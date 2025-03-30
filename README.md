@@ -4,3 +4,7 @@ Group 19:
 Mardee 
 Tim
 Joel
+
+## Conceptual Design
+
+![conceptual design](README_images/conceptual_design.png)
