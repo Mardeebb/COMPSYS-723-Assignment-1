@@ -142,9 +142,15 @@ ACDS_VERSION := 18.1
 ELF := frequency_analyser.elf
 
 # Paths to C, C++, and assembly source files.
-C_SRCS :=
+C_SRCS += freq_analyser.c
+C_SRCS += FreeRTOS/croutine.c
+C_SRCS += FreeRTOS/event_groups.c
+C_SRCS += FreeRTOS/heap.c
+C_SRCS += FreeRTOS/list.c
+C_SRCS += FreeRTOS/port.c
+C_SRCS += FreeRTOS/queue.c
 CXX_SRCS :=
-ASM_SRCS :=
+ASM_SRCS := FreeRTOS/port_asm.S
 
 
 # Path to root of object file tree.
