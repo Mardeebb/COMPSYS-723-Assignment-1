@@ -1,0 +1,27 @@
+16:25:55 **** Incremental Build of configuration Nios II for project Assignment_1 ****
+make all 
+Info: Building ../Assignment_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Assignment_1_bsp/
+[BSP build complete]
+Info: Compiling FreeRTOS/heap.c to obj/default/FreeRTOS/heap.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Assignment_1_bsp//HAL/inc -I../Assignment_1_bsp/ -I../Assignment_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/FreeRTOS/heap.o FreeRTOS/heap.c
+FreeRTOS/heap.c:147:7: error: conflicting types for 'pvPortMalloc'
+ void *pvPortMalloc( size_t xWantedSize )
+       ^
+In file included from FreeRTOS/FreeRTOS.h:104:0,
+                 from FreeRTOS/heap.c:82:
+FreeRTOS/portable.h:163:7: note: previous declaration of 'pvPortMalloc' was here
+ void *pvPortMalloc( size_t xSize ) PRIVILEGED_FUNCTION;
+       ^
+FreeRTOS/heap.c:262:8: error: conflicting types for 'xPortGetFreeHeapSize'
+ size_t xPortGetFreeHeapSize( void )
+        ^
+In file included from FreeRTOS/FreeRTOS.h:104:0,
+                 from FreeRTOS/heap.c:82:
+FreeRTOS/portable.h:166:8: note: previous declaration of 'xPortGetFreeHeapSize' was here
+ size_t xPortGetFreeHeapSize( void ) PRIVILEGED_FUNCTION;
+        ^
+make: *** [obj/default/FreeRTOS/heap.o] Error 1
+
+16:25:57 Build Finished (took 1s.213ms)
+

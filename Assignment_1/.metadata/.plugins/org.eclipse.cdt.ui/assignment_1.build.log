@@ -1,0 +1,13 @@
+15:24:17 **** Incremental Build of configuration Nios II for project assignment_1 ****
+make all 
+Info: Building ../assignment_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../assignment_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../assignment_1_bsp//HAL/inc -I../assignment_1_bsp/ -I../assignment_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c:7:31: fatal error: FreeRTOS/FreeRTOS.h: No such file or directory
+compilation terminated.
+make: *** [obj/default/main.o] Error 1
+
+15:24:19 Build Finished (took 1s.823ms)
+
