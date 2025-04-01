@@ -1,6 +1,6 @@
-13:42:28 **** Clean-only build of configuration Nios II for project frequency_analyser_bsp ****
+14:56:06 **** Clean-only build of configuration Nios II for project frequency_analyser_bsp ****
 make clean 
 [BSP clean complete]
 
-13:42:28 Build Finished (took 637ms)
+14:56:07 Build Finished (took 488ms)
 

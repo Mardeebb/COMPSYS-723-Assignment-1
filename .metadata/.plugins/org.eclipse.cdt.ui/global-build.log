@@ -1,6 +1,33 @@
-13:42:28 **** Clean-only build of configuration Nios II for project frequency_analyser_bsp ****
-make clean 
-[BSP clean complete]
-13:42:35 **** Clean-only build of configuration Nios II for project frequency_analyser ****
-make clean 
-[frequency_analyser clean complete]
+15:01:20 **** Build of configuration Nios II for project frequency_analyser ****
+make all 
+Info: Building ../frequency_analyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../frequency_analyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../frequency_analyser_bsp//HAL/inc -I../frequency_analyser_bsp/ -I../frequency_analyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+Info: Linking frequency_analyser.elf
+nios2-elf-g++  -T'../frequency_analyser_bsp//linker.x' -msys-crt0='../frequency_analyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../frequency_analyser_bsp/   -Wl,-Map=frequency_analyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o frequency_analyser.elf obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert frequency_analyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/723/COMPSYS-723-Assignment-1/CS723_2017_Assignment1-resources" --sopcinfo H:/723/COMPSYS-723-Assignment-1/CS723_2017_Assignment1-resources/software/frequency_analyser_bsp/../../nios2.sopcinfo
+Info: (frequency_analyser.elf) 88 KBytes program size (code + initialized data).
+Info:                          131062 KBytes free for stack + heap.
+Info: Creating frequency_analyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source frequency_analyser.elf >frequency_analyser.objdump
+[frequency_analyser build complete]
+15:01:43 **** Build of configuration Nios II for project frequency_analyser ****
+make all 
+Info: Building ../frequency_analyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../frequency_analyser_bsp/
+[BSP build complete]
+[frequency_analyser build complete]
+15:01:46 **** Incremental Build of configuration Nios II for project frequency_analyser ****
+make all 
+Info: Building ../frequency_analyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../frequency_analyser_bsp/
+[BSP build complete]
+[frequency_analyser build complete]
+15:03:06 **** Incremental Build of configuration Nios II for project frequency_analyser ****
+make all 
+Info: Building ../frequency_analyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../frequency_analyser_bsp/
+[BSP build complete]
+[frequency_analyser build complete]

@@ -1,6 +1,9 @@
-13:42:35 **** Clean-only build of configuration Nios II for project frequency_analyser ****
-make clean 
-[frequency_analyser clean complete]
+15:03:06 **** Incremental Build of configuration Nios II for project frequency_analyser ****
+make all 
+Info: Building ../frequency_analyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../frequency_analyser_bsp/
+[BSP build complete]
+[frequency_analyser build complete]
 
-13:42:35 Build Finished (took 338ms)
+15:03:09 Build Finished (took 2s.761ms)
 
