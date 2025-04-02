@@ -1,0 +1,97 @@
+
+#include <stdio.h>
+#include <unistd.h>
+#include <stddef.h>
+#include <string.h>
+
+#include "sys/alt_irq.h"
+#include "io.h"
+#include <system.h>
+#include <altera_avalon_pio_regs.h>
+
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/queue.h"
+#include "FreeRTOS/timers.h"
+
+/* The parameters passed to the reg test tasks.  This is just done to check
+ the parameter passing mechanism is working correctly. */
+#define mainREG_TEST_1_PARAMETER    ( ( void * ) 0x12345678 )
+#define mainREG_TEST_2_PARAMETER    ( ( void * ) 0x87654321 )
+#define mainREG_TEST_PRIORITY       ( tskIDLE_PRIORITY + 1)
+static void freq_analyser_task(void *pvParameters);
+static void prvSecondRegTestTask(void *pvParameters);
+#define ESC 27
+#define CLEAR_LCD_STRING "[2J"
+#define Timer_Reset_Task_P      (tskIDLE_PRIORITY+1)
+TimerHandle_t timer;
+TaskHandle_t Timer_Reset;
+
+volatile double frequency;
+double prev_freq = 0;
+double roc = 0;
+
+uint8_t freq_update = 1;
+uint8_t stability_flag = 1;
+
+void freq_relay_irq(){
+	prev_freq = frequency;
+	unsigned int temp = IORD(FREQUENCY_ANALYSER_BASE, 0);
+	frequency = 16000/(double)temp;
+	roc = (frequency - prev_freq) / temp;
+	printf("freq:     %f Hz\nprev_freq: %f Hz\nroc:      %f Hz\n", frequency, prev_freq, roc);
+	freq_update = 1;
+	return;
+}
+void Timer_Reset_Task(void *pvParameters ){ //reset timer if any of the push button is pressed
+	while(1){
+		if (stability_flag == 1){
+			xTimerReset( timer, 10 );
+		}
+	}
+}
+void vTimerCallback(xTimerHandle t_timer){ //Timer flashes green LEDs
+	IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0xFF^IORD_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE));
+}
+
+int main(void)
+{
+	timer = xTimerCreate("Timer Name", 500, pdTRUE, NULL, vTimerCallback);
+	alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_irq);
+
+	xTaskCreate( freq_analyser_task, "Rreg1", configMINIMAL_STACK_SIZE, mainREG_TEST_1_PARAMETER, mainREG_TEST_PRIORITY, NULL);
+	xTaskCreate( prvSecondRegTestTask, "Rreg2", configMINIMAL_STACK_SIZE, mainREG_TEST_2_PARAMETER, mainREG_TEST_PRIORITY, NULL);
+	xTaskCreate( Timer_Reset_Task, "0", configMINIMAL_STACK_SIZE, NULL, Timer_Reset_Task_P, &Timer_Reset );
+	vTaskStartScheduler();
+	for (;;);
+}
+static void freq_analyser_task(void *pvParameters)
+{
+	FILE *lcd;
+	lcd = fopen(CHARACTER_LCD_NAME, "w");
+	while (1)
+	{
+	  while(freq_update == 0);
+
+      fprintf(lcd, "%c%s", ESC, CLEAR_LCD_STRING);
+	  fprintf(lcd, "ROC frequency\n%f Hz\n", roc);
+	  prev_freq = frequency;
+	  freq_update = 0;
+	  if (roc != 0){
+		  stability_flag = 0;
+	  } else {
+		  stability_flag = 1;
+	  }
+	}
+}
+static void prvSecondRegTestTask(void *pvParameters)
+{
+	while (1)
+	{
+	  IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0x55);
+	  usleep(100000);
+	  IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0xaa);
+	  usleep(100000);
+	}
+}
+

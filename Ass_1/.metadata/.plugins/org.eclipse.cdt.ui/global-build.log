@@ -1,4 +1,16 @@
-14:22:46 **** Incremental Build of configuration Nios II for project Ass_1 ****
+14:35:11 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+[Ass_1 build complete]
+14:35:33 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+[Ass_1 build complete]
+14:36:15 **** Incremental Build of configuration Nios II for project Ass_1 ****
 make all 
 Info: Building ../Ass_1_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
@@ -8,33 +20,12 @@ nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1
 Info: Linking Ass_1.elf
 nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/freertos_semaphore.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
 nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
-Info: (Ass_1.elf) 608 KBytes program size (code + initialized data).
+Info: (Ass_1.elf) 610 KBytes program size (code + initialized data).
 Info:             130561 KBytes free for stack + heap.
 Info: Creating Ass_1.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
 [Ass_1 build complete]
-14:22:49 **** Incremental Build of configuration Nios II for project Ass_1 ****
-make all 
-Info: Building ../Ass_1_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
-[BSP build complete]
-[Ass_1 build complete]
-14:23:36 **** Incremental Build of configuration Nios II for project Ass_1 ****
-make all 
-Info: Building ../Ass_1_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
-[BSP build complete]
-Info: Compiling freertos_semaphore.c to obj/default/freertos_semaphore.o
-nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/freertos_semaphore.o freertos_semaphore.c
-Info: Linking Ass_1.elf
-nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/freertos_semaphore.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
-Info: (Ass_1.elf) 608 KBytes program size (code + initialized data).
-Info:             130561 KBytes free for stack + heap.
-Info: Creating Ass_1.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
-[Ass_1 build complete]
-14:26:02 **** Incremental Build of configuration Nios II for project Ass_1 ****
+14:36:53 **** Incremental Build of configuration Nios II for project Ass_1 ****
 make all 
 Info: Building ../Ass_1_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
@@ -49,52 +40,26 @@ Info:             130561 KBytes free for stack + heap.
 Info: Creating Ass_1.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
 [Ass_1 build complete]
-14:27:06 **** Incremental Build of configuration Nios II for project Ass_1 ****
+14:47:08 **** Incremental Build of configuration Nios II for project Ass_1 ****
 make all 
 Info: Building ../Ass_1_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
 [BSP build complete]
 Info: Compiling freertos_semaphore.c to obj/default/freertos_semaphore.o
 nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/freertos_semaphore.o freertos_semaphore.c
-Info: Linking Ass_1.elf
-nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/freertos_semaphore.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
-Info: (Ass_1.elf) 610 KBytes program size (code + initialized data).
-Info:             130561 KBytes free for stack + heap.
-Info: Creating Ass_1.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
-[Ass_1 build complete]
-14:27:29 **** Incremental Build of configuration Nios II for project Ass_1 ****
-make all 
-Info: Building ../Ass_1_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
-[BSP build complete]
-Info: Compiling freertos_semaphore.c to obj/default/freertos_semaphore.o
-nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/freertos_semaphore.o freertos_semaphore.c
-Info: Linking Ass_1.elf
-nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/freertos_semaphore.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
-Info: (Ass_1.elf) 610 KBytes program size (code + initialized data).
-Info:             130561 KBytes free for stack + heap.
-Info: Creating Ass_1.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
-[Ass_1 build complete]
-14:28:11 **** Incremental Build of configuration Nios II for project Ass_1 ****
-make all 
-Info: Building ../Ass_1_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
-[BSP build complete]
-Info: Compiling freertos_semaphore.c to obj/default/freertos_semaphore.o
-nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/freertos_semaphore.o freertos_semaphore.c
-Info: Linking Ass_1.elf
-nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/freertos_semaphore.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
-Info: (Ass_1.elf) 610 KBytes program size (code + initialized data).
-Info:             130561 KBytes free for stack + heap.
-Info: Creating Ass_1.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
-[Ass_1 build complete]
-14:29:12 **** Incremental Build of configuration Nios II for project Ass_1 ****
+freertos_semaphore.c:24:55: error: expected identifier or '(' before '=' token
+ static void prvSecondRegTestTask(void *pvParameters); = 0;
+                                                       ^
+freertos_semaphore.c: In function 'main':
+freertos_semaphore.c:40:8: warning: variable 'lcd' set but not used [-Wunused-but-set-variable]
+  FILE *lcd;
+        ^
+freertos_semaphore.c: In function 'prvSecondRegTestTask':
+freertos_semaphore.c:53:4: warning: implicit declaration of function 'IOWR_ALTERA_AVALON_PIO_DATA' [-Wimplicit-function-declaration]
+    IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0x55);
+    ^
+make: *** [obj/default/freertos_semaphore.o] Error 1
+14:47:33 **** Incremental Build of configuration Nios II for project Ass_1 ****
 make all 
 Info: Building ../Ass_1_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
@@ -102,19 +67,64 @@ C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-director
 Info: Compiling freertos_semaphore.c to obj/default/freertos_semaphore.o
 nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/freertos_semaphore.o freertos_semaphore.c
 freertos_semaphore.c: In function 'main':
-freertos_semaphore.c:32:16: warning: format '%f' expects argument of type 'double', but argument 3 has type 'unsigned int' [-Wformat=]
+freertos_semaphore.c:39:8: warning: variable 'lcd' set but not used [-Wunused-but-set-variable]
+  FILE *lcd;
+        ^
+freertos_semaphore.c: In function 'prvSecondRegTestTask':
+freertos_semaphore.c:52:4: warning: implicit declaration of function 'IOWR_ALTERA_AVALON_PIO_DATA' [-Wimplicit-function-declaration]
+    IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0x55);
+    ^
 Info: Linking Ass_1.elf
 nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/freertos_semaphore.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-   fprintf(lcd, "Hello %f\n", temp);
-                ^
-freertos_semaphore.c:32:16: warning: format '%f' expects argument of type 'double', but argument 3 has type 'unsigned int' [-Wformat=]
+obj/default/freertos_semaphore.o: In function `prvSecondRegTestTask':
+C:\Users\tcas362\Documents\GitHub\COMPSYS-723-Assignment-1\Ass_1\software\Ass_1/freertos_semaphore.c:52: undefined reference to `IOWR_ALTERA_AVALON_PIO_DATA'
+C:\Users\tcas362\Documents\GitHub\COMPSYS-723-Assignment-1\Ass_1\software\Ass_1/freertos_semaphore.c:54: undefined reference to `IOWR_ALTERA_AVALON_PIO_DATA'
+collect2.exe: error: ld returned 1 exit status
+make: *** [Ass_1.elf] Error 1
+14:48:17 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling freertos_semaphore.c to obj/default/freertos_semaphore.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/freertos_semaphore.o freertos_semaphore.c
+freertos_semaphore.c: In function 'main':
+freertos_semaphore.c:42:8: warning: variable 'lcd' set but not used [-Wunused-but-set-variable]
+  FILE *lcd;
+        ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/freertos_semaphore.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
 nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
 Info: (Ass_1.elf) 610 KBytes program size (code + initialized data).
 Info:             130561 KBytes free for stack + heap.
 Info: Creating Ass_1.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
 [Ass_1 build complete]
-14:29:48 **** Incremental Build of configuration Nios II for project Ass_1 ****
+14:49:24 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling freertos_semaphore.c to obj/default/freertos_semaphore.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/freertos_semaphore.o freertos_semaphore.c
+freertos_semaphore.c: In function 'freq_relay_task':
+freertos_semaphore.c:38:10: warning: passing argument 1 of 'printf' from incompatible pointer type [-Wincompatible-pointer-types]
+   printf(lcd, "%f Hz\n", frequency);
+          ^
+In file included from c:\intelfpga\18.1\nios2eds\bin\gnu\h-x86_64-mingw32\nios2-elf\include\stdio.h:29:0,
+                 from freertos_semaphore.c:2:
+c:\intelfpga\18.1\nios2eds\bin\gnu\h-x86_64-mingw32\nios2-elf\include\stdio.h:215:5: note: expected 'const char * restrict' but argument is of type 'FILE * {aka struct __sFILE *}'
+ int _EXFUN(printf, (const char *__restrict, ...)
+     ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/freertos_semaphore.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 610 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+14:50:22 **** Incremental Build of configuration Nios II for project Ass_1 ****
 make all 
 Info: Building ../Ass_1_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
@@ -124,7 +134,286 @@ nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1
 Info: Linking Ass_1.elf
 nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/freertos_semaphore.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
 nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
-Info: (Ass_1.elf) 610 KBytes program size (code + initialized data).
+Info: (Ass_1.elf) 611 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+14:51:19 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling freertos_semaphore.c to obj/default/freertos_semaphore.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/freertos_semaphore.o freertos_semaphore.c
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/freertos_semaphore.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 611 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+15:00:44 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 611 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+15:02:46 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 611 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+15:13:25 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 611 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+15:13:58 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 611 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+15:14:07 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 611 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+15:14:32 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 611 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+15:15:34 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 611 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+15:16:17 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 611 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+15:17:23 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 611 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+15:17:54 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 611 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+15:18:10 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 611 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+15:19:20 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 611 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+15:22:21 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 611 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+15:37:49 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 611 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+15:50:04 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c:87:13: warning: 'prvSecondRegTestTask' defined but not used [-Wunused-function]
+ static void prvSecondRegTestTask(void *pvParameters)
+             ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 611 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+15:51:04 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c:87:13: warning: 'prvSecondRegTestTask' defined but not used [-Wunused-function]
+ static void prvSecondRegTestTask(void *pvParameters)
+             ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 611 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+15:51:41 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c:87:13: warning: 'prvSecondRegTestTask' defined but not used [-Wunused-function]
+ static void prvSecondRegTestTask(void *pvParameters)
+             ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 611 KBytes program size (code + initialized data).
 Info:             130561 KBytes free for stack + heap.
 Info: Creating Ass_1.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
