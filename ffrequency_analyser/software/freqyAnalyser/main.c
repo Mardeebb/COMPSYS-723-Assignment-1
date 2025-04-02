@@ -3,23 +3,64 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <system.h>
+#include <sys/alt_alarm.h>
+#include <sys/alt_irq.h>
+#include <altera_avalon_pio_regs.h>
+#include <altera_avalon_uart_regs.h>
+
 /* Scheduler includes. */
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/queue.h"
+#include "FreeRTOS/FreeRTOS.h"
+#include "FreeRTOS/task.h"
+#include "FreeRTOS/queue.h"
+#include "FreeRTOS/timers.h"
 
 /* The parameters passed to the reg test tasks.  This is just done to check
  the parameter passing mechanism is working correctly. */
 #define mainREG_TEST_1_PARAMETER    ( ( void * ) 0x12345678 )
 #define mainREG_TEST_2_PARAMETER    ( ( void * ) 0x87654321 )
 #define mainREG_TEST_PRIORITY       ( tskIDLE_PRIORITY + 1)
-static void prvFirstRegTestTask(void *pvParameters);
-static void prvSecondRegTestTask(void *pvParameters);
+static void stabilityMonitorTask(void *pvParameters);
+static void loadMonitorTask(void *pvParameters);
+static void pollingSwitchsTask(void *pvParameters);
 
-void freq_relay(){
-	unsigned int temp = IORD(FREQUENCY_ANALYSER_BASE, 0);
-	printf("%f Hz\n", 16000/(double)temp);
+#define Timer_Reset_Task_P      (tskIDLE_PRIORITY+1)
+TimerHandle_t timer;
+TaskHandle_t Timer_Reset;
+
+volatile double frequency = 0;
+volatile double old_frequency = 0;
+volatile double roc_frequency = 0;
+volatile uint64_t systemTime = 0;
+
+volatile timer_flag = 0;
+
+
+void freq_relay_isr(){
+	// declare variables
+	unsigned int samples;
+
+	old_frequency = frequency;
+	samples = IORD(FREQUENCY_ANALYSER_BASE, 0);
+	frequency = 16000/(double)samples;
+	roc_frequency = ((frequency - old_frequency)/samples) * 16000;
+	//printf("ROC: %f milliseconds, Old: %f, New:%f \n", roc_frequency,old_frequency,frequency);
 	return;
+}
+
+void Timer_Reset_Task(void *pvParameters ){ //reset timer if any of the push button is pressed
+	while(1){
+		if (IORD_ALTERA_AVALON_PIO_DATA(PUSH_BUTTON_BASE) != 0x7){
+			xTimerReset( timer, 10 );
+		}
+
+	}
+}
+
+
+void vTimerCallback(xTimerHandle t_timer){ //Timer flashes green LEDs
+	timer_flag = 1;
+	IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0xFF^IORD_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE));
 }
 
 /*
@@ -27,34 +68,62 @@ void freq_relay(){
  */
 int main(void)
 {
-	/* The RegTest tasks as described at the top of this file. */
-	xTaskCreate( prvFirstRegTestTask, "Rreg1", configMINIMAL_STACK_SIZE, mainREG_TEST_1_PARAMETER, mainREG_TEST_PRIORITY, NULL);
-	xTaskCreate( prvSecondRegTestTask, "Rreg2", configMINIMAL_STACK_SIZE, mainREG_TEST_2_PARAMETER, mainREG_TEST_PRIORITY, NULL);
+	/*Interrupts*/
+	alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_isr);
 
-	/* Finally start the scheduler. */
+	/* Create Tasks */
+	xTaskCreate(stabilityMonitorTask, "Rreg1", configMINIMAL_STACK_SIZE, mainREG_TEST_1_PARAMETER, mainREG_TEST_PRIORITY, 5);
+	xTaskCreate(loadMonitorTask, "Rreg2", configMINIMAL_STACK_SIZE, mainREG_TEST_2_PARAMETER, mainREG_TEST_PRIORITY, NULL);
+	xTaskCreate(pollingSwitchsTask, "Rreg3", configMINIMAL_STACK_SIZE, mainREG_TEST_2_PARAMETER, mainREG_TEST_PRIORITY, NULL);
+
+
+	// everytime the timer reaches 500ms it call vTimerCallback
+	timer = xTimerCreate("Timer Name", 500, pdTRUE, NULL, vTimerCallback);
+
+	if (xTimerStart(timer, 0) != pdPASS){
+		printf("Cannot start timer");
+	}
+	xTaskCreate( Timer_Reset_Task, "0", configMINIMAL_STACK_SIZE, NULL, Timer_Reset_Task_P, &Timer_Reset );
+
+	/*Start scheduler */
 	vTaskStartScheduler();
 
 	/* Will only reach here if there is insufficient heap available to start
 	 the scheduler. */
 	for (;;);
 }
-static void prvFirstRegTestTask(void *pvParameters)
+static void stabilityMonitorTask(void *pvParameters)
 {
-	alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay);
 	while(1){
-	  IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0x55);
-	  usleep(1000000);
-	  IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0xaa);
+//		if (roc_frequency > 5) {
+//			IOWR_ALTERA_AVALON_PIO_DATA(RED_LEDS_BASE, 0x5555);
+//		} else {
+//			IOWR_ALTERA_AVALON_PIO_DATA(RED_LEDS_BASE, 0x00);
+//		}
+//	  IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0x55);
+//	  usleep(1000000);
+//	  IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0xaa);
 	  usleep(1000000);
 	}
-
-  return 0;
 }
-static void prvSecondRegTestTask(void *pvParameters)
+static void loadMonitorTask(void *pvParameters)
 {
 	while (1)
 	{
-		printf("Task 2\n");
+		printf("Load Monitor Task\n");
+		timer_flag = 0;
 		vTaskDelay(1000);
+	}
+}
+
+static void pollingSwitchsTask(void *pvParameters)
+{
+	unsigned int uiSwitchValue = 0;
+	while (1)
+	{
+	    // read the value of the switch and store to uiSwitchValue
+	    uiSwitchValue = IORD_ALTERA_AVALON_PIO_DATA(SLIDE_SWITCH_BASE);
+	    // write the value of the switches to the red LEDs
+	    IOWR_ALTERA_AVALON_PIO_DATA(RED_LEDS_BASE, uiSwitchValue);
 	}
 }
