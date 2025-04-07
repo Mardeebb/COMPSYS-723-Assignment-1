@@ -19,79 +19,81 @@
 #define mainREG_TEST_1_PARAMETER    ( ( void * ) 0x12345678 )
 #define mainREG_TEST_2_PARAMETER    ( ( void * ) 0x87654321 )
 #define mainREG_TEST_PRIORITY       ( tskIDLE_PRIORITY + 1)
-static void freq_analyser_task(void *pvParameters);
-static void prvSecondRegTestTask(void *pvParameters);
 #define ESC 27
 #define CLEAR_LCD_STRING "[2J"
 #define Timer_Reset_Task_P      (tskIDLE_PRIORITY+1)
+
+static void freq_analyser_task(void *pvParameters);
+static void LCD_task(void *pvParameters);
+
 TimerHandle_t timer;
 TaskHandle_t Timer_Reset;
 
-volatile double frequency;
-double prev_freq = 0;
-double roc = 0;
+volatile double freq;
+volatile double prev_freq = 0;
+volatile double roc = 0;
 
 uint8_t freq_update = 1;
 uint8_t stability_flag = 1;
+uint8_t timer_reset = 0;
 
 void freq_relay_irq(){
-	prev_freq = frequency;
+	prev_freq = freq;
 	unsigned int temp = IORD(FREQUENCY_ANALYSER_BASE, 0);
-	frequency = 16000/(double)temp;
-	roc = (frequency - prev_freq) / temp;
-	printf("freq:     %f Hz\nprev_freq: %f Hz\nroc:      %f Hz\n", frequency, prev_freq, roc);
+	freq = 16000/(double)temp;
+	roc = (freq - prev_freq) / temp;
+	roc = roc < 0 ? roc * -1 : roc;
 	freq_update = 1;
 	return;
 }
-void Timer_Reset_Task(void *pvParameters ){ //reset timer if any of the push button is pressed
+
+void Timer_Reset_Task(void *pvParameters ){
 	while(1){
-		if (stability_flag == 1){
+		if (timer_reset == 1){
 			xTimerReset( timer, 10 );
+			timer_reset = 0;
 		}
 	}
 }
-void vTimerCallback(xTimerHandle t_timer){ //Timer flashes green LEDs
-	IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0xFF);
+void vTimerCallback(xTimerHandle t_timer){
+	int LEDs = stability_flag == 1 ? 0xFF : 0x00;
+	IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, LEDs);
 }
 
-int main(void)
-{
-	timer = xTimerCreate("Timer Name", 500, pdTRUE, NULL, vTimerCallback);
+int main(void) {
+	timer = xTimerCreate("Timer Name", 5, pdTRUE, NULL, vTimerCallback);
 	alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_irq);
+	IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0x55);
 
 	xTaskCreate( freq_analyser_task, "Rreg1", configMINIMAL_STACK_SIZE, mainREG_TEST_1_PARAMETER, mainREG_TEST_PRIORITY, NULL);
-	//xTaskCreate( prvSecondRegTestTask, "Rreg2", configMINIMAL_STACK_SIZE, mainREG_TEST_2_PARAMETER, mainREG_TEST_PRIORITY, NULL);
+	xTaskCreate( LCD_task, "Rreg2", configMINIMAL_STACK_SIZE, mainREG_TEST_2_PARAMETER, mainREG_TEST_PRIORITY, NULL);
 	xTaskCreate( Timer_Reset_Task, "0", configMINIMAL_STACK_SIZE, NULL, Timer_Reset_Task_P, &Timer_Reset );
 	vTaskStartScheduler();
 	for (;;);
 }
-static void freq_analyser_task(void *pvParameters)
-{
-	FILE *lcd;
-	lcd = fopen(CHARACTER_LCD_NAME, "w");
-	while (1)
-	{
-	  while(freq_update == 0);
 
-      fprintf(lcd, "%c%s", ESC, CLEAR_LCD_STRING);
-	  fprintf(lcd, "ROC frequency\n%f Hz\n", roc);
-	  prev_freq = frequency;
-	  freq_update = 0;
-	  if (roc != 0){
+static void freq_analyser_task(void *pvParameters) {
+	while (1) {
+	  while(freq_update == 0);
+	  if (roc >= 0.0005 || (freq < 49 || freq > 51)){
 		  stability_flag = 0;
 	  } else {
 		  stability_flag = 1;
 	  }
+	  freq_update = 0;
+	  timer_reset = 1;
 	}
 }
-static void prvSecondRegTestTask(void *pvParameters)
-{
-	while (1)
-	{
-	  IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0x55);
-	  usleep(100000);
-	  IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0xaa);
-	  usleep(100000);
+
+static void LCD_task(void *pvParameters) {
+	FILE *lcd;
+	lcd = fopen(CHARACTER_LCD_NAME, "w");
+	while (1) {
+		vTaskDelay(100);
+	  fprintf(lcd, "%c%s", ESC, CLEAR_LCD_STRING);
+	  fprintf(lcd, "ROC frequency\n%f Hz\n", roc);
+		printf("freq:     %f Hz\nprev_freq: %f Hz\nroc:      %f Hz\n", freq, prev_freq, roc);
+		printf("\nstability flag: %d\n", stability_flag);
 	}
 }
 
