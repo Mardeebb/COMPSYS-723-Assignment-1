@@ -14,17 +14,21 @@
 #include "freertos/queue.h"
 #include "FreeRTOS/timers.h"
 
-/* The parameters passed to the reg test tasks.  This is just done to check
- the parameter passing mechanism is working correctly. */
-#define mainREG_TEST_1_PARAMETER    ( ( void * ) 0x12345678 )
-#define mainREG_TEST_2_PARAMETER    ( ( void * ) 0x87654321 )
-#define mainREG_TEST_PRIORITY       ( tskIDLE_PRIORITY + 1)
 #define ESC 27
 #define CLEAR_LCD_STRING "[2J"
-#define Timer_Reset_Task_P      (tskIDLE_PRIORITY+1)
+
+#define   TASK_STACKSIZE       2048
+
+#define LCD_PRIORITY       		11
+#define SWITCHES_PRIORITY       12
+#define LED_PRIORITY       		13
+#define TIMER_RESET_PRIORITY    14
+#define LOAD_MONITOR_PRIORITY   15
+#define FREQ_ANALYSER_PRIORITY  16
 
 static void freq_analyser_task(void *pvParameters);
 static void LCD_task(void *pvParameters);
+void Timer_Reset_Task(void *pvParameters);
 
 TimerHandle_t timer;
 TaskHandle_t Timer_Reset;
@@ -65,11 +69,11 @@ int main(void) {
 	alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_irq);
 	IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0x55);
 
-	xTaskCreate( freq_analyser_task, "Rreg1", configMINIMAL_STACK_SIZE, mainREG_TEST_1_PARAMETER, mainREG_TEST_PRIORITY, NULL);
-	xTaskCreate( LCD_task, "Rreg2", configMINIMAL_STACK_SIZE, mainREG_TEST_2_PARAMETER, mainREG_TEST_PRIORITY, NULL);
-	xTaskCreate( Timer_Reset_Task, "0", configMINIMAL_STACK_SIZE, NULL, Timer_Reset_Task_P, &Timer_Reset );
+	xTaskCreate( freq_analyser_task, "freq_analyser_task", TASK_STACKSIZE, NULL, FREQ_ANALYSER_PRIORITY, NULL);
+	xTaskCreate( LCD_task, "LCD_task", TASK_STACKSIZE, NULL, LCD_PRIORITY, NULL);
+	xTaskCreate( Timer_Reset_Task, "0", TASK_STACKSIZE, NULL, TIMER_RESET_PRIORITY, &Timer_Reset );
 	vTaskStartScheduler();
-	for (;;);
+	while (1);
 }
 
 static void freq_analyser_task(void *pvParameters) {
@@ -90,8 +94,8 @@ static void LCD_task(void *pvParameters) {
 	lcd = fopen(CHARACTER_LCD_NAME, "w");
 	while (1) {
 		vTaskDelay(100);
-	  fprintf(lcd, "%c%s", ESC, CLEAR_LCD_STRING);
-	  fprintf(lcd, "ROC frequency\n%f Hz\n", roc);
+	    fprintf(lcd, "%c%s", ESC, CLEAR_LCD_STRING);
+	    fprintf(lcd, "ROC frequency\n%f Hz\n", roc);
 		printf("freq:     %f Hz\nprev_freq: %f Hz\nroc:      %f Hz\n", freq, prev_freq, roc);
 		printf("\nstability flag: %d\n", stability_flag);
 	}

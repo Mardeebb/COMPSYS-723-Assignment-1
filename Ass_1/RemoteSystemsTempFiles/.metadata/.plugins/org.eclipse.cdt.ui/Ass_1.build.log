@@ -1,4 +1,4 @@
-10:41:21 **** Incremental Build of configuration Nios II for project Ass_1 ****
+11:50:45 **** Incremental Build of configuration Nios II for project Ass_1 ****
 make all 
 Info: Building ../Ass_1_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
@@ -14,5 +14,5 @@ Info: Creating Ass_1.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
 [Ass_1 build complete]
 
-10:41:28 Build Finished (took 6s.777ms)
+11:50:46 Build Finished (took 1s.503ms)
 
