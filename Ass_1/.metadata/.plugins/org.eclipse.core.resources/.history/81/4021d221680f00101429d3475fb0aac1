@@ -1,0 +1,67 @@
+
+#include <stdio.h>
+#include <unistd.h>
+#include <stddef.h>
+#include <string.h>
+
+#include "sys/alt_irq.h"
+#include "io.h"
+#include <system.h>
+#include <altera_avalon_pio_regs.h>
+
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/queue.h"
+
+/* The parameters passed to the reg test tasks.  This is just done to check
+ the parameter passing mechanism is working correctly. */
+#define mainREG_TEST_1_PARAMETER    ( ( void * ) 0x12345678 )
+#define mainREG_TEST_2_PARAMETER    ( ( void * ) 0x87654321 )
+#define mainREG_TEST_PRIORITY       ( tskIDLE_PRIORITY + 1)
+static void freq_relay_task(void *pvParameters);
+static void prvSecondRegTestTask(void *pvParameters);
+#define ESC 27
+#define CLEAR_LCD_STRING "[2J"
+
+volatile double frequency;
+uint8_t freq_update = 0;
+double prev_freq = 0;
+
+void freq_relay_irq(){
+	unsigned int temp = IORD(FREQUENCY_ANALYSER_BASE, 0);
+	printf("%f Hz\n", 16000/(double)temp);
+	freq_update = 1;
+	return;
+}
+
+int main(void)
+{
+	alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_irq);
+	xTaskCreate( freq_relay_task, "Rreg1", configMINIMAL_STACK_SIZE, mainREG_TEST_1_PARAMETER, mainREG_TEST_PRIORITY, NULL);
+	xTaskCreate( prvSecondRegTestTask, "Rreg2", configMINIMAL_STACK_SIZE, mainREG_TEST_2_PARAMETER, mainREG_TEST_PRIORITY, NULL);
+
+	vTaskStartScheduler();
+	for (;;);
+}
+static void freq_relay_task(void *pvParameters)
+{
+	FILE *lcd;
+	lcd = fopen(CHARACTER_LCD_NAME, "w");
+	while (1)
+	{
+	  while(freq_update == 0);
+	  fprintf(lcd, "average frequency = %f\n", (frequency + prev_freq) / 2);
+	  freq_update = 0;
+	}
+}
+static void prvSecondRegTestTask(void *pvParameters)
+{
+	while (1)
+	{
+	  IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0x55);
+	  usleep(100000);
+	  IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0xaa);
+	  usleep(100000);
+	}
+}
+

@@ -1,20 +1,19 @@
-/* Standard includes. */
-#include <stddef.h>
+
 #include <stdio.h>
+#include <unistd.h>
+#include <stddef.h>
 #include <string.h>
 #include <stdlib.h>
 
+#include "sys/alt_irq.h"
 #include "io.h"
+#include <system.h>
+#include <altera_avalon_pio_regs.h>
 #include "altera_up_avalon_video_character_buffer_with_dma.h"
 #include "altera_up_avalon_video_pixel_buffer_dma.h"
-
-#include <system.h>
 #include <sys/alt_alarm.h>
-#include <sys/alt_irq.h>
-#include <altera_avalon_pio_regs.h>
 #include <altera_avalon_uart_regs.h>
 
-/* Scheduler includes. */
 #include "FreeRTOS/FreeRTOS.h"
 #include "FreeRTOS/task.h"
 #include "FreeRTOS/queue.h"
@@ -22,6 +21,18 @@
 #include "FreeRTOS/portable.h"
 #include "FreeRTOS/portmacro.h"
 #include "FreeRTOS/semphr.h"
+
+#define ESC 27
+#define CLEAR_LCD_STRING "[2J"
+
+#define   TASK_STACKSIZE       2048
+
+#define DISPLAY_PRIORITY       	11
+#define SWITCHES_PRIORITY       12
+#define LED_PRIORITY       		13
+#define TIMER_RESET_PRIORITY    14
+#define LOAD_MONITOR_PRIORITY   15
+#define FREQ_ANALYSER_PRIORITY  16
 
 //For frequency plot
 #define FREQPLT_ORI_X 101		//x axis pixel position at the plot origin
@@ -34,13 +45,23 @@
 #define ROCPLT_ORI_Y 259.0
 #define ROCPLT_ROC_RES 0.5		//number of pixels per Hz/s (y axis scale)
 
-#define MIN_FREQ 45.0 //minimum frequency to draw
+#define MIN_FREQ 45.0
+#define ROC_TH 8.0
+#define FREQ_TH 50.0
 
-#define PRVGADraw_Task_P      (tskIDLE_PRIORITY+1)
+static void stabilityMonitorTask(void *pvParameters);
+static void LCD_task(void *pvParameters);
+static void stabilityMonitorTask(void *pvParameters);
+static void pollingSwitchsTask(void *pvParameters);
+static void PRVGADraw_Task(void *pvParameters );
+static void Timer_Reset_Task(void *pvParameters);
+
+TaskHandle_t Timer_Reset;
 TaskHandle_t PRVGADraw;
-
-
 static QueueHandle_t Q_freq_data;
+TimerHandle_t timer, timer2, stabilityTaskHandle, loadMonitorTaskHandle, pollingSwitchsTaskHandle, PRVGADraw, LCD_handle;
+TaskHandle_t Timer_Reset1;
+QueueHandle_t stabilityTaskQueue, loadMonitorTaskQueue;
 
 typedef struct{
 	unsigned int x1;
@@ -49,163 +70,85 @@ typedef struct{
 	unsigned int y2;
 }Line;
 
-/* The parameters passed to the reg test tasks.  This is just done to check
- the parameter passing mechanism is working correctly. */
-#define mainREG_TEST_1_PARAMETER    ( ( void * ) 0x12345678 )
-#define mainREG_TEST_2_PARAMETER    ( ( void * ) 0x87654321 )
-#define mainREG_TEST_PRIORITY       ( tskIDLE_PRIORITY + 1)
-static void stabilityMonitorTask(void *pvParameters);
-static void loadMonitorTask(void *pvParameters);
-static void pollingSwitchsTask(void *pvParameters);
-void PRVGADraw_Task(void *pvParameters );
+volatile double frequency = 0;
+volatile double old_frequency = 0;
+volatile double roc_frequency = 0;
 
-#define Timer_Reset_Task_P      (tskIDLE_PRIORITY+1)
-TimerHandle_t timer, timer2, stabilityTaskHandle, loadMonitorTaskHandle, pollingSwitchsTaskHandle,PRVGADraw;
-TaskHandle_t Timer_Reset1;
-
-double frequency = 0;
-double old_frequency = 0;
-double roc_frequency = 0;
-
-volatile int timer500_flag = 0;
-int stability_flag = 1;
 int loads_active_flag = 0;
 int load_state[] = {1,1,1,1,1};
 
-
-
-QueueHandle_t stabilityTaskQueue, loadMonitorTaskQueue;
-
+uint8_t timer500_flag = 0;
+uint8_t freq_update = 1;
+uint8_t stability_flag = 1;
+uint8_t timer_reset = 0;
+uint8_t maintenance_flag = 0;
 
 void freq_relay_isr(){
-//	static TickType_t last_tick = 0;
-//	TickType_t current_tick = xTaskGetTickCountFromISR();
-//	TickType_t delta_ticks = current_tick - last_tick;
-//	last_tick = current_tick;
-//
-//	// Convert to milliseconds (assuming configTICK_RATE_HZ is 1000)
-//	uint32_t interval_ms = delta_ticks;
-//
-//	// Print or store the interval
-//	printf("Time between interrupts: %lu ms\n", interval_ms);
-
-	// declare variables
 	unsigned int samples = IORD(FREQUENCY_ANALYSER_BASE, 0);
-	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    old_frequency = frequency;
+    frequency = 16000.0 / (double)samples;
+    roc_frequency = ((frequency - old_frequency) / samples) * 16000.0;
+	roc_frequency = roc_frequency < 0 ? roc_frequency * -1 : roc_frequency;
 
-    // Send the data to the task
-    xQueueSendFromISR(stabilityTaskQueue, &samples, &xHigherPriorityTaskWoken);
-
-    // Perform a context switch if needed
-    portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+    xQueueSendFromISR(stabilityTaskQueue, &frequency, pdFALSE);
+    xQueueSendToBackFromISR( Q_freq_data, &frequency, pdFALSE );
 	return;
 }
 
-void Timer_Reset_Task(void *pvParameters ){ //reset timer if any of the push button is pressed
-	while(1){
-		if (IORD_ALTERA_AVALON_PIO_DATA(PUSH_BUTTON_BASE) != 0x7){
-			xTimerReset( timer, 10 );
-		}
-
+void button_isr() {
+	if (maintenance_flag == 1) {
+		maintenance_flag = 0;
+	    IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0x11111111);
+	}else {
+		maintenance_flag = 1;
+	    IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0x88888888);
 	}
+	IORD_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE);
+	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE, 0x7);
+	return;
 }
 
-
-void vTimerCallback(xTimerHandle t_timer){ //Timer flashes green LEDs
-	timer500_flag = 1;
-	IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0xFF^IORD_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE));
-}
-
-/*
- * Create the demo tasks then start the scheduler.
- */
-int main(void)
-{
-
-	Q_freq_data = xQueueCreate( 100, sizeof(double) );
-	/*Interrupts*/
-	alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_isr);
-
-	/* Create Tasks */
-	xTaskCreate(stabilityMonitorTask, "Rreg1", configMINIMAL_STACK_SIZE, mainREG_TEST_1_PARAMETER, 5, &stabilityTaskHandle);
-	xTaskCreate(loadMonitorTask, "Rreg2", configMINIMAL_STACK_SIZE, mainREG_TEST_2_PARAMETER, 4, &loadMonitorTaskHandle);
-	xTaskCreate(pollingSwitchsTask, "Rreg3", configMINIMAL_STACK_SIZE, mainREG_TEST_2_PARAMETER, 3, &pollingSwitchsTaskHandle);
-
-	xTaskCreate( PRVGADraw_Task, "DrawTsk", configMINIMAL_STACK_SIZE, NULL, PRVGADraw_Task_P, &PRVGADraw );
-
-	stabilityTaskQueue = xQueueCreate(5, sizeof(double));
-	loadMonitorTaskQueue = xQueueCreate(5, sizeof(int));
-	// everytime the timer reaches 500ms it call vTimerCallback
-	// crate timer
-	timer = xTimerCreate("500ms timer", 500, pdTRUE, NULL, vTimerCallback);
-
-
-	xTaskCreate( Timer_Reset_Task, "0", configMINIMAL_STACK_SIZE, NULL, Timer_Reset_Task_P, &Timer_Reset1 );
-
-	/*Start scheduler */
-	vTaskStartScheduler();
-
-	/* Will only reach here if there is insufficient heap available to start
-	 the scheduler. */
-	for (;;);
-}
-static void stabilityMonitorTask(void *pvParameters)
-{
-	while(1){
-		int samples;
-        // Wait for data from the ISR
-        if (xQueueReceive(stabilityTaskQueue, &samples, portMAX_DELAY)) {
-        	//printf("%i", &samples);
-            // Process the received value
-            old_frequency = frequency;
-            frequency = 16000.0 / (double)samples;
-            roc_frequency = ((frequency - old_frequency) / samples) * 16000.0;
-            xQueueSendToBackFromISR( Q_freq_data, &frequency, pdFALSE );
-        	//printf("ROC: %f milliseconds, Old: %f, New:%f \n", roc_frequency,old_frequency,frequency);
-        	if (frequency >= 51 || frequency < 50) {
+static void stabilityMonitorTask(void *pvParameters) {
+	uint8_t prev = stability_flag;
+	while(1) {
+        if (xQueueReceive(stabilityTaskQueue, &frequency, portMAX_DELAY)) {
+        	if (frequency > 51 || frequency < FREQ_TH || roc_frequency > ROC_TH) {
         		stability_flag = 0;
-        		xQueueSend(loadMonitorTaskQueue, &stability_flag, portMAX_DELAY);
-        		xTaskNotifyGive(loadMonitorTaskHandle);
-        		//printf("%f\n", frequency);
-        		//printf("unstable\n");
         	} else {
         		stability_flag = 1;
-        		//printf("stable: %f\n", frequency);
         	}
+        	if (stability_flag != prev){
+        		xQueueSend(loadMonitorTaskQueue, &stability_flag, pdFALSE);
+        		xTaskNotifyGive(loadMonitorTaskHandle);
+        	}
+        	prev = stability_flag;
         }
 	}
 }
-static void loadMonitorTask(void *pvParameters)
-{
-	while (1)
-	{
+
+static void loadMonitorTask(void *pvParameters) {
+	while (1) {
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 
-		if (xQueueReceive(loadMonitorTaskQueue, &stability_flag, portMAX_DELAY)) {
-		    // Explicitly start the timer
+		if (xQueueReceive(loadMonitorTaskQueue, &stability_flag, pdFALSE)) {
 		    if (xTimerStart(timer, 0) != pdPASS) {
-		        // If the timer fails to start
 		        printf("Cannot start timer\n");
 		        return;
 		    }
 
 			if (timer500_flag && !stability_flag) {
 				for (int i = 4; i >= 0; i--) {
-				//	printf("checking load: %i it is state %i\n",i,load_state[i]);
 					if (load_state[i] == 1) {
 						load_state[i] = 0;
 						loads_active_flag = 1;
-						printf("%i load deattached \n", i);
 						break;
 					}
 				}
-			//	printf("Load Monitor Task\n");
 				timer500_flag = 0;
 				vTaskDelay(1000);
 			}
 			if (timer500_flag && stability_flag) {
 				for (int i = 0; i <= 4; i++) {
-				//	printf("checking load (stable): %i it is state %i\n",i,load_state[i]);
 					if (load_state[i] == 0) {
 						load_state[i] = 1;
 						loads_active_flag = 1;
@@ -218,22 +161,16 @@ static void loadMonitorTask(void *pvParameters)
 	}
 }
 
-
 static void pollingSwitchsTask(void *pvParameters) {
-	printf("In Switchs task");
 	unsigned int uiSwitchValue = 0;
-	while (1)
-	{
-	    // read the value of the switch and store to uiSwitchValue
+	while (1) {
 	    uiSwitchValue = IORD_ALTERA_AVALON_PIO_DATA(SLIDE_SWITCH_BASE);
-	    // write the value of the switches to the red LEDs
 	    IOWR_ALTERA_AVALON_PIO_DATA(RED_LEDS_BASE, uiSwitchValue);
 	}
 }
 
-void PRVGADraw_Task(void *pvParameters ) {
-	printf("In VGA Task");
-	//initialize VGA controllers
+static void PRVGADraw_Task(void *pvParameters ) {
+	//printf("In VGA Task\n");
 	alt_up_pixel_buffer_dma_dev *pixel_buf;
 	pixel_buf = alt_up_pixel_buffer_dma_open_dev(VIDEO_PIXEL_BUFFER_DMA_NAME);
 	if(pixel_buf == NULL){
@@ -248,12 +185,10 @@ void PRVGADraw_Task(void *pvParameters ) {
 	}
 	alt_up_char_buffer_clear(char_buf);
 
-
-
 	//Set up plot axes
 	alt_up_pixel_buffer_dma_draw_hline(pixel_buf, 100, 590, 200, ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
 	alt_up_pixel_buffer_dma_draw_hline(pixel_buf, 100, 590, 300, ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
-	alt_up_pixel_buffer_dma_draw_vline(pixel_buf, 100, 50, 200, ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
+	alt_up_pixel_buffer_dma_draw_vline(pixel_buf, 100, 50, 200,  ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
 	alt_up_pixel_buffer_dma_draw_vline(pixel_buf, 100, 220, 300, ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
 
 	alt_up_char_buffer_string(char_buf, "Frequency(Hz)", 4, 4);
@@ -266,22 +201,17 @@ void PRVGADraw_Task(void *pvParameters ) {
 	alt_up_char_buffer_string(char_buf, "60", 10, 28);
 	alt_up_char_buffer_string(char_buf, "30", 10, 30);
 	alt_up_char_buffer_string(char_buf, "0", 10, 32);
+	alt_up_char_buffer_string(char_buf, "0", 10, 32);
 	alt_up_char_buffer_string(char_buf, "-30", 9, 34);
 	alt_up_char_buffer_string(char_buf, "-60", 9, 36);
-
 
 	double freq[100], dfreq[100];
 	int i = 99, j = 0;
 	Line line_freq, line_roc;
 
 	while(1){
-
-		//receive frequency data from queue
 		while(uxQueueMessagesWaiting( Q_freq_data ) != 0){
 			xQueueReceive( Q_freq_data, freq+i, 0 );
-
-			//calculate frequency RoC
-
 			if(i==0){
 				dfreq[0] = (freq[0]-freq[99]) * 2.0 * freq[0] * freq[99] / (freq[0]+freq[99]);
 			}
@@ -292,19 +222,13 @@ void PRVGADraw_Task(void *pvParameters ) {
 			if (dfreq[i] > 100.0){
 				dfreq[i] = 100.0;
 			}
-
-
-			i =	++i%100; //point to the next data (oldest) to be overwritten
-
+			i =	++i % 100;
 		}
-
-		//clear old graph to draw new graph
 		alt_up_pixel_buffer_dma_draw_box(pixel_buf, 101, 0, 639, 199, 0, 0);
 		alt_up_pixel_buffer_dma_draw_box(pixel_buf, 101, 201, 639, 299, 0, 0);
 
-		for(j=0;j<99;++j){ //i here points to the oldest data, j loops through all the data to be drawn on VGA
+		for(j=0;j<99;++j){
 			if (((int)(freq[(i+j)%100]) > MIN_FREQ) && ((int)(freq[(i+j+1)%100]) > MIN_FREQ)){
-				//Calculate coordinates of the two data points to draw a line in between
 				//Frequency plot
 				line_freq.x1 = FREQPLT_ORI_X + FREQPLT_GRID_SIZE_X * j;
 				line_freq.y1 = (int)(FREQPLT_ORI_Y - FREQPLT_FREQ_RES * (freq[(i+j)%100] - MIN_FREQ));
@@ -319,13 +243,94 @@ void PRVGADraw_Task(void *pvParameters ) {
 				line_roc.x2 = ROCPLT_ORI_X + ROCPLT_GRID_SIZE_X * (j + 1);
 				line_roc.y2 = (int)(ROCPLT_ORI_Y - ROCPLT_ROC_RES * dfreq[(i+j+1)%100]);
 
-				//Draw
-				alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_freq.x1, line_freq.y1, line_freq.x2, line_freq.y2, 0x3ff << 0, 0);
-				alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_roc.x1, line_roc.y1, line_roc.x2, line_roc.y2, 0x3ff << 0, 0);
+				if (stability_flag == 1) {
+					alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_freq.x1, line_freq.y1, line_freq.x2, line_freq.y2, 0x3ff << 0, 0);
+					alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_roc.x1, line_roc.y1, line_roc.x2, line_roc.y2, 0x3ff << 0, 0);
+				} else {
+					alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_freq.x1, line_freq.y1, line_freq.x2, line_freq.y2, 0xF800 << 0, 0);
+					alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_roc.x1, line_roc.y1, line_roc.x2, line_roc.y2, 0xF800 << 0, 0);
+
+				}
+				//(pixel_buf, line_freq.x1, line_freq.y1, line_freq.x2, line_freq.y2, 0x3ff << 0, 0);
+				//alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_roc.x1, line_roc.y1, line_roc.x2, line_roc.y2, 0x3ff << 0, 0);
 			}
 		}
-		vTaskDelay(10);
 
+		char roc_th_str[20], rfreq_th_str[20], stability_str[20];
+		sprintf(roc_th_str, "FREQUENCY: %.4f", frequency);
+		sprintf(rfreq_th_str, "ROC: %.4f", roc_frequency);
+		alt_up_char_buffer_string(char_buf, roc_th_str, 10, 40);
+		alt_up_char_buffer_string(char_buf, rfreq_th_str, 10, 42);
+
+		sprintf(roc_th_str, "ROC_TH: %.4f", ROC_TH);
+		sprintf(rfreq_th_str, "FREQ_TH: %.1f", FREQ_TH);
+
+		alt_up_char_buffer_string(char_buf, roc_th_str, 10, 46);
+		alt_up_char_buffer_string(char_buf, rfreq_th_str, 10, 48);
+		alt_up_char_buffer_string(char_buf, "Stability:    ", 35, 40);
+		alt_up_char_buffer_string(char_buf, "Mode:", 35, 46);
+
+		if (stability_flag == 1) {
+			sprintf(stability_str, "Stable    ");
+		} else {
+			sprintf(stability_str, "Not Stable");
+		}
+		alt_up_char_buffer_string(char_buf,stability_str ,35,42);
+		if (maintenance_flag == 1){
+			sprintf(stability_str, "Maintenance");
+		} else {
+			sprintf(stability_str, "Normal     ");
+		}
+		alt_up_char_buffer_string(char_buf,stability_str ,35,48);
+
+		vTaskDelay(10);
 	}
 }
 
+static void Timer_Reset_Task(void *pvParameters ){
+	while(1){
+		if (timer_reset == 1){
+			printf("In reset task\n");
+			xTimerReset( timer, 10 );
+			timer_reset = 0;
+		}
+	}
+}
+void vTimerCallback(xTimerHandle t_timer){
+	timer500_flag = 1;
+}
+
+static void LCD_task(void *pvParameters) {
+	FILE *lcd;
+	lcd = fopen(CHARACTER_LCD_NAME, "w");
+	while (1) {
+	    fprintf(lcd, "%c%s", ESC, CLEAR_LCD_STRING);
+	    fprintf(lcd, "ROC frequency\n%f Hz\n", roc_frequency);
+		printf("freq:      %f Hz\n", frequency);
+		printf("prev_freq: %f Hz\n", old_frequency);
+		printf("roc:       %f Hz\n", roc_frequency);
+		printf("stability flag: %d\n", stability_flag);
+		vTaskDelay(100);
+	}
+}
+
+int main(void) {
+	Q_freq_data = xQueueCreate( 100, sizeof(double) );
+	timer = xTimerCreate("Timer Name", 500, pdTRUE, NULL, vTimerCallback);
+	alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_isr);
+	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE, 0x7);
+	IOWR_ALTERA_AVALON_PIO_IRQ_MASK(PUSH_BUTTON_BASE, 0x7);
+	alt_irq_register(PUSH_BUTTON_IRQ,0, button_isr);
+
+	stabilityTaskQueue = xQueueCreate(5, sizeof(double));
+	loadMonitorTaskQueue = xQueueCreate(5, sizeof(int));
+
+	xTaskCreate( stabilityMonitorTask, "stabilityMonitorTask", TASK_STACKSIZE, NULL, FREQ_ANALYSER_PRIORITY, &stabilityTaskHandle);
+	xTaskCreate( loadMonitorTask, "loadMonitorTask", TASK_STACKSIZE, NULL, LOAD_MONITOR_PRIORITY, &loadMonitorTaskHandle);
+	xTaskCreate( pollingSwitchsTask, "pollingSwitchsTask", TASK_STACKSIZE, NULL, SWITCHES_PRIORITY, &pollingSwitchsTaskHandle);
+	xTaskCreate( LCD_task, "LCD_task", TASK_STACKSIZE, NULL, DISPLAY_PRIORITY, &LCD_handle);
+	xTaskCreate( PRVGADraw_Task, "DrawTsk", TASK_STACKSIZE, NULL, DISPLAY_PRIORITY, &PRVGADraw );
+	xTaskCreate( Timer_Reset_Task, "0", TASK_STACKSIZE, NULL, TIMER_RESET_PRIORITY, &Timer_Reset );
+	vTaskStartScheduler();
+	while (1);
+}
