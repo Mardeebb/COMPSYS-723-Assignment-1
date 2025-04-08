@@ -75,9 +75,11 @@ volatile double old_frequency = 0;
 volatile double roc_frequency = 0;
 
 int loads_active_flag = 0;
-int load_state[] = {1,1,1,1,1};
+int load_state_N[] = {1,1,1,1,1};
+int load_state_M[] = {1,1,1,1,1};
 
 volatile uint8_t timer500_flag = 1;
+volatile uint8_t timer_reset_flag = 1;
 uint8_t freq_update = 1;
 uint8_t stability_flag = 1;
 uint8_t maintenance_flag = 0;
@@ -131,49 +133,44 @@ static void loadMonitorTask(void *pvParameters) {
     while (1) {
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
         if (xQueueReceive(loadMonitorTaskQueue, &received_stability, portMAX_DELAY) && maintenance_flag == 0) {
-        	//printf("%i\n", received_stability);
             if (timer500_flag && !received_stability) {
+                timer500_flag = 0;
                 for (int i = 4; i >= 0; i--) {
-                    printf("checking load: %i it is state %i\n",i,load_state[i]);
-                    if (load_state[i] == 1) {
-                        load_state[i] = 0;
-                        loads_active_flag = 1;
+                    printf("checking load (unstable): %i it is state %i\n",i,load_state_N[i]);
+                    if (load_state_N[i] == 1) {
+                    	load_state_N[i] = 0;
+                        printf("%i load detached \n", i);
                         break;
                     }
                 }
             }
             if (timer500_flag && received_stability) {
+                timer500_flag = 0;
                 for (int i = 0; i <= 4; i++) {
-                    printf("checking load (stable): %i it is state %i\n",i,load_state[i]);
-                    if (load_state[i] == 0) {
-                        load_state[i] = 1;
-                        loads_active_flag = 1;
-                       // printf("%i load attached \n", i);
+                    printf("checking load (stable): %i it is state %i\n",i,load_state_N[i]);
+                    if (load_state_N[i] == 0) {
+                    	load_state_N[i] = 1;
+                        printf("%i load attached \n", i);
                         break;
                     }
                 }
             }
+            led_output = 0;
             for (int i = 0; i < 5; i++) {
-				led_output |= (load_state[i] << i);
+				led_output |= (load_state_N[i] << i);
 			}
 			IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, led_output);
         }
-        if (maintenance_flag == 1) {
+        if (maintenance_flag == 1 && timer500_flag) {
           unsigned int uiSwitchValue = IORD_ALTERA_AVALON_PIO_DATA(SLIDE_SWITCH_BASE);
           for (int i = 0; i < 5; i++) {
-              load_state[i] = (uiSwitchValue >> i) & 0x1;
+        	  load_state_M[i] = (uiSwitchValue >> i) & 0x1;
           }
+          led_output = 0;
           for (int i = 0; i < 5; i++) {
-				led_output |= (load_state[i] << i);
+				led_output |= (load_state_M[i] << i);
 			}
-			IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, led_output);
-        }
-        if (loads_active_flag) {
-            for (int i = 0; i < 5; i++) {
-                led_output |= (load_state[i] << i);
-            }
-            IOWR_ALTERA_AVALON_PIO_DATA(RED_LEDS_BASE, led_output);
-            loads_active_flag = 0;
+			IOWR_ALTERA_AVALON_PIO_DATA(RED_LEDS_BASE, led_output);
         }
         vTaskDelay(pdMS_TO_TICKS(50));
     }
@@ -185,7 +182,7 @@ static void pollingSwitchsTask(void *pvParameters) {
         uiSwitchValue = IORD_ALTERA_AVALON_PIO_DATA(SLIDE_SWITCH_BASE);
         if (maintenance_flag == 1){
 			for (int i = 0; i < 5; i++) {
-				load_state[i] = (uiSwitchValue >> i) & 0x1;
+				load_state_M[i] = (uiSwitchValue >> i) & 0x1;
 			}
         }
         //IOWR_ALTERA_AVALON_PIO_DATA(RED_LEDS_BASE, uiSwitchValue);
@@ -305,11 +302,19 @@ static void PRVGADraw_Task(void *pvParameters ) {
 
         alt_up_char_buffer_string(char_buf, "Load state: ", 35, 52);
         for (int i = 0; i < 5; i++) {
-          if (load_state[i] == 1) {
-            sprintf(bfr_c, "Load %d: ON ", i);
-          } else {
-            sprintf(bfr_c, "Load %d: OFF", i);
-          }
+        	if (maintenance_flag == 0){
+			  if (load_state_N[i] == 1) {
+				sprintf(bfr_c, "Load %d: ON ", i);
+			  } else {
+				sprintf(bfr_c, "Load %d: OFF", i);
+			  }
+        	} else {
+        		if (load_state_M[i] == 1) {
+					sprintf(bfr_c, "Load %d: ON ", i);
+				} else {
+					sprintf(bfr_c, "Load %d: OFF", i);
+				}
+        	}
           alt_up_char_buffer_string(char_buf, bfr_c, 5 + i*15, 54);
         }
 
@@ -331,19 +336,19 @@ static void LCD_task(void *pvParameters) {
 	}
 }
 
-void Timer_Reset_Task(void *pvParameters ){ //reset timer if any of the push button is pressed
+void Timer_Reset_Task(void *pvParameters ){
 	while(1){
-		if (timer500_flag == 1){
+		if (timer_reset_flag == 1){
 			xTimerReset( timer, 10 );
-			timer500_flag = 0;
+			timer_reset_flag = 0;
 		}
 
 	}
 }
 
 
-void vTimerCallback(xTimerHandle t_timer){ //Timer flashes green LEDs
-	//IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0xFF^IORD_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE));
+void vTimerCallback(xTimerHandle t_timer){
+	timer_reset_flag = 1;
 	timer500_flag = 1;
 }
 
