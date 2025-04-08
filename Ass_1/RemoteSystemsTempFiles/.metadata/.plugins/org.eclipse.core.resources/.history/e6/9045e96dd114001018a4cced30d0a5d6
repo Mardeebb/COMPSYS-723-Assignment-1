@@ -97,7 +97,7 @@ void button_isr() {
         IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0x00000000);
     } else {
         maintenance_flag = 1;
-        IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0xEEEEEEEE); // E -> M -> Maintenance
+        IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0xEEEEEEEE);
     }
     IORD_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE);
     IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE, 0x7);
@@ -191,7 +191,7 @@ static void pollingSwitchsTask(void *pvParameters) {
 }
 
 static void PRVGADraw_Task(void *pvParameters ) {
-  char bfr_a[30], bfr_b[30], bfr_c[30];
+  char bfr_a[20], bfr_b[20], bfr_c[20];
   alt_up_pixel_buffer_dma_dev *pixel_buf;
   pixel_buf = alt_up_pixel_buffer_dma_open_dev(VIDEO_PIXEL_BUFFER_DMA_NAME);
   if (pixel_buf == NULL) {
@@ -275,15 +275,15 @@ static void PRVGADraw_Task(void *pvParameters ) {
             }
         }
 
-        sprintf(bfr_a, "FREQUENCY: %.4f Hz     ", frequency);
-        sprintf(bfr_b, "ROC:       %.4f Hz/s   ", roc_frequency);
-        alt_up_char_buffer_string(char_buf, bfr_a, 5, 40);
-        alt_up_char_buffer_string(char_buf, bfr_b, 5, 42);
+        sprintf(bfr_a, "FREQUENCY: %.4f", frequency);
+        sprintf(bfr_b, "ROC: %.4f", roc_frequency);
+        alt_up_char_buffer_string(char_buf, bfr_a, 10, 40);
+        alt_up_char_buffer_string(char_buf, bfr_b, 10, 42);
 
-        sprintf(bfr_a, "FREQ_TH: %.1f Hz  ", FREQ_TH);
-        sprintf(bfr_b, "ROC_TH:  %.4f Hz/s", ROC_TH);
-        alt_up_char_buffer_string(char_buf, bfr_a, 5, 46);
-        alt_up_char_buffer_string(char_buf, bfr_b, 5, 48);
+        sprintf(bfr_a, "ROC_TH: %.4f", ROC_TH);
+        sprintf(bfr_b, "FREQ_TH: %.1f", FREQ_TH);
+        alt_up_char_buffer_string(char_buf, bfr_a, 10, 46);
+        alt_up_char_buffer_string(char_buf, bfr_b, 10, 48);
 
         alt_up_char_buffer_string(char_buf, "Stability:    ", 35, 40);
         alt_up_char_buffer_string(char_buf, "Mode:", 35, 46);

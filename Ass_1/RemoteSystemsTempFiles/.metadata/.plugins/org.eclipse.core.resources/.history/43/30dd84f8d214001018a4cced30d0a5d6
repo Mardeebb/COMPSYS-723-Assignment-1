@@ -97,7 +97,7 @@ void button_isr() {
         IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0x00000000);
     } else {
         maintenance_flag = 1;
-        IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0xEEEEEEEE); // E -> M -> Maintenance
+        IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0xEEEEEEEE); // E -> M -> maintenance
     }
     IORD_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE);
     IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE, 0x7);
