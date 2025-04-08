@@ -1,103 +1,54 @@
+/* This example shows how to use the software timer in FreeRTOS
+ * 1 Hz timer time up causes the call back function to execute,
+ * which in turn flashes the green LED. If any of the push button is pressed,
+ * the timer resets and has to wait for a new second for the LED to flash.
+ */
 
 #include <stdio.h>
-#include <unistd.h>
-#include <stddef.h>
-#include <string.h>
-
-#include "sys/alt_irq.h"
-#include "io.h"
-#include <system.h>
-#include <altera_avalon_pio_regs.h>
-
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/queue.h"
+#include "system.h"
+#include "altera_avalon_pio_regs.h"
+#include "FreeRTOS/FreeRTOS.h"
+#include "FreeRTOS/task.h"
 #include "FreeRTOS/timers.h"
 
-#define ESC 27
-#define CLEAR_LCD_STRING "[2J"
 
-#define   TASK_STACKSIZE       2048
-
-#define LCD_PRIORITY       		11
-#define SWITCHES_PRIORITY       12
-#define LED_PRIORITY       		13
-#define TIMER_RESET_PRIORITY    14
-#define LOAD_MONITOR_PRIORITY   15
-#define FREQ_ANALYSER_PRIORITY  16
-
-static void freq_analyser_task(void *pvParameters);
-static void LCD_task(void *pvParameters);
-void Timer_Reset_Task(void *pvParameters);
-
+#define Timer_Reset_Task_P      (tskIDLE_PRIORITY+1)
 TimerHandle_t timer;
 TaskHandle_t Timer_Reset;
 
-volatile double freq;
-volatile double prev_freq = 0;
-volatile double roc = 0;
 
-uint8_t freq_update = 1;
-uint8_t stability_flag = 1;
-uint8_t timer_reset = 0;
-
-void freq_relay_irq(){
-	prev_freq = freq;
-	unsigned int temp = IORD(FREQUENCY_ANALYSER_BASE, 0);
-	freq = 16000/(double)temp;
-	roc = (freq - prev_freq) / temp;
-	roc = roc < 0 ? roc * -1 : roc;
-	freq_update = 1;
-	return;
-}
-
-void Timer_Reset_Task(void *pvParameters ){
+void Timer_Reset_Task(void *pvParameters ){ //reset timer if any of the push button is pressed
 	while(1){
-		if (timer_reset == 1){
+		if (IORD_ALTERA_AVALON_PIO_DATA(PUSH_BUTTON_BASE) != 0x7){
 			xTimerReset( timer, 10 );
-			timer_reset = 0;
 		}
+
 	}
 }
-void vTimerCallback(xTimerHandle t_timer){
-	int LEDs = stability_flag == 1 ? 0xFF : 0x00;
-	IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, LEDs);
+
+
+void vTimerCallback(xTimerHandle t_timer){ //Timer flashes green LEDs
+	IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0xFF^IORD_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE));
 }
 
-int main(void) {
-	timer = xTimerCreate("Timer Name", 5, pdTRUE, NULL, vTimerCallback);
-	alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_irq);
+
+int main()
+{
+
+
 	IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0x55);
 
-	xTaskCreate( freq_analyser_task, "freq_analyser_task", TASK_STACKSIZE, NULL, FREQ_ANALYSER_PRIORITY, NULL);
-	xTaskCreate( LCD_task, "LCD_task", TASK_STACKSIZE, NULL, LCD_PRIORITY, NULL);
-	xTaskCreate( Timer_Reset_Task, "0", TASK_STACKSIZE, NULL, TIMER_RESET_PRIORITY, &Timer_Reset );
+	timer = xTimerCreate("Timer Name", 1000, pdTRUE, NULL, vTimerCallback);
+
+	if (xTimerStart(timer, 0) != pdPASS){
+		printf("Cannot start timer");
+	}
+	xTaskCreate( Timer_Reset_Task, "0", configMINIMAL_STACK_SIZE, NULL, Timer_Reset_Task_P, &Timer_Reset );
+
 	vTaskStartScheduler();
-	while (1);
-}
+	while(1){
 
-static void freq_analyser_task(void *pvParameters) {
-	while (1) {
-	  while(freq_update == 0);
-	  if (roc >= 0.0005 || (freq < 49 || freq > 51)){
-		  stability_flag = 0;
-	  } else {
-		  stability_flag = 1;
-	  }
-	  freq_update = 0;
-	  timer_reset = 1;
 	}
-}
 
-static void LCD_task(void *pvParameters) {
-	FILE *lcd;
-	lcd = fopen(CHARACTER_LCD_NAME, "w");
-	while (1) {
-		vTaskDelay(100);
-	    fprintf(lcd, "%c%s", ESC, CLEAR_LCD_STRING);
-	    fprintf(lcd, "ROC frequency\n%f Hz\n", roc);
-		printf("freq:     %f Hz\nprev_freq: %f Hz\nroc:      %f Hz\n", freq, prev_freq, roc);
-		printf("\nstability flag: %d\n", stability_flag);
-	}
+  return 0;
 }
-
