@@ -46,8 +46,8 @@
 #define ROCPLT_ROC_RES 0.5		//number of pixels per Hz/s (y axis scale)
 
 #define MIN_FREQ 45.0
-#define ROC_TH 8.0
-#define FREQ_TH 50.0
+#define ROC_TH 5.0
+#define RFREQ_TH 50.0
 
 static void stabilityMonitorTask(void *pvParameters);
 static void LCD_task(void *pvParameters);
@@ -109,19 +109,15 @@ void button_isr() {
 }
 
 static void stabilityMonitorTask(void *pvParameters) {
-	uint8_t prev = stability_flag;
 	while(1) {
         if (xQueueReceive(stabilityTaskQueue, &frequency, portMAX_DELAY)) {
-        	if (frequency > 51 || frequency < FREQ_TH || roc_frequency > ROC_TH) {
+        	if (frequency > 51 || frequency < 50 || roc_frequency > 5) {
         		stability_flag = 0;
+        		xQueueSend(loadMonitorTaskQueue, &stability_flag, portMAX_DELAY);
+        		xTaskNotifyGive(loadMonitorTaskHandle);
         	} else {
         		stability_flag = 1;
         	}
-        	if (stability_flag != prev){
-        		xQueueSend(loadMonitorTaskQueue, &stability_flag, pdFALSE);
-        		xTaskNotifyGive(loadMonitorTaskHandle);
-        	}
-        	prev = stability_flag;
         }
 	}
 }
@@ -130,7 +126,7 @@ static void loadMonitorTask(void *pvParameters) {
 	while (1) {
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 
-		if (xQueueReceive(loadMonitorTaskQueue, &stability_flag, pdFALSE)) {
+		if (xQueueReceive(loadMonitorTaskQueue, &stability_flag, portMAX_DELAY)) {
 		    if (xTimerStart(timer, 0) != pdPASS) {
 		        printf("Cannot start timer\n");
 		        return;
@@ -256,33 +252,20 @@ static void PRVGADraw_Task(void *pvParameters ) {
 			}
 		}
 
-		char roc_th_str[20], rfreq_th_str[20], stability_str[20];
-		sprintf(roc_th_str, "FREQUENCY: %.4f", frequency);
-		sprintf(rfreq_th_str, "ROC: %.4f", roc_frequency);
-		alt_up_char_buffer_string(char_buf, roc_th_str, 10, 40);
-		alt_up_char_buffer_string(char_buf, rfreq_th_str, 10, 42);
-
+		char roc_th_str[20], rfreq_th_str[20];
 		sprintf(roc_th_str, "ROC_TH: %.4f", ROC_TH);
-		sprintf(rfreq_th_str, "FREQ_TH: %.1f", FREQ_TH);
+		sprintf(rfreq_th_str, "RFREQ_TH: %.1f", RFREQ_TH);
 
-		alt_up_char_buffer_string(char_buf, roc_th_str, 10, 46);
-		alt_up_char_buffer_string(char_buf, rfreq_th_str, 10, 48);
+		alt_up_char_buffer_string(char_buf, roc_th_str, 10, 40);
+		alt_up_char_buffer_string(char_buf, rfreq_th_str, 10, 42); 
 		alt_up_char_buffer_string(char_buf, "Stability:    ", 35, 40);
-		alt_up_char_buffer_string(char_buf, "Mode:", 35, 46);
 
 		if (stability_flag == 1) {
-			sprintf(stability_str, "Stable    ");
+			alt_up_char_buffer_string(char_buf, "    Stable	   ", 30, 42);
+			alt_up_char_buffer_set_color(char_buf, 0xF800);
 		} else {
-			sprintf(stability_str, "Not Stable");
+			alt_up_char_buffer_string(char_buf, " Not Stable   ", 30, 42);
 		}
-		alt_up_char_buffer_string(char_buf,stability_str ,35,42);
-		if (maintenance_flag == 1){
-			sprintf(stability_str, "Maintenance");
-		} else {
-			sprintf(stability_str, "Normal     ");
-		}
-		alt_up_char_buffer_string(char_buf,stability_str ,35,48);
-
 		vTaskDelay(10);
 	}
 }

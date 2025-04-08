@@ -46,7 +46,7 @@
 #define ROCPLT_ROC_RES 0.5		//number of pixels per Hz/s (y axis scale)
 
 #define MIN_FREQ 45.0
-#define ROC_TH 8.0
+#define ROC_TH 7.5
 #define FREQ_TH 50.0
 
 static void stabilityMonitorTask(void *pvParameters);
@@ -257,32 +257,19 @@ static void PRVGADraw_Task(void *pvParameters ) {
 		}
 
 		char roc_th_str[20], rfreq_th_str[20], stability_str[20];
-		sprintf(roc_th_str, "FREQUENCY: %.4f", frequency);
-		sprintf(rfreq_th_str, "ROC: %.4f", roc_frequency);
-		alt_up_char_buffer_string(char_buf, roc_th_str, 10, 40);
-		alt_up_char_buffer_string(char_buf, rfreq_th_str, 10, 42);
-
 		sprintf(roc_th_str, "ROC_TH: %.4f", ROC_TH);
-		sprintf(rfreq_th_str, "FREQ_TH: %.1f", FREQ_TH);
+		sprintf(rfreq_th_str, "RFREQ_TH: %.1f", FREQ_TH);
 
-		alt_up_char_buffer_string(char_buf, roc_th_str, 10, 46);
-		alt_up_char_buffer_string(char_buf, rfreq_th_str, 10, 48);
+		alt_up_char_buffer_string(char_buf, roc_th_str, 10, 40);
+		alt_up_char_buffer_string(char_buf, rfreq_th_str, 10, 42); 
 		alt_up_char_buffer_string(char_buf, "Stability:    ", 35, 40);
-		alt_up_char_buffer_string(char_buf, "Mode:", 35, 46);
 
 		if (stability_flag == 1) {
-			sprintf(stability_str, "Stable    ");
+			sprintf(stability_str, " Stable	   ");
 		} else {
-			sprintf(stability_str, "Not Stable");
+			sprintf(stability_str, " Not Stable	   ");
 		}
 		alt_up_char_buffer_string(char_buf,stability_str ,35,42);
-		if (maintenance_flag == 1){
-			sprintf(stability_str, "Maintenance");
-		} else {
-			sprintf(stability_str, "Normal     ");
-		}
-		alt_up_char_buffer_string(char_buf,stability_str ,35,48);
-
 		vTaskDelay(10);
 	}
 }

@@ -46,7 +46,7 @@
 #define ROCPLT_ROC_RES 0.5		//number of pixels per Hz/s (y axis scale)
 
 #define MIN_FREQ 45.0
-#define ROC_TH 8.0
+#define ROC_TH 7.5
 #define FREQ_TH 50.0
 
 static void stabilityMonitorTask(void *pvParameters);
@@ -271,9 +271,9 @@ static void PRVGADraw_Task(void *pvParameters ) {
 		alt_up_char_buffer_string(char_buf, "Mode:", 35, 46);
 
 		if (stability_flag == 1) {
-			sprintf(stability_str, "Stable    ");
+			sprintf(stability_str, "Stable	     ");
 		} else {
-			sprintf(stability_str, "Not Stable");
+			sprintf(stability_str, "Not Stable	     ");
 		}
 		alt_up_char_buffer_string(char_buf,stability_str ,35,42);
 		if (maintenance_flag == 1){
