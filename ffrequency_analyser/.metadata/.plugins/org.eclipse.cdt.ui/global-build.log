@@ -1,0 +1,295 @@
+14:10:56 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling FreeRTOS/croutine.c to obj/default/FreeRTOS/croutine.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/FreeRTOS/croutine.o FreeRTOS/croutine.c
+FreeRTOS/croutine.c: In function 'xCoRoutineCreate':
+FreeRTOS/croutine.c:148:29: warning: implicit declaration of function 'pvPortMalloc' [-Wimplicit-function-declaration]
+  pxCoRoutine = ( CRCB_t * ) pvPortMalloc( sizeof( CRCB_t ) );
+                             ^
+Info: Compiling FreeRTOS/event_groups.c to obj/default/FreeRTOS/event_groups.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/FreeRTOS/event_groups.o FreeRTOS/event_groups.c
+FreeRTOS/event_groups.c: In function 'xEventGroupCreate':
+FreeRTOS/event_groups.c:142:16: warning: implicit declaration of function 'pvPortMalloc' [-Wimplicit-function-declaration]
+  pxEventBits = pvPortMalloc( sizeof( EventGroup_t ) );
+                ^
+FreeRTOS/event_groups.c:142:14: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+  pxEventBits = pvPortMalloc( sizeof( EventGroup_t ) );
+              ^
+Info: Compiling FreeRTOS/heap.c to obj/default/FreeRTOS/heap.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/FreeRTOS/heap.o FreeRTOS/heap.c
+Info: Compiling FreeRTOS/list.c to obj/default/FreeRTOS/list.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/FreeRTOS/list.o FreeRTOS/list.c
+Info: Compiling FreeRTOS/port.c to obj/default/FreeRTOS/port.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/FreeRTOS/port.o FreeRTOS/port.c
+FreeRTOS/port.c:90:0: warning: "configTICK_RATE_HZ" redefined
+ #define configTICK_RATE_HZ 1000
+ ^
+In file included from FreeRTOS/FreeRTOS.h:98:0,
+                 from FreeRTOS/port.c:84:
+FreeRTOS/FreeRTOSConfig.h:97:0: note: this is the location of the previous definition
+ #define configTICK_RATE_HZ    ( ( portTickType ) 1000 )
+ ^
+FreeRTOS/port.c:91:0: warning: "configCPU_CLOCK_HZ" redefined
+ #define configCPU_CLOCK_HZ TIMER1MS_FREQ
+ ^
+In file included from FreeRTOS/FreeRTOS.h:98:0,
+                 from FreeRTOS/port.c:84:
+FreeRTOS/FreeRTOSConfig.h:98:0: note: this is the location of the previous definition
+ #define configCPU_CLOCK_HZ    ( ( unsigned long ) ALT_SYS_CLK ) 
+ ^
+FreeRTOS/port.c: In function 'vApplicationStackOverflowHook':
+FreeRTOS/port.c:96:2: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
+  printf("[free_rtos] Application stack overflow at task: %s\n", pcTaskName);
+  ^
+FreeRTOS/port.c:96:2: warning: incompatible implicit declaration of built-in function 'printf'
+FreeRTOS/port.c:96:2: note: include '<stdio.h>' or provide a declaration of 'printf'
+FreeRTOS/port.c: In function 'alt_irq_register':
+FreeRTOS/port.c:231:18: warning: variable 'status' set but not used [-Wunused-but-set-variable]
+  alt_irq_context status;
+                  ^
+Info: Compiling FreeRTOS/queue.c to obj/default/FreeRTOS/queue.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/FreeRTOS/queue.o FreeRTOS/queue.c
+FreeRTOS/queue.c: In function 'xQueueGenericCreate':
+FreeRTOS/queue.c:339:35: warning: implicit declaration of function 'pvPortMalloc' [-Wimplicit-function-declaration]
+  pcAllocatedBuffer = ( int8_t * ) pvPortMalloc( sizeof( Queue_t ) + xQueueSizeInBytes );
+                                   ^
+Info: Compiling FreeRTOS/tasks.c to obj/default/FreeRTOS/tasks.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/FreeRTOS/tasks.o FreeRTOS/tasks.c
+In file included from FreeRTOS/tasks.c:80:0:
+FreeRTOS/tasks.c: In function 'prvAllocateTCBAndStack':
+FreeRTOS/FreeRTOS.h:651:88: warning: implicit declaration of function 'pvPortMalloc' [-Wimplicit-function-declaration]
+  #define pvPortMallocAligned( x, puxStackBuffer ) ( ( ( puxStackBuffer ) == NULL ) ? ( pvPortMalloc( ( x ) ) ) : ( puxStackBuffer ) )
+                                                                                        ^
+FreeRTOS/tasks.c:3052:31: note: in expansion of macro 'pvPortMallocAligned'
+   pxStack = ( StackType_t * ) pvPortMallocAligned( ( ( ( size_t ) usStackDepth ) * sizeof( StackType_t ) ), puxStackBuffer ); /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
+                               ^
+FreeRTOS/FreeRTOS.h:651:112: warning: pointer/integer type mismatch in conditional expression
+  #define pvPortMallocAligned( x, puxStackBuffer ) ( ( ( puxStackBuffer ) == NULL ) ? ( pvPortMalloc( ( x ) ) ) : ( puxStackBuffer ) )
+                                                                                                                ^
+FreeRTOS/tasks.c:3052:31: note: in expansion of macro 'pvPortMallocAligned'
+   pxStack = ( StackType_t * ) pvPortMallocAligned( ( ( ( size_t ) usStackDepth ) * sizeof( StackType_t ) ), puxStackBuffer ); /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
+                               ^
+Info: Compiling FreeRTOS/timers.c to obj/default/FreeRTOS/timers.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/FreeRTOS/timers.o FreeRTOS/timers.c
+FreeRTOS/timers.c: In function 'xTimerCreate':
+FreeRTOS/timers.c:286:30: warning: implicit declaration of function 'pvPortMalloc' [-Wimplicit-function-declaration]
+   pxNewTimer = ( Timer_t * ) pvPortMalloc( sizeof( Timer_t ) );
+                              ^
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:282:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+main.c: At top level:
+main.c:150:13: warning: 'stabilityMonitorTask' defined but not used [-Wunused-function]
+ static void stabilityMonitorTask(void *pvParameters)
+             ^
+main.c:175:13: warning: 'loadMonitorTask' defined but not used [-Wunused-function]
+ static void loadMonitorTask(void *pvParameters)
+             ^
+main.c:317:13: warning: 'pollingSwitchsTask' defined but not used [-Wunused-function]
+ static void pollingSwitchsTask(void *pvParameters) {
+             ^
+Info: Assembling FreeRTOS/port_asm.S to obj/default/FreeRTOS/port_asm.o
+nios2-elf-gcc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -Wa,-I../freqyAnalyser_bsp//HAL/inc -Wa,-I../freqyAnalyser_bsp/ -Wa,-I../freqyAnalyser_bsp//drivers/inc -Wa,-gdwarf2 -o obj/default/FreeRTOS/port_asm.o FreeRTOS/port_asm.S
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 616 KBytes program size (code + initialized data).
+Info:                     130561 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+14:11:55 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:281:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 616 KBytes program size (code + initialized data).
+Info:                     130561 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+14:12:14 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+[freqyAnalyser build complete]
+14:12:56 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+[freqyAnalyser build complete]
+14:14:10 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+[freqyAnalyser build complete]
+14:14:56 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:281:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 616 KBytes program size (code + initialized data).
+Info:                     130561 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+14:15:51 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:281:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 616 KBytes program size (code + initialized data).
+Info:                     130561 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+14:17:05 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:281:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 616 KBytes program size (code + initialized data).
+Info:                     130561 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+14:18:15 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:281:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 616 KBytes program size (code + initialized data).
+Info:                     130561 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+14:20:05 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:283:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 616 KBytes program size (code + initialized data).
+Info:                     130561 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+14:22:40 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:284:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 616 KBytes program size (code + initialized data).
+Info:                     130561 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+14:24:06 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:297:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 616 KBytes program size (code + initialized data).
+Info:                     130561 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+14:25:34 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:297:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 616 KBytes program size (code + initialized data).
+Info:                     130561 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]

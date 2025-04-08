@@ -11,24 +11,30 @@
 #include <altera_avalon_pio_regs.h>
 #include "altera_up_avalon_video_character_buffer_with_dma.h"
 #include "altera_up_avalon_video_pixel_buffer_dma.h"
+#include <sys/alt_alarm.h>
+#include <altera_avalon_uart_regs.h>
 
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/queue.h"
+#include "FreeRTOS/FreeRTOS.h"
+#include "FreeRTOS/task.h"
+#include "FreeRTOS/queue.h"
 #include "FreeRTOS/timers.h"
+#include "FreeRTOS/portable.h"
+#include "FreeRTOS/portmacro.h"
+#include "FreeRTOS/semphr.h"
 
 #define ESC 27
 #define CLEAR_LCD_STRING "[2J"
 
 #define   TASK_STACKSIZE       2048
 
-#define LCD_PRIORITY       		11
+#define DISPLAY_PRIORITY       	11
 #define SWITCHES_PRIORITY       12
 #define LED_PRIORITY       		13
 #define TIMER_RESET_PRIORITY    14
 #define LOAD_MONITOR_PRIORITY   15
 #define FREQ_ANALYSER_PRIORITY  16
 
+//For frequency plot
 #define FREQPLT_ORI_X 101		//x axis pixel position at the plot origin
 #define FREQPLT_GRID_SIZE_X 5	//pixel separation in the x axis between two data points
 #define FREQPLT_ORI_Y 199.0		//y axis pixel position at the plot origin
@@ -47,10 +53,8 @@ static void freq_analyser_task(void *pvParameters);
 static void LCD_task(void *pvParameters);
 void Timer_Reset_Task(void *pvParameters);
 
-TimerHandle_t timer;
 TaskHandle_t Timer_Reset;
 TaskHandle_t PRVGADraw;
-
 static QueueHandle_t Q_freq_data;
 
 typedef struct{
@@ -60,18 +64,117 @@ typedef struct{
 	unsigned int y2;
 }Line;
 
+static void stabilityMonitorTask(void *pvParameters);
+static void loadMonitorTask(void *pvParameters);
+static void pollingSwitchsTask(void *pvParameters);
+void PRVGADraw_Task(void *pvParameters );
+
+TimerHandle_t timer, timer2, stabilityTaskHandle, loadMonitorTaskHandle, pollingSwitchsTaskHandle, PRVGADraw;
+TaskHandle_t Timer_Reset1;
+QueueHandle_t stabilityTaskQueue, loadMonitorTaskQueue;
+
+volatile double frequency = 0;
+volatile double old_frequency = 0;
+volatile double roc_frequency = 0;
+
+int stability_flag = 1;
+int loads_active_flag = 0;
+int load_state[] = {1,1,1,1,1};
+
 volatile double crnt_freq;
 volatile double prev_freq = 0;
 volatile double roc = 0;
 
+uint8_t timer500_flag = 0;
 uint8_t freq_update = 1;
 uint8_t stability_flag = 1;
 uint8_t timer_reset = 0;
 
-/****** VGA display ******/
 
-void PRVGADraw_Task(void *pvParameters ){
+void freq_relay_isr(){
+	unsigned int samples = IORD(FREQUENCY_ANALYSER_BASE, 0);
+	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 
+    xQueueSendFromISR(stabilityTaskQueue, &samples, &xHigherPriorityTaskWoken);
+    portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+	return;
+}
+
+static void stabilityMonitorTask(void *pvParameters) {
+	while(1) {
+		int samples;
+        if (xQueueReceive(stabilityTaskQueue, &samples, portMAX_DELAY)) {
+            old_frequency = frequency;
+            frequency = 16000.0 / (double)samples;
+            roc_frequency = ((frequency - old_frequency) / samples) * 16000.0;
+			roc_frequency = roc_frequency < 0 ? roc_frequency * -1 : roc_frequency;
+            xQueueSendToBackFromISR( Q_freq_data, &frequency, pdFALSE );
+        	//printf("ROC: %f milliseconds, Old: %f, New:%f \n", roc_frequency,old_frequency,frequency);
+        	if (frequency >= 51 || frequency < 50) {
+        		stability_flag = 0;
+        		xQueueSend(loadMonitorTaskQueue, &stability_flag, portMAX_DELAY);
+        		xTaskNotifyGive(loadMonitorTaskHandle);
+        		//printf("unstable\n");
+        	} else {
+        		stability_flag = 1;
+        		//printf("stable: %f\n", frequency);
+        	}
+        }
+	}
+}
+
+static void loadMonitorTask(void *pvParameters) {
+	while (1) {
+        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+
+		if (xQueueReceive(loadMonitorTaskQueue, &stability_flag, portMAX_DELAY)) {
+		    // Explicitly start the timer
+		    if (xTimerStart(timer, 0) != pdPASS) {
+		        // If the timer fails to start
+		        printf("Cannot start timer\n");
+		        return;
+		    }
+
+			if (timer500_flag && !stability_flag) {
+				for (int i = 4; i >= 0; i--) {
+				//	printf("checking load: %i it is state %i\n",i,load_state[i]);
+					if (load_state[i] == 1) {
+						load_state[i] = 0;
+						loads_active_flag = 1;
+						printf("%i load deattached \n", i);
+						break;
+					}
+				}
+			//	printf("Load Monitor Task\n");
+				timer500_flag = 0;
+				vTaskDelay(1000);
+			}
+			if (timer500_flag && stability_flag) {
+				for (int i = 0; i <= 4; i++) {
+				//	printf("checking load (stable): %i it is state %i\n",i,load_state[i]);
+					if (load_state[i] == 0) {
+						load_state[i] = 1;
+						loads_active_flag = 1;
+						printf("%i load attached \n", i);
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+
+static void pollingSwitchsTask(void *pvParameters) {
+	printf("In Switchs task");
+	unsigned int uiSwitchValue = 0;
+	while (1) {
+	    uiSwitchValue = IORD_ALTERA_AVALON_PIO_DATA(SLIDE_SWITCH_BASE);
+	    IOWR_ALTERA_AVALON_PIO_DATA(RED_LEDS_BASE, uiSwitchValue);
+	}
+}
+
+void PRVGADraw_Task(void *pvParameters ) {
+	printf("In VGA Task");
 	//initialize VGA controllers
 	alt_up_pixel_buffer_dma_dev *pixel_buf;
 	pixel_buf = alt_up_pixel_buffer_dma_open_dev(VIDEO_PIXEL_BUFFER_DMA_NAME);
@@ -86,7 +189,6 @@ void PRVGADraw_Task(void *pvParameters ){
 		printf("can't find char buffer device\n");
 	}
 	alt_up_char_buffer_clear(char_buf);
-
 
 	//Set up plot axes
 	alt_up_pixel_buffer_dma_draw_hline(pixel_buf, 100, 590, 200, ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
@@ -123,7 +225,7 @@ void PRVGADraw_Task(void *pvParameters ){
 			else{
 				dfreq[i] = (freq[i]-freq[i-1]) * 2.0 * freq[i]* freq[i-1] / (freq[i]+freq[i-1]);
 			}
-			dfreq[i] = dfreq[i] < 0 ? dfreq[i] * -1 : dfreq[i];
+			dfreq[i] = dfreq[i] < 0 ? dfreq[i] * -1 : dfreq[i]; // abs
 
 			if (dfreq[i] > 100.0){
 				dfreq[i] = 100.0;
@@ -156,6 +258,7 @@ void PRVGADraw_Task(void *pvParameters ){
 				line_roc.y2 = (int)(ROCPLT_ORI_Y - ROCPLT_ROC_RES * dfreq[(i+j+1)%100]);
 
 				//Draw
+
 				if (stability_flag == 1) {
 					alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_freq.x1, line_freq.y1, line_freq.x2, line_freq.y2, 0x3ff << 0, 0);
 					alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_roc.x1, line_roc.y1, line_roc.x2, line_roc.y2, 0x3ff << 0, 0);
@@ -173,35 +276,18 @@ void PRVGADraw_Task(void *pvParameters ){
 		sprintf(roc_th_str, "ROC_TH: %.4f", ROC_TH);
 		sprintf(rfreq_th_str, "RFREQ_TH: %.1f", RFREQ_TH);
 
-		alt_up_char_buffer_string(char_buf, roc_th_str, 10, 40); // Adjust y position as needed
-		alt_up_char_buffer_string(char_buf, rfreq_th_str, 10, 42); // Adjust y position as needed
+		alt_up_char_buffer_string(char_buf, roc_th_str, 10, 40);
+		alt_up_char_buffer_string(char_buf, rfreq_th_str, 10, 42); 
 		alt_up_char_buffer_string(char_buf, "Stability:    ", 35, 40);
 
-		// Display stability flag (green or red)
 		char stability_flag_str[20];
 		if (stability_flag == 1) {
-			// Green text
-			alt_up_char_buffer_string(char_buf, "Stable	   ", 30, 42); // Adjust y position as needed
-			//alt_up_char_buffer_set_foreground_color(char_buf, 0x07E0); // Green
+			alt_up_char_buffer_string(char_buf, "    Stable	   ", 30, 42);
 		} else {
-			// Red text
-			alt_up_char_buffer_string(char_buf, "Not Stable", 30, 42); // Adjust y position as needed
-			//alt_up_char_buffer_set_foreground_color(char_buf, 0xF800); // Red
+			alt_up_char_buffer_string(char_buf, "Not Stable", 30, 42);
 		}
 		vTaskDelay(10);
 	}
-}
-
-void freq_relay_irq(){
-	#define SAMPLING_FREQ 16000.0
-	prev_freq = crnt_freq;
-	unsigned int temp = IORD(FREQUENCY_ANALYSER_BASE, 0);
-	crnt_freq = SAMPLING_FREQ/(double)temp;
-	roc = (crnt_freq - prev_freq) / temp;
-	roc = roc < 0 ? roc * -1 : roc;
-	xQueueSendToBackFromISR( Q_freq_data, &crnt_freq, pdFALSE );
-	freq_update = 1;
-	return;
 }
 
 void Timer_Reset_Task(void *pvParameters ){
@@ -212,22 +298,11 @@ void Timer_Reset_Task(void *pvParameters ){
 		}
 	}
 }
-void vTimerCallback(xTimerHandle t_timer){
-	int LEDs = stability_flag == 1 ? 0xFF : 0x00;
-	IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, LEDs);
-}
 
-static void freq_analyser_task(void *pvParameters) {
-	while (1) {
-	  while(freq_update == 0);
-	  if (roc >= 0.0005 || (crnt_freq < 49 || crnt_freq > 51)){
-		  stability_flag = 0;
-	  } else {
-		  stability_flag = 1;
-	  }
-	  freq_update = 0;
-	  timer_reset = 1;
-	}
+void vTimerCallback(xTimerHandle t_timer){
+	timer500_flag = 1;
+	// int LEDs = stability_flag == 1 ? 0xFF : 0x00;
+	// IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, LEDs);
 }
 
 static void LCD_task(void *pvParameters) {
@@ -237,23 +312,25 @@ static void LCD_task(void *pvParameters) {
 		vTaskDelay(100);
 	    fprintf(lcd, "%c%s", ESC, CLEAR_LCD_STRING);
 	    fprintf(lcd, "ROC frequency\n%f Hz\n", roc);
-		printf("freq:     %f Hz\nprev_freq: %f Hz\nroc:      %f Hz\n", crnt_freq, prev_freq, roc);
+		printf("freq:     %f Hz\nprev_freq: %f Hz\nroc:      %f Hz\n", frequency, old_frequency, roc_frequency);
 		printf("\nstability flag: %d\n", stability_flag);
 	}
 }
-
 
 int main(void) {
 	Q_freq_data = xQueueCreate( 100, sizeof(double) );
 	timer = xTimerCreate("Timer Name", 500, pdTRUE, NULL, vTimerCallback);
 	alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_irq);
-	IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0x55);
 
-	xTaskCreate( freq_analyser_task, "freq_analyser_task", TASK_STACKSIZE, NULL, FREQ_ANALYSER_PRIORITY, NULL);
-	xTaskCreate( LCD_task, "LCD_task", TASK_STACKSIZE, NULL, LCD_PRIORITY, NULL);
-	xTaskCreate( PRVGADraw_Task, "DrawTsk", TASK_STACKSIZE, NULL, LCD_PRIORITY, &PRVGADraw );
+	stabilityTaskQueue = xQueueCreate(5, sizeof(double));
+	loadMonitorTaskQueue = xQueueCreate(5, sizeof(int));
+
+	xTaskCreate( stabilityMonitorTask, "stabilityMonitorTask", TASK_STACKSIZE, NULL, FREQ_ANALYSER_PRIORITY, NULL);
+	xTaskCreate( loadMonitorTask, "loadMonitorTask", TASK_STACKSIZE, NULL, LOAD_MONITOR_PRIORITY, NULL);
+	xTaskCreate( pollingSwitchsTask, "pollingSwitchsTask", TASK_STACKSIZE, NULL, SWITCHES_PRIORITY, NULL);
+	xTaskCreate( LCD_task, "LCD_task", TASK_STACKSIZE, NULL, DISPLAY_PRIORITY, NULL);
+	xTaskCreate( PRVGADraw_Task, "DrawTsk", TASK_STACKSIZE, NULL, DISPLAY_PRIORITY, &PRVGADraw );
 	xTaskCreate( Timer_Reset_Task, "0", TASK_STACKSIZE, NULL, TIMER_RESET_PRIORITY, &Timer_Reset );
 	vTaskStartScheduler();
 	while (1);
 }
-
