@@ -29,7 +29,7 @@
 
 #define DISPLAY_PRIORITY       	11
 #define SWITCHES_PRIORITY       12
-#define LED_PRIORITY       		13
+#define LED_PRIORITY       		  13
 #define TIMER_RESET_PRIORITY    14
 #define LOAD_MONITOR_PRIORITY   15
 #define FREQ_ANALYSER_PRIORITY  16
@@ -47,7 +47,7 @@
 
 #define MIN_FREQ 45.0
 #define ROC_TH 15.0
-#define RFREQ_TH 45.0
+#define FREQ_TH 45.0
 
 static void stabilityMonitorTask(void *pvParameters);
 static void LCD_task(void *pvParameters);
@@ -56,24 +56,21 @@ static void pollingSwitchsTask(void *pvParameters);
 static void PRVGADraw_Task(void *pvParameters );
 static void Timer_Reset_Task(void *pvParameters);
 
-TaskHandle_t PRVGADraw;
 static QueueHandle_t Q_freq_data;
-TaskHandle_t stabilityTaskHandle, loadMonitorTaskHandle, pollingSwitchsTaskHandle, PRVGADraw, LCD_handle;
+TaskHandle_t Timer_Reset, stabilityTaskHandle, loadMonitorTaskHandle, pollingSwitchsTaskHandle, PRVGADraw, LCD_handle;
 QueueHandle_t stabilityTaskQueue, loadMonitorTaskQueue;
-
-
-typedef struct{
-	unsigned int x1;
-	unsigned int y1;
-	unsigned int x2;
-	unsigned int y2;
-}Line;
-
-#define Timer_Reset_Task_P      (tskIDLE_PRIORITY+1)
 TimerHandle_t timer;
-TaskHandle_t Timer_Reset;
+
+typedef struct {
+    unsigned int x1;
+    unsigned int y1;
+    unsigned int x2;
+    unsigned int y2;
+} Line;
 
 volatile double frequency = 0;
+volatile double old_frequency = 0;
+volatile double roc_frequency = 0;
 
 int loads_active_flag = 0;
 int load_state[] = {1,1,1,1,1};
@@ -89,19 +86,27 @@ void freq_relay_isr(){
     portEND_SWITCHING_ISR(pdFALSE);
 }
 
+void button_isr() {
+    if (maintenance_flag == 1) {
+        maintenance_flag = 0;
+        IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0x11111111);
+    } else {
+        maintenance_flag = 1;
+        IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0x88888888);
+    }
+    IORD_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE);
+    IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE, 0x7);
+    return;
+}
+
 static void stabilityMonitorTask(void *pvParameters) {
     unsigned int received_samples;
-    double old_frequency;
-    double roc_frequency;
-    uint8_t prev = stability_flag;
     while (1) {
         if (xQueueReceive(stabilityTaskQueue, &received_samples, portMAX_DELAY)) {
             old_frequency = frequency;
             frequency = 16000.0 / (double)received_samples;
             roc_frequency = ((frequency - old_frequency) / received_samples) * 16000.0;
             xQueueSend(Q_freq_data, &frequency, pdFALSE);
-
-            //printf("%f\n", frequency);
 
             if (frequency > 51 || frequency < 50 || roc_frequency < -10 || roc_frequency > 10) {
                 stability_flag = 0;
@@ -112,177 +117,192 @@ static void stabilityMonitorTask(void *pvParameters) {
                 xQueueSend(loadMonitorTaskQueue, &stability_flag, pdFALSE);
                 xTaskNotifyGive(loadMonitorTaskHandle);
             }
-//            if (stability_flag != prev){
-//                xQueueSend(loadMonitorTaskQueue, &stability_flag, pdFALSE);
-//                xTaskNotifyGive(loadMonitorTaskHandle);
-//            }
-//            prev = stability_flag;
         }
     }
 }
 
 static void loadMonitorTask(void *pvParameters) {
-	uint8_t received_stability;
-	while (1) {
-		//printf("load task running\n");
-		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-		if (xQueueReceive(loadMonitorTaskQueue, &received_stability, pdFALSE)) {
-		    //printf("%i\n", received_stability);
-			if (xTimerStart(timer, 0) != pdPASS){
-				printf("Cannot start timer");
-			}
-			//printf("%i\n",received_stability);
-			if (timer500_flag && !received_stability) {
-				for (int i = 4; i >= 0; i--) {
-					printf("checking load: %i it is state %i\n",i,load_state[i]);
-					if (load_state[i] == 1) {
-						load_state[i] = 0;
-						loads_active_flag = 1;
-						 //IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 2^i);
-						break;
-					}
-				}
-
-			}
-			//printf("%i",timer500_flag);
-			if (timer500_flag && received_stability) {
-				for (int i = 0; i <= 4; i++) {
-					printf("checking load (stable): %i it is state %i\n",i,load_state[i]);
-					if (load_state[i] == 0) {
-						load_state[i] = 1;
-						loads_active_flag = 1;
-						printf("%i load attached \n", i);
-						break;
-					}
-				}
-			}
-
-		}
-	}
+    uint8_t received_stability;
+    while (1) {
+        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+        if (xQueueReceive(loadMonitorTaskQueue, &received_stability, pdFALSE) and maintenance_flag == 0) {
+            if (xTimerStart(timer, 0) != pdPASS){
+              printf("Cannot start timer");
+            }
+            if (timer500_flag && !received_stability) {
+                for (int i = 4; i >= 0; i--) {
+                    printf("checking load: %i it is state %i\n",i,load_state[i]);
+                    if (load_state[i] == 1) {
+                        load_state[i] = 0;
+                        loads_active_flag = 1;
+                        //IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 2^i);
+                        break;
+                    }
+                }
+            }
+            if (timer500_flag && received_stability) {
+                for (int i = 0; i <= 4; i++) {
+                    printf("checking load (stable): %i it is state %i\n",i,load_state[i]);
+                    if (load_state[i] == 0) {
+                        load_state[i] = 1;
+                        loads_active_flag = 1;
+                        printf("%i load attached \n", i);
+                        break;
+                    }
+                }
+            }
+        } else if (maintenance_flag == 1) {
+          unsigned int uiSwitchValue = IORD_ALTERA_AVALON_PIO_DATA(SLIDE_SWITCH_BASE);
+          for (int i = 0; i < 5; i++) {
+              load_state[i] = (uiSwitchValue >> i) & 0x1;
+          }
+        }
+        if (loads_active_flag) {
+            unsigned int led_output = 0;
+            for (int i = 0; i < 5; i++) {
+                led_output |= (load_state[i] << i);
+            }
+            IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, led_output);
+            loads_active_flag = 0;
+        }
+    } 
 }
 
 static void pollingSwitchsTask(void *pvParameters) {
-	//printf("In Switchs task");
-	unsigned int uiSwitchValue = 0;
-	int led_output = 0;
-	while (1)
-	{
-	    // read the value of the switch and store to uiSwitchValue
-	    uiSwitchValue = IORD_ALTERA_AVALON_PIO_DATA(SLIDE_SWITCH_BASE);
-
-	    // Update load_state[] based on switch values
-	    for (int i = 0; i < 5; i++) {
-	        load_state[i] = (uiSwitchValue >> i) & 0x1;  // Extract bit i
-	    }
-
-
-	    // write the value of the switches to the red LEDs
-	    IOWR_ALTERA_AVALON_PIO_DATA(RED_LEDS_BASE, uiSwitchValue);
-
-	    // Delay to avoid CPU hogging and bouncing issues
-	    vTaskDelay(pdMS_TO_TICKS(100));
-	}
+    unsigned int uiSwitchValue = 0;
+    int led_output = 0;
+    while (1) {
+        uiSwitchValue = IORD_ALTERA_AVALON_PIO_DATA(SLIDE_SWITCH_BASE);
+        for (int i = 0; i < 5; i++) {
+            load_state[i] = (uiSwitchValue >> i) & 0x1;
+        }
+        IOWR_ALTERA_AVALON_PIO_DATA(RED_LEDS_BASE, uiSwitchValue);
+        vTaskDelay(pdMS_TO_TICKS(100));
+    }
 }
 
 static void PRVGADraw_Task(void *pvParameters ) {
-	//printf("In VGA Task\n");
-	alt_up_pixel_buffer_dma_dev *pixel_buf;
-	pixel_buf = alt_up_pixel_buffer_dma_open_dev(VIDEO_PIXEL_BUFFER_DMA_NAME);
-	if(pixel_buf == NULL){
-		printf("can't find pixel buffer device\n");
-	}
-	alt_up_pixel_buffer_dma_clear_screen(pixel_buf, 0);
+  char bfr_a[20], bfr_b[20], bfr_c[20];
+  alt_up_pixel_buffer_dma_dev *pixel_buf;
+  pixel_buf = alt_up_pixel_buffer_dma_open_dev(VIDEO_PIXEL_BUFFER_DMA_NAME);
+  if (pixel_buf == NULL) {
+    printf("can't find pixel buffer device\n");
+  }
+    alt_up_pixel_buffer_dma_clear_screen(pixel_buf, 0);
 
-	alt_up_char_buffer_dev *char_buf;
-	char_buf = alt_up_char_buffer_open_dev("/dev/video_character_buffer_with_dma");
-	if(char_buf == NULL){
-		printf("can't find char buffer device\n");
-	}
-	alt_up_char_buffer_clear(char_buf);
+    alt_up_char_buffer_dev *char_buf;
+    char_buf = alt_up_char_buffer_open_dev("/dev/video_character_buffer_with_dma");
+    if(char_buf == NULL){
+        printf("can't find char buffer device\n");
+    }
+    alt_up_char_buffer_clear(char_buf);
 
-	//Set up plot axes
-	alt_up_pixel_buffer_dma_draw_hline(pixel_buf, 100, 590, 200, ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
-	alt_up_pixel_buffer_dma_draw_hline(pixel_buf, 100, 590, 300, ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
-	alt_up_pixel_buffer_dma_draw_vline(pixel_buf, 100, 50, 200,  ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
-	alt_up_pixel_buffer_dma_draw_vline(pixel_buf, 100, 220, 300, ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
+    //Set up plot axes
+    alt_up_pixel_buffer_dma_draw_hline(pixel_buf, 100, 590, 200, ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
+    alt_up_pixel_buffer_dma_draw_hline(pixel_buf, 100, 590, 300, ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
+    alt_up_pixel_buffer_dma_draw_vline(pixel_buf, 100, 50, 200,  ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
+    alt_up_pixel_buffer_dma_draw_vline(pixel_buf, 100, 220, 300, ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
 
-	alt_up_char_buffer_string(char_buf, "Frequency(Hz)", 4, 4);
-	alt_up_char_buffer_string(char_buf, "52", 10, 7);
-	alt_up_char_buffer_string(char_buf, "50", 10, 12);
-	alt_up_char_buffer_string(char_buf, "48", 10, 17);
-	alt_up_char_buffer_string(char_buf, "46", 10, 22);
+    alt_up_char_buffer_string(char_buf, "Frequency(Hz)", 4, 4);
+    alt_up_char_buffer_string(char_buf, "52", 10, 7);
+    alt_up_char_buffer_string(char_buf, "50", 10, 12);
+    alt_up_char_buffer_string(char_buf, "48", 10, 17);
+    alt_up_char_buffer_string(char_buf, "46", 10, 22);
 
-	alt_up_char_buffer_string(char_buf, "df/dt(Hz/s)", 4, 26);
-	alt_up_char_buffer_string(char_buf, "60", 10, 28);
-	alt_up_char_buffer_string(char_buf, "30", 10, 30);
-	alt_up_char_buffer_string(char_buf, "0", 10, 32);
+    alt_up_char_buffer_string(char_buf, "df/dt(Hz/s)", 4, 26);
+    alt_up_char_buffer_string(char_buf, "60", 10, 28);
+    alt_up_char_buffer_string(char_buf, "30", 10, 30);
+    alt_up_char_buffer_string(char_buf, "0", 10, 32);
+    alt_up_char_buffer_string(char_buf, "-30", 9, 34);
+    alt_up_char_buffer_string(char_buf, "-60", 9, 36);
 
-	double freq[100], dfreq[100];
-	int i = 99, j = 0;
-	Line line_freq, line_roc;
+    double freq[100], dfreq[100];
+    int i = 99, j = 0;
+    Line line_freq, line_roc;
 
-	while(1){
-		while(uxQueueMessagesWaiting( Q_freq_data ) != 0){
-			xQueueReceive( Q_freq_data, freq+i, 0 );
-			if(i==0){
-				dfreq[0] = (freq[0]-freq[99]) * 2.0 * freq[0] * freq[99] / (freq[0]+freq[99]);
-			}
-			else{
-				dfreq[i] = (freq[i]-freq[i-1]) * 2.0 * freq[i]* freq[i-1] / (freq[i]+freq[i-1]);
-			}
+    while(1){
+        while(uxQueueMessagesWaiting( Q_freq_data ) != 0){
+            xQueueReceive( Q_freq_data, freq+i, 0 );
+            if(i==0){
+                dfreq[0] = (freq[0]-freq[99]) * 2.0 * freq[0] * freq[99] / (freq[0]+freq[99]);
+            }
+            else{
+                dfreq[i] = (freq[i]-freq[i-1]) * 2.0 * freq[i]* freq[i-1] / (freq[i]+freq[i-1]);
+            }
+            if (dfreq[i] > 100.0){
+                dfreq[i] = 100.0;
+            }
+            i =	++i%100;
+      }
+      alt_up_pixel_buffer_dma_draw_box(pixel_buf, 101, 0, 639, 199, 0, 0);
+      alt_up_pixel_buffer_dma_draw_box(pixel_buf, 101, 201, 639, 299, 0, 0);
 
-			if (dfreq[i] > 100.0){
-				dfreq[i] = 100.0;
-			}
-			i =	++i%100;
-		}
-		alt_up_pixel_buffer_dma_draw_box(pixel_buf, 101, 0, 639, 199, 0, 0);
-		alt_up_pixel_buffer_dma_draw_box(pixel_buf, 101, 201, 639, 299, 0, 0);
+        for(j=0;j<99;++j){
+            if (((int)(freq[(i+j)%100]) > MIN_FREQ) && ((int)(freq[(i+j+1)%100]) > MIN_FREQ)){
+              //Frequency plot
+              line_freq.x1 = FREQPLT_ORI_X + FREQPLT_GRID_SIZE_X * j;
+              line_freq.y1 = (int)(FREQPLT_ORI_Y - FREQPLT_FREQ_RES * (freq[(i+j)%100] - MIN_FREQ));
 
-		for(j=0;j<99;++j){
-			if (((int)(freq[(i+j)%100]) > MIN_FREQ) && ((int)(freq[(i+j+1)%100]) > MIN_FREQ)){
-				//Frequency plot
-				line_freq.x1 = FREQPLT_ORI_X + FREQPLT_GRID_SIZE_X * j;
-				line_freq.y1 = (int)(FREQPLT_ORI_Y - FREQPLT_FREQ_RES * (freq[(i+j)%100] - MIN_FREQ));
+              line_freq.x2 = FREQPLT_ORI_X + FREQPLT_GRID_SIZE_X * (j + 1);
+              line_freq.y2 = (int)(FREQPLT_ORI_Y - FREQPLT_FREQ_RES * (freq[(i+j+1)%100] - MIN_FREQ));
 
-				line_freq.x2 = FREQPLT_ORI_X + FREQPLT_GRID_SIZE_X * (j + 1);
-				line_freq.y2 = (int)(FREQPLT_ORI_Y - FREQPLT_FREQ_RES * (freq[(i+j+1)%100] - MIN_FREQ));
+              //Frequency RoC plot
+              line_roc.x1 = ROCPLT_ORI_X + ROCPLT_GRID_SIZE_X * j;
+              line_roc.y1 = (int)(ROCPLT_ORI_Y - ROCPLT_ROC_RES * dfreq[(i+j)%100]);
 
-				//Frequency RoC plot
-				line_roc.x1 = ROCPLT_ORI_X + ROCPLT_GRID_SIZE_X * j;
-				line_roc.y1 = (int)(ROCPLT_ORI_Y - ROCPLT_ROC_RES * dfreq[(i+j)%100]);
+              line_roc.x2 = ROCPLT_ORI_X + ROCPLT_GRID_SIZE_X * (j + 1);
+              line_roc.y2 = (int)(ROCPLT_ORI_Y - ROCPLT_ROC_RES * dfreq[(i+j+1)%100]);
 
-				line_roc.x2 = ROCPLT_ORI_X + ROCPLT_GRID_SIZE_X * (j + 1);
-				line_roc.y2 = (int)(ROCPLT_ORI_Y - ROCPLT_ROC_RES * dfreq[(i+j+1)%100]);
+              if (stability_flag == 1) {
+                alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_freq.x1, line_freq.y1, line_freq.x2, line_freq.y2, 0x3ff << 0, 0);
+                alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_roc.x1, line_roc.y1, line_roc.x2, line_roc.y2, 0x3ff << 0, 0);
+              } else {
+                alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_freq.x1, line_freq.y1, line_freq.x2, line_freq.y2, 0xF800 << 0, 0);
+                alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_roc.x1, line_roc.y1, line_roc.x2, line_roc.y2, 0xF800 << 0, 0);
+              }
+              //(pixel_buf, line_freq.x1, line_freq.y1, line_freq.x2, line_freq.y2, 0x3ff << 0, 0);
+              //alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_roc.x1, line_roc.y1, line_roc.x2, line_roc.y2, 0x3ff << 0, 0);
+            }
+        }
 
-				if (stability_flag == 1) {
-					alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_freq.x1, line_freq.y1, line_freq.x2, line_freq.y2, 0x3ff << 0, 0);
-					alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_roc.x1, line_roc.y1, line_roc.x2, line_roc.y2, 0x3ff << 0, 0);
-				} else {
-					alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_freq.x1, line_freq.y1, line_freq.x2, line_freq.y2, 0xF800 << 0, 0);
-					alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_roc.x1, line_roc.y1, line_roc.x2, line_roc.y2, 0xF800 << 0, 0);
+        sprintf(bfr_a, "FREQUENCY: %.4f", frequency);
+        sprintf(bfr_b, "ROC: %.4f", roc_frequency);
+        alt_up_char_buffer_string(char_buf, bfr_a, 10, 40);
+        alt_up_char_buffer_string(char_buf, bfr_b, 10, 42);
 
-				}
-				//(pixel_buf, line_freq.x1, line_freq.y1, line_freq.x2, line_freq.y2, 0x3ff << 0, 0);
-				//alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_roc.x1, line_roc.y1, line_roc.x2, line_roc.y2, 0x3ff << 0, 0);
-			}
-		}
+        sprintf(bfr_a, "ROC_TH: %.4f", ROC_TH);
+        sprintf(bfr_b, "FREQ_TH: %.1f", FREQ_TH);
+        alt_up_char_buffer_string(char_buf, bfr_a, 10, 46);
+        alt_up_char_buffer_string(char_buf, bfr_b, 10, 48);
 
-		char roc_th_str[20], rfreq_th_str[20];
-		sprintf(roc_th_str, "ROC_TH: %.4f", ROC_TH);
-		sprintf(rfreq_th_str, "RFREQ_TH: %.1f", RFREQ_TH);
+        alt_up_char_buffer_string(char_buf, "Stability:    ", 35, 40);
+        alt_up_char_buffer_string(char_buf, "Mode:", 35, 46);
 
-		alt_up_char_buffer_string(char_buf, roc_th_str, 10, 40);
-		alt_up_char_buffer_string(char_buf, rfreq_th_str, 10, 42);
-		alt_up_char_buffer_string(char_buf, "Stability:    ", 35, 40);
+        if (stability_flag == 1) {
+          sprintf(bfr_c, "Stable    ");
+        } else {
+          sprintf(bfr_c, "Not Stable");
+        }
+        alt_up_char_buffer_string(char_buf, bfr_c, 35, 42);
+        if (maintenance_flag == 1) {
+          sprintf(bfr_c, "Maintenance");
+        } else {
+          sprintf(bfr_c, "Normal     ");
+        }
+        alt_up_char_buffer_string(char_buf, bfr_c, 35, 48);
 
-		if (stability_flag == 1) {
-			alt_up_char_buffer_string(char_buf, "Stable    ", 30, 42);
-		} else {
-			alt_up_char_buffer_string(char_buf, "Not Stable", 30, 42);
-		}
-		vTaskDelay(10);
-	}
+        alt_up_char_buffer_string(char_buf, "Load state: ", 35, 52); 
+        for (int i = 0; i < 5; i++) {
+          if (load_state[i] == 1) {
+            sprintf(bfr_c, "Load %d: ON ", i);
+          } else {
+            sprintf(bfr_c, "Load %d: OFF", i);
+          }
+          alt_up_char_buffer_string(char_buf, bfr_c, 35, 54 + i*2);
+        }
+
+        vTaskDelay(10);
+	  }
 }
 
 static void LCD_task(void *pvParameters) {
@@ -299,37 +319,37 @@ static void LCD_task(void *pvParameters) {
 	}
 }
 
-void Timer_Reset_Task(void *pvParameters ){ //reset timer if any of the push button is pressed
-	while(1){
-		if (IORD_ALTERA_AVALON_PIO_DATA(PUSH_BUTTON_BASE) != 0x7){
-			xTimerReset( timer, 10 );
-		}
-
-	}
+void Timer_Reset_Task(void *pvParameters ){
+  while (1) {
+    if (timer_reset == 1) {
+      printf("In reset task\n");
+      xTimerReset(timer, 10);
+      timer_reset = 0;
+    }
+  }
 }
 
-
-void vTimerCallback(xTimerHandle t_timer){ //Timer flashes green LEDs
-	IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0xFF^IORD_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE));
+void vTimerCallback(xTimerHandle t_timer) {
+  timer500_flag = 1;
 }
-
 
 int main(void) {
-	Q_freq_data = xQueueCreate( 100, sizeof(double) );
+  Q_freq_data = xQueueCreate(100, sizeof(double));
+  timer = xTimerCreate("Timer Name", 500, pdTRUE, NULL, vTimerCallback);
+  alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_isr);
+  IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE, 0x7);
+  IOWR_ALTERA_AVALON_PIO_IRQ_MASK(PUSH_BUTTON_BASE, 0x7);
+  alt_irq_register(PUSH_BUTTON_IRQ, 0, button_isr);
 
-	alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_isr);
+  stabilityTaskQueue = xQueueCreate(100, sizeof(double));
+  loadMonitorTaskQueue = xQueueCreate(100, sizeof(int));
 
-	timer = xTimerCreate("Timer Name", 1000, pdTRUE, NULL, vTimerCallback);
-
-	stabilityTaskQueue = xQueueCreate(100, sizeof(double));
-	loadMonitorTaskQueue = xQueueCreate(100, sizeof(int));
-
-	xTaskCreate( stabilityMonitorTask, "stabilityMonitorTask", TASK_STACKSIZE, NULL, FREQ_ANALYSER_PRIORITY, &stabilityTaskHandle);
-	xTaskCreate( loadMonitorTask, "loadMonitorTask", TASK_STACKSIZE, NULL, LOAD_MONITOR_PRIORITY, &loadMonitorTaskHandle);
-	xTaskCreate( pollingSwitchsTask, "pollingSwitchsTask", TASK_STACKSIZE, NULL, SWITCHES_PRIORITY, &pollingSwitchsTaskHandle);
-	xTaskCreate( LCD_task, "LCD_task", TASK_STACKSIZE, NULL, DISPLAY_PRIORITY, &LCD_handle);
-	xTaskCreate( PRVGADraw_Task, "DrawTsk", TASK_STACKSIZE, NULL, DISPLAY_PRIORITY, &PRVGADraw );
-	xTaskCreate( Timer_Reset_Task, "0", configMINIMAL_STACK_SIZE, NULL, Timer_Reset_Task_P, &Timer_Reset );
-	vTaskStartScheduler();
-	while (1);
+  xTaskCreate(stabilityMonitorTask, "stabilityMonitorTask", TASK_STACKSIZE, NULL, FREQ_ANALYSER_PRIORITY, &stabilityTaskHandle);
+  xTaskCreate(loadMonitorTask, "loadMonitorTask", TASK_STACKSIZE, NULL, LOAD_MONITOR_PRIORITY, &loadMonitorTaskHandle);
+  xTaskCreate(pollingSwitchsTask, "pollingSwitchsTask", TASK_STACKSIZE, NULL, SWITCHES_PRIORITY, &pollingSwitchsTaskHandle);
+  xTaskCreate(LCD_task, "LCD_task", TASK_STACKSIZE, NULL, DISPLAY_PRIORITY, &LCD_handle);
+  xTaskCreate(PRVGADraw_Task, "DrawTsk", TASK_STACKSIZE, NULL, DISPLAY_PRIORITY, &PRVGADraw);
+  xTaskCreate(Timer_Reset_Task, "0", configMINIMAL_STACK_SIZE, NULL, TIMER_RESET_PRIORITY, &Timer_Reset);
+  vTaskStartScheduler();
+  while (1);
 }
