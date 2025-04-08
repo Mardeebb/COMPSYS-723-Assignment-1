@@ -1,4 +1,4 @@
-13:00:15 **** Incremental Build of configuration Nios II for project Ass_1 ****
+14:14:47 **** Incremental Build of configuration Nios II for project Ass_1 ****
 make all 
 Info: Building ../Ass_1_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
@@ -9,7 +9,7 @@ main.c: In function 'PRVGADraw_Task':
 main.c:133:6: warning: operation on 'i' may be undefined [-Wsequence-point]
     i = ++i%100; //point to the next data (oldest) to be overwritten
       ^
-main.c:180:8: warning: unused variable 'stability_flag_str' [-Wunused-variable]
+main.c:181:8: warning: unused variable 'stability_flag_str' [-Wunused-variable]
    char stability_flag_str[20];
         ^
 In file included from main.c:17:0:
@@ -17,7 +17,7 @@ main.c: In function 'freq_relay_irq':
 freertos/queue.h:1100:123: warning: passing argument 2 of 'xQueueGenericSendFromISR' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
  #define xQueueSendToBackFromISR( xQueue, pvItemToQueue, pxHigherPriorityTaskWoken ) xQueueGenericSendFromISR( ( xQueue ), ( pvItemToQueue ), ( pxHigherPriorityTaskWoken ), queueSEND_TO_BACK )
                                                                                                                            ^
-main.c:201:2: note: in expansion of macro 'xQueueSendToBackFromISR'
+main.c:202:2: note: in expansion of macro 'xQueueSendToBackFromISR'
   xQueueSendToBackFromISR( Q_freq_data, &crnt_freq, pdFALSE );
   ^
 freertos/queue.h:1340:12: note: expected 'const void * const' but argument is of type 'volatile double *'
@@ -32,5 +32,5 @@ Info: Creating Ass_1.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
 [Ass_1 build complete]
 
-13:00:17 Build Finished (took 1s.603ms)
+14:14:49 Build Finished (took 1s.608ms)
 
