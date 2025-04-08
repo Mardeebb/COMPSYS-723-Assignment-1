@@ -47,19 +47,22 @@
 
 #define MIN_FREQ 45.0
 #define ROC_TH 15.0
-#define FREQ_TH 45.0
+#define FREQ_TH 50.0
+
+#define Timer_Reset_Task_P      (tskIDLE_PRIORITY+1)
+TimerHandle_t timer;
+TaskHandle_t Timer_Reset;
 
 static void stabilityMonitorTask(void *pvParameters);
 static void LCD_task(void *pvParameters);
 static void stabilityMonitorTask(void *pvParameters);
 static void pollingSwitchsTask(void *pvParameters);
 static void PRVGADraw_Task(void *pvParameters );
-static void Timer_Reset_Task(void *pvParameters);
 
 static QueueHandle_t Q_freq_data;
-TaskHandle_t Timer_Reset, stabilityTaskHandle, loadMonitorTaskHandle, pollingSwitchsTaskHandle, PRVGADraw, LCD_handle;
+TaskHandle_t  stabilityTaskHandle, loadMonitorTaskHandle, pollingSwitchsTaskHandle, PRVGADraw, LCD_handle;
 QueueHandle_t stabilityTaskQueue, loadMonitorTaskQueue;
-TimerHandle_t timer;
+SemaphoreHandle_t xTimerSemaphore;
 
 typedef struct {
     unsigned int x1;
@@ -73,11 +76,14 @@ volatile double old_frequency = 0;
 volatile double roc_frequency = 0;
 
 int loads_active_flag = 0;
-int load_state[] = {1,1,1,1,1};
+int load_state[] = {0,0,0,0,0};
+int switch_state[] = {0,0,0,0};
 
-volatile uint8_t timer500_flag = 0;
+uint8_t timer500_flag = 1;
 uint8_t freq_update = 1;
 uint8_t stability_flag = 1;
+uint8_t maintenance_flag = 0;
+uint8_t stability_changed_flag = 0;
 
 
 void freq_relay_isr(){
@@ -89,10 +95,10 @@ void freq_relay_isr(){
 void button_isr() {
     if (maintenance_flag == 1) {
         maintenance_flag = 0;
-        IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0x11111111);
+        IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0x00000000);
     } else {
         maintenance_flag = 1;
-        IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0x88888888);
+        IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0xEEEEEEEE);
     }
     IORD_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE);
     IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE, 0x7);
@@ -101,6 +107,7 @@ void button_isr() {
 
 static void stabilityMonitorTask(void *pvParameters) {
     unsigned int received_samples;
+    static uint8_t last_stability = 1;
     while (1) {
         if (xQueueReceive(stabilityTaskQueue, &received_samples, portMAX_DELAY)) {
             old_frequency = frequency;
@@ -108,7 +115,7 @@ static void stabilityMonitorTask(void *pvParameters) {
             roc_frequency = ((frequency - old_frequency) / received_samples) * 16000.0;
             xQueueSend(Q_freq_data, &frequency, pdFALSE);
 
-            if (frequency > 51 || frequency < 50 || roc_frequency < -10 || roc_frequency > 10) {
+            if (frequency >= FREQ_TH + 1 || frequency <= FREQ_TH-1 || roc_frequency < -1 * ROC_TH || roc_frequency > ROC_TH) {
                 stability_flag = 0;
                 xQueueSend(loadMonitorTaskQueue, &stability_flag, pdFALSE);
                 xTaskNotifyGive(loadMonitorTaskHandle);
@@ -118,31 +125,49 @@ static void stabilityMonitorTask(void *pvParameters) {
                 xTaskNotifyGive(loadMonitorTaskHandle);
             }
         }
+        vTaskDelay(pdMS_TO_TICKS(50));
     }
 }
 
 static void loadMonitorTask(void *pvParameters) {
     uint8_t received_stability;
+    static uint8_t last_stability = 1;
+    unsigned int led_output = 0;
+    unsigned int redled_output = 0;
+
     while (1) {
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-        if (xQueueReceive(loadMonitorTaskQueue, &received_stability, pdFALSE) and maintenance_flag == 0) {
-            if (xTimerStart(timer, 0) != pdPASS){
-              printf("Cannot start timer");
+        if (xQueueReceive(loadMonitorTaskQueue, &received_stability, portMAX_DELAY) && xSemaphoreTake(xTimerSemaphore, portMAX_DELAY) && maintenance_flag == 0) {
+
+            // Check for a change in stability
+            if (received_stability != last_stability) {
+                stability_changed_flag = 1;
+                xTimerReset(timer, 10);
+                timer500_flag = 0;
+                last_stability = received_stability;
+                continue;  // Skip processing until 500ms has passed
             }
+
+//        	xTimerReset(timer, 10);
+        	//printf("%i\n", received_stability);
+        	// if unstable and 500ms passes shed loads
             if (timer500_flag && !received_stability) {
+            	printf("unstable for 500ms\n");
                 for (int i = 4; i >= 0; i--) {
-                    printf("checking load: %i it is state %i\n",i,load_state[i]);
+                  //  printf("checking load: %i it is state %i\n",i,load_state[i]);
                     if (load_state[i] == 1) {
                         load_state[i] = 0;
                         loads_active_flag = 1;
-                        //IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 2^i);
+                        printf("%i load detached \n", i);
                         break;
                     }
                 }
             }
+        	// if stable and 500ms passes reconnecting loads
             if (timer500_flag && received_stability) {
+            	printf("Stable for 500ms\n");
                 for (int i = 0; i <= 4; i++) {
-                    printf("checking load (stable): %i it is state %i\n",i,load_state[i]);
+                   // printf("checking load (stable): %i it is state %i\n",i,load_state[i]);
                     if (load_state[i] == 0) {
                         load_state[i] = 1;
                         loads_active_flag = 1;
@@ -151,32 +176,62 @@ static void loadMonitorTask(void *pvParameters) {
                     }
                 }
             }
-        } else if (maintenance_flag == 1) {
+//            for (int i = 0; i < 5; i++) {
+//				led_output |= (load_state[i] << i);
+//			}
+//           // printf("%i\n",led_output);
+//			IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, led_output);
+        }
+        // If in maintance mode disable green LEDS and switches control which loads are on/off
+        if (maintenance_flag == 1) {
+        	led_output = 0;
           unsigned int uiSwitchValue = IORD_ALTERA_AVALON_PIO_DATA(SLIDE_SWITCH_BASE);
           for (int i = 0; i < 5; i++) {
-              load_state[i] = (uiSwitchValue >> i) & 0x1;
+              switch_state[i] = (uiSwitchValue >> i) & 0x1;
+            //  printf("%i of switches is %i\n",i,switch_state[i]);
           }
+          for (int i = 0; i < 5; i++) {
+        	  printf("%i of switches is %i\n",i,switch_state[i]);
+				led_output |= (switch_state[i] << i);
+				printf("LED output is now %i\n",led_output);
+				load_state[i] = switch_state[i];
+			}
+         // printf("LED output is %i\n",led_output);
+			IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0);
+			IOWR_ALTERA_AVALON_PIO_DATA(RED_LEDS_BASE, led_output);
         }
         if (loads_active_flag) {
-            unsigned int led_output = 0;
+            led_output = 0;
             for (int i = 0; i < 5; i++) {
                 led_output |= (load_state[i] << i);
             }
-            IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, led_output);
+
+            // Write to red LEDs
+            IOWR_ALTERA_AVALON_PIO_DATA(RED_LEDS_BASE, led_output);
+
+            // Invert for green LEDs (only lowest 5 bits)
+            uint32_t green_led_output = (~led_output) & 0x1F;  // Mask to 5 bits
+            IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, green_led_output);
             loads_active_flag = 0;
         }
-    } 
+        vTaskDelay(pdMS_TO_TICKS(100));
+    }
 }
+
+//static void LEDsTask(void *pvParameters) {
+//
+//}
 
 static void pollingSwitchsTask(void *pvParameters) {
     unsigned int uiSwitchValue = 0;
-    int led_output = 0;
     while (1) {
         uiSwitchValue = IORD_ALTERA_AVALON_PIO_DATA(SLIDE_SWITCH_BASE);
-        for (int i = 0; i < 5; i++) {
-            load_state[i] = (uiSwitchValue >> i) & 0x1;
+        if (maintenance_flag == 1){
+			for (int i = 0; i < 5; i++) {
+				load_state[i] = (uiSwitchValue >> i) & 0x1;
+			}
         }
-        IOWR_ALTERA_AVALON_PIO_DATA(RED_LEDS_BASE, uiSwitchValue);
+        //IOWR_ALTERA_AVALON_PIO_DATA(RED_LEDS_BASE, uiSwitchValue);
         vTaskDelay(pdMS_TO_TICKS(100));
     }
 }
@@ -291,14 +346,14 @@ static void PRVGADraw_Task(void *pvParameters ) {
         }
         alt_up_char_buffer_string(char_buf, bfr_c, 35, 48);
 
-        alt_up_char_buffer_string(char_buf, "Load state: ", 35, 52); 
+        alt_up_char_buffer_string(char_buf, "Load state: ", 35, 52);
         for (int i = 0; i < 5; i++) {
           if (load_state[i] == 1) {
             sprintf(bfr_c, "Load %d: ON ", i);
           } else {
             sprintf(bfr_c, "Load %d: OFF", i);
           }
-          alt_up_char_buffer_string(char_buf, bfr_c, 35, 54 + i*2);
+          alt_up_char_buffer_string(char_buf, bfr_c, 5 + i*15, 54);
         }
 
         vTaskDelay(10);
@@ -315,31 +370,30 @@ static void LCD_task(void *pvParameters) {
 //		printf("prev_freq: %f Hz\n", old_frequency);
 //		printf("roc:       %f Hz\n", roc_frequency);
 //		printf("stability flag: %d\n", stability_flag);
-		vTaskDelay(100);
+        vTaskDelay(pdMS_TO_TICKS(100));
 	}
 }
 
-void Timer_Reset_Task(void *pvParameters ){
-  while (1) {
-    if (timer_reset == 1) {
-      printf("In reset task\n");
-      xTimerReset(timer, 10);
-      timer_reset = 0;
-    }
-  }
+void Timer_Reset_Task(void *pvParameters ){ //reset timer if any of the push button is pressed
+	while(1){
+		if (timer500_flag == 1){
+			xTimerReset( timer, 10 );
+			timer500_flag = 0;
+		}
+
+	}
 }
 
-void vTimerCallback(xTimerHandle t_timer) {
-  timer500_flag = 1;
+
+void vTimerCallback(xTimerHandle t_timer){ //Timer flashes green LEDs
+	//IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0xFF^IORD_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE));
+	timer500_flag = 1;
+    xSemaphoreGiveFromISR(xTimerSemaphore, NULL);
 }
+
 
 int main(void) {
-  Q_freq_data = xQueueCreate(100, sizeof(double));
-  timer = xTimerCreate("Timer Name", 500, pdTRUE, NULL, vTimerCallback);
-  alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_isr);
-  IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE, 0x7);
-  IOWR_ALTERA_AVALON_PIO_IRQ_MASK(PUSH_BUTTON_BASE, 0x7);
-  alt_irq_register(PUSH_BUTTON_IRQ, 0, button_isr);
+
 
   stabilityTaskQueue = xQueueCreate(100, sizeof(double));
   loadMonitorTaskQueue = xQueueCreate(100, sizeof(int));
@@ -349,7 +403,20 @@ int main(void) {
   xTaskCreate(pollingSwitchsTask, "pollingSwitchsTask", TASK_STACKSIZE, NULL, SWITCHES_PRIORITY, &pollingSwitchsTaskHandle);
   xTaskCreate(LCD_task, "LCD_task", TASK_STACKSIZE, NULL, DISPLAY_PRIORITY, &LCD_handle);
   xTaskCreate(PRVGADraw_Task, "DrawTsk", TASK_STACKSIZE, NULL, DISPLAY_PRIORITY, &PRVGADraw);
-  xTaskCreate(Timer_Reset_Task, "0", configMINIMAL_STACK_SIZE, NULL, TIMER_RESET_PRIORITY, &Timer_Reset);
+  xTaskCreate( Timer_Reset_Task, "0", configMINIMAL_STACK_SIZE, NULL, Timer_Reset_Task_P, &Timer_Reset );
+
+  xTimerSemaphore = xSemaphoreCreateBinary();
+
+  timer = xTimerCreate("Timer Name", 500, pdTRUE, NULL, vTimerCallback);
+  timer500_flag = 1;
+
+  Q_freq_data = xQueueCreate(100, sizeof(double));
+  alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_isr);
+  IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE, 0x7);
+  IOWR_ALTERA_AVALON_PIO_IRQ_MASK(PUSH_BUTTON_BASE, 0x7);
+  alt_irq_register(PUSH_BUTTON_IRQ, 0, button_isr);
+  IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0x00000000);
+
   vTaskStartScheduler();
   while (1);
 }
