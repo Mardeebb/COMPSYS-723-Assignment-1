@@ -9,10 +9,15 @@ obj/default/main.o: main.c ../Ass_1_bsp//HAL/inc/sys/alt_irq.h \
  ../Ass_1_bsp//HAL/inc/sys/alt_llist.h \
  ../Ass_1_bsp//HAL/inc/priv/alt_dev_llist.h \
  ../Ass_1_bsp//drivers/inc/altera_up_avalon_video_pixel_buffer_dma.h \
- freertos/FreeRTOS.h freertos/FreeRTOSConfig.h freertos/projdefs.h \
- freertos/portable.h freertos/deprecated_definitions.h \
- freertos/portmacro.h freertos/mpu_wrappers.h freertos/task.h \
- freertos/list.h freertos/queue.h FreeRTOS/timers.h FreeRTOS/task.h
+ ../Ass_1_bsp//HAL/inc/sys/alt_alarm.h \
+ ../Ass_1_bsp//HAL/inc/sys/alt_llist.h \
+ ../Ass_1_bsp//HAL/inc/priv/alt_alarm.h \
+ ../Ass_1_bsp//drivers/inc/altera_avalon_uart_regs.h FreeRTOS/FreeRTOS.h \
+ FreeRTOS/FreeRTOSConfig.h FreeRTOS/projdefs.h FreeRTOS/portable.h \
+ FreeRTOS/deprecated_definitions.h FreeRTOS/portmacro.h \
+ FreeRTOS/mpu_wrappers.h FreeRTOS/task.h FreeRTOS/list.h FreeRTOS/queue.h \
+ FreeRTOS/timers.h FreeRTOS/task.h FreeRTOS/portable.h \
+ FreeRTOS/portmacro.h FreeRTOS/semphr.h FreeRTOS/queue.h
 
 ../Ass_1_bsp//HAL/inc/sys/alt_irq.h:
 
@@ -42,26 +47,42 @@ obj/default/main.o: main.c ../Ass_1_bsp//HAL/inc/sys/alt_irq.h \
 
 ../Ass_1_bsp//drivers/inc/altera_up_avalon_video_pixel_buffer_dma.h:
 
-freertos/FreeRTOS.h:
+../Ass_1_bsp//HAL/inc/sys/alt_alarm.h:
 
-freertos/FreeRTOSConfig.h:
+../Ass_1_bsp//HAL/inc/sys/alt_llist.h:
 
-freertos/projdefs.h:
+../Ass_1_bsp//HAL/inc/priv/alt_alarm.h:
 
-freertos/portable.h:
+../Ass_1_bsp//drivers/inc/altera_avalon_uart_regs.h:
 
-freertos/deprecated_definitions.h:
+FreeRTOS/FreeRTOS.h:
 
-freertos/portmacro.h:
+FreeRTOS/FreeRTOSConfig.h:
 
-freertos/mpu_wrappers.h:
+FreeRTOS/projdefs.h:
 
-freertos/task.h:
+FreeRTOS/portable.h:
 
-freertos/list.h:
+FreeRTOS/deprecated_definitions.h:
 
-freertos/queue.h:
+FreeRTOS/portmacro.h:
+
+FreeRTOS/mpu_wrappers.h:
+
+FreeRTOS/task.h:
+
+FreeRTOS/list.h:
+
+FreeRTOS/queue.h:
 
 FreeRTOS/timers.h:
 
 FreeRTOS/task.h:
+
+FreeRTOS/portable.h:
+
+FreeRTOS/portmacro.h:
+
+FreeRTOS/semphr.h:
+
+FreeRTOS/queue.h:
