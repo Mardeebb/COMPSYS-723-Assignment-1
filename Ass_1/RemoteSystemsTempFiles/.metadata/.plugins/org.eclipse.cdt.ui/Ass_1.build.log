@@ -1,4 +1,4 @@
-15:52:52 **** Incremental Build of configuration Nios II for project Ass_1 ****
+16:59:30 **** Incremental Build of configuration Nios II for project Ass_1 ****
 make all 
 Info: Building ../Ass_1_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
@@ -29,15 +29,15 @@ main.c: In function 'stabilityMonitorTask':
 FreeRTOS/queue.h:814:91: warning: passing argument 2 of 'xQueueGenericReceive' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
  #define xQueueReceive( xQueue, pvBuffer, xTicksToWait ) xQueueGenericReceive( ( xQueue ), ( pvBuffer ), ( xTicksToWait ), pdFALSE )
                                                                                            ^
-main.c:100:13: note: in expansion of macro 'xQueueReceive'
+main.c:113:13: note: in expansion of macro 'xQueueReceive'
          if (xQueueReceive(stabilityTaskQueue, &frequency, portMAX_DELAY)) {
              ^
 FreeRTOS/queue.h:913:12: note: expected 'void * const' but argument is of type 'volatile double *'
  BaseType_t xQueueGenericReceive( QueueHandle_t xQueue, void * const pvBuffer, TickType_t xTicksToWait, const BaseType_t xJustPeek ) PRIVILEGED_FUNCTION;
             ^
 main.c: In function 'PRVGADraw_Task':
-main.c:212:6: warning: operation on 'i' may be undefined [-Wsequence-point]
-    i = ++i%100;
+main.c:221:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i % 100;
       ^
 Info: Linking Ass_1.elf
 nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
@@ -48,5 +48,5 @@ Info: Creating Ass_1.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
 [Ass_1 build complete]
 
-15:52:53 Build Finished (took 1s.653ms)
+16:59:31 Build Finished (took 1s.604ms)
 

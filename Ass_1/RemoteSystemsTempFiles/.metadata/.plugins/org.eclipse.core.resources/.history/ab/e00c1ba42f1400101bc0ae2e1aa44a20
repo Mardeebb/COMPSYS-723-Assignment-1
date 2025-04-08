@@ -46,8 +46,8 @@
 #define ROCPLT_ROC_RES 0.5		//number of pixels per Hz/s (y axis scale)
 
 #define MIN_FREQ 45.0
-#define ROC_TH 5.0
-#define RFREQ_TH 50.0
+#define ROC_TH 15.0
+#define RFREQ_TH 45.0
 
 static void stabilityMonitorTask(void *pvParameters);
 static void LCD_task(void *pvParameters);
@@ -81,7 +81,7 @@ uint8_t timer500_flag = 0;
 uint8_t freq_update = 1;
 uint8_t stability_flag = 1;
 uint8_t timer_reset = 0;
-uint8_t maintenance_flag = 0;
+
 
 void freq_relay_isr(){
 	unsigned int samples = IORD(FREQUENCY_ANALYSER_BASE, 0);
@@ -95,23 +95,11 @@ void freq_relay_isr(){
 	return;
 }
 
-void button_isr() {
-	if (maintenance_flag == 1) {
-		maintenance_flag = 0;
-	    IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0x9ABCDEF0);
-	}else {
-		maintenance_flag = 1;
-	    IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0x12345678);
-	}
-	IORD_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE);
-	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE, 0x7);
-	return;
-}
-
 static void stabilityMonitorTask(void *pvParameters) {
 	while(1) {
         if (xQueueReceive(stabilityTaskQueue, &frequency, portMAX_DELAY)) {
-        	if (frequency > 51 || frequency < 50 || roc_frequency > 5) {
+    		//printf("In stability task\n");
+        	if (frequency >= 51 || frequency < 50 || roc_frequency > 5) {
         		stability_flag = 0;
         		xQueueSend(loadMonitorTaskQueue, &stability_flag, portMAX_DELAY);
         		xTaskNotifyGive(loadMonitorTaskHandle);
@@ -127,13 +115,16 @@ static void loadMonitorTask(void *pvParameters) {
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 
 		if (xQueueReceive(loadMonitorTaskQueue, &stability_flag, portMAX_DELAY)) {
+			//printf("In load task\n");
 		    if (xTimerStart(timer, 0) != pdPASS) {
+		        // If the timer fails to start
 		        printf("Cannot start timer\n");
 		        return;
 		    }
 
 			if (timer500_flag && !stability_flag) {
 				for (int i = 4; i >= 0; i--) {
+				//	printf("checking load: %i it is state %i\n",i,load_state[i]);
 					if (load_state[i] == 1) {
 						load_state[i] = 0;
 						loads_active_flag = 1;
@@ -145,6 +136,7 @@ static void loadMonitorTask(void *pvParameters) {
 			}
 			if (timer500_flag && stability_flag) {
 				for (int i = 0; i <= 4; i++) {
+				//	printf("checking load (stable): %i it is state %i\n",i,load_state[i]);
 					if (load_state[i] == 0) {
 						load_state[i] = 1;
 						loads_active_flag = 1;
@@ -158,6 +150,7 @@ static void loadMonitorTask(void *pvParameters) {
 }
 
 static void pollingSwitchsTask(void *pvParameters) {
+	//printf("In Switchs task\n");
 	unsigned int uiSwitchValue = 0;
 	while (1) {
 	    uiSwitchValue = IORD_ALTERA_AVALON_PIO_DATA(SLIDE_SWITCH_BASE);
@@ -197,9 +190,6 @@ static void PRVGADraw_Task(void *pvParameters ) {
 	alt_up_char_buffer_string(char_buf, "60", 10, 28);
 	alt_up_char_buffer_string(char_buf, "30", 10, 30);
 	alt_up_char_buffer_string(char_buf, "0", 10, 32);
-	alt_up_char_buffer_string(char_buf, "0", 10, 32);
-	alt_up_char_buffer_string(char_buf, "-30", 9, 34);
-	alt_up_char_buffer_string(char_buf, "-60", 9, 36);
 
 	double freq[100], dfreq[100];
 	int i = 99, j = 0;
@@ -218,7 +208,7 @@ static void PRVGADraw_Task(void *pvParameters ) {
 			if (dfreq[i] > 100.0){
 				dfreq[i] = 100.0;
 			}
-			i =	++i % 100;
+			i =	++i%100;
 		}
 		alt_up_pixel_buffer_dma_draw_box(pixel_buf, 101, 0, 639, 199, 0, 0);
 		alt_up_pixel_buffer_dma_draw_box(pixel_buf, 101, 201, 639, 299, 0, 0);
@@ -263,7 +253,7 @@ static void PRVGADraw_Task(void *pvParameters ) {
 		if (stability_flag == 1) {
 			alt_up_char_buffer_string(char_buf, "    Stable	   ", 30, 42);
 		} else {
-			alt_up_char_buffer_string(char_buf, " Not Stable   ", 30, 42);
+			alt_up_char_buffer_string(char_buf, "Not Stable", 30, 42);
 		}
 		vTaskDelay(10);
 	}
@@ -300,9 +290,6 @@ int main(void) {
 	Q_freq_data = xQueueCreate( 100, sizeof(double) );
 	timer = xTimerCreate("Timer Name", 500, pdTRUE, NULL, vTimerCallback);
 	alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_isr);
-	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE, 0x7);
-	IOWR_ALTERA_AVALON_PIO_IRQ_MASK(PUSH_BUTTON_BASE, 0x7);
-	alt_irq_register(PUSH_BUTTON_IRQ,0, button_isr);
 
 	stabilityTaskQueue = xQueueCreate(5, sizeof(double));
 	loadMonitorTaskQueue = xQueueCreate(5, sizeof(int));

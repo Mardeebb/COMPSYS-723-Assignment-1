@@ -98,7 +98,7 @@ void freq_relay_isr(){
 void button_isr() {
 	if (maintenance_flag == 1) {
 		maintenance_flag = 0;
-	    IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0x9ABCDEF0);
+	    IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0xFAAACCCC);
 	}else {
 		maintenance_flag = 1;
 	    IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0x12345678);

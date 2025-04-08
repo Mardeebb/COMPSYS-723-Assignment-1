@@ -95,16 +95,14 @@ void freq_relay_isr(){
 	return;
 }
 
-void button_isr() {
+void button_isr(void* context) {
 	if (maintenance_flag == 1) {
 		maintenance_flag = 0;
-	    IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0x9ABCDEF0);
+	    IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0xFAAACCCC);
 	}else {
 		maintenance_flag = 1;
 	    IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0x12345678);
 	}
-	IORD_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE);
-	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE, 0x7);
 	return;
 }
 
@@ -300,9 +298,7 @@ int main(void) {
 	Q_freq_data = xQueueCreate( 100, sizeof(double) );
 	timer = xTimerCreate("Timer Name", 500, pdTRUE, NULL, vTimerCallback);
 	alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_isr);
-	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE, 0x7);
-	IOWR_ALTERA_AVALON_PIO_IRQ_MASK(PUSH_BUTTON_BASE, 0x7);
-	alt_irq_register(PUSH_BUTTON_IRQ,0, button_isr);
+	alt_irq_register(PUSH_BUTTON_IRQ, 0, button_isr);
 
 	stabilityTaskQueue = xQueueCreate(5, sizeof(double));
 	loadMonitorTaskQueue = xQueueCreate(5, sizeof(int));
