@@ -635,3 +635,464 @@ Info:             130561 KBytes free for stack + heap.
 Info: Creating Ass_1.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
 [Ass_1 build complete]
+12:33:52 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:134:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+main.c:178:4: warning: implicit declaration of function 'alt_up_char_buffer_set_foreground_color' [-Wimplicit-function-declaration]
+    alt_up_char_buffer_set_foreground_color(char_buf, 0x07E0); // Green
+    ^
+main.c:174:8: warning: unused variable 'stability_flag_str' [-Wunused-variable]
+   char stability_flag_str[20];
+        ^
+In file included from main.c:17:0:
+main.c: In function 'freq_relay_irq':
+freertos/queue.h:1100:123: warning: passing argument 2 of 'xQueueGenericSendFromISR' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSendToBackFromISR( xQueue, pvItemToQueue, pxHigherPriorityTaskWoken ) xQueueGenericSendFromISR( ( xQueue ), ( pvItemToQueue ), ( pxHigherPriorityTaskWoken ), queueSEND_TO_BACK )
+                                                                                                                           ^
+main.c:197:2: note: in expansion of macro 'xQueueSendToBackFromISR'
+  xQueueSendToBackFromISR( Q_freq_data, &crnt_freq, pdFALSE );
+  ^
+freertos/queue.h:1340:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSendFromISR( QueueHandle_t xQueue, const void * const pvItemToQueue, BaseType_t * const pxHigherPriorityTaskWoken, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+obj/default/main.o: In function `PRVGADraw_Task':
+C:\Users\tcas362\Documents\GitHub\COMPSYS-723-Assignment-1\Ass_1\software\Ass_1/main.c:178: undefined reference to `alt_up_char_buffer_set_foreground_color'
+C:\Users\tcas362\Documents\GitHub\COMPSYS-723-Assignment-1\Ass_1\software\Ass_1/main.c:182: undefined reference to `alt_up_char_buffer_set_foreground_color'
+collect2.exe: error: ld returned 1 exit status
+make: *** [Ass_1.elf] Error 1
+12:37:22 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:133:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+In file included from main.c:17:0:
+main.c: In function 'freq_relay_irq':
+freertos/queue.h:1100:123: warning: passing argument 2 of 'xQueueGenericSendFromISR' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSendToBackFromISR( xQueue, pvItemToQueue, pxHigherPriorityTaskWoken ) xQueueGenericSendFromISR( ( xQueue ), ( pvItemToQueue ), ( pxHigherPriorityTaskWoken ), queueSEND_TO_BACK )
+                                                                                                                           ^
+main.c:174:2: note: in expansion of macro 'xQueueSendToBackFromISR'
+  xQueueSendToBackFromISR( Q_freq_data, &crnt_freq, pdFALSE );
+  ^
+freertos/queue.h:1340:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSendFromISR( QueueHandle_t xQueue, const void * const pvItemToQueue, BaseType_t * const pxHigherPriorityTaskWoken, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 618 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+12:38:48 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:133:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+main.c:172:8: warning: unused variable 'stability_flag_str' [-Wunused-variable]
+   char stability_flag_str[20];
+        ^
+In file included from main.c:17:0:
+main.c: In function 'freq_relay_irq':
+freertos/queue.h:1100:123: warning: passing argument 2 of 'xQueueGenericSendFromISR' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSendToBackFromISR( xQueue, pvItemToQueue, pxHigherPriorityTaskWoken ) xQueueGenericSendFromISR( ( xQueue ), ( pvItemToQueue ), ( pxHigherPriorityTaskWoken ), queueSEND_TO_BACK )
+                                                                                                                           ^
+main.c:193:2: note: in expansion of macro 'xQueueSendToBackFromISR'
+  xQueueSendToBackFromISR( Q_freq_data, &crnt_freq, pdFALSE );
+  ^
+freertos/queue.h:1340:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSendFromISR( QueueHandle_t xQueue, const void * const pvItemToQueue, BaseType_t * const pxHigherPriorityTaskWoken, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 632 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+12:42:54 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:133:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+main.c:172:8: warning: unused variable 'stability_flag_str' [-Wunused-variable]
+   char stability_flag_str[20];
+        ^
+In file included from main.c:17:0:
+main.c: In function 'freq_relay_irq':
+freertos/queue.h:1100:123: warning: passing argument 2 of 'xQueueGenericSendFromISR' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSendToBackFromISR( xQueue, pvItemToQueue, pxHigherPriorityTaskWoken ) xQueueGenericSendFromISR( ( xQueue ), ( pvItemToQueue ), ( pxHigherPriorityTaskWoken ), queueSEND_TO_BACK )
+                                                                                                                           ^
+main.c:193:2: note: in expansion of macro 'xQueueSendToBackFromISR'
+  xQueueSendToBackFromISR( Q_freq_data, &crnt_freq, pdFALSE );
+  ^
+freertos/queue.h:1340:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSendFromISR( QueueHandle_t xQueue, const void * const pvItemToQueue, BaseType_t * const pxHigherPriorityTaskWoken, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 632 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+12:46:08 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:133:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+main.c:172:8: warning: unused variable 'stability_flag_str' [-Wunused-variable]
+   char stability_flag_str[20];
+        ^
+In file included from main.c:17:0:
+main.c: In function 'freq_relay_irq':
+freertos/queue.h:1100:123: warning: passing argument 2 of 'xQueueGenericSendFromISR' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSendToBackFromISR( xQueue, pvItemToQueue, pxHigherPriorityTaskWoken ) xQueueGenericSendFromISR( ( xQueue ), ( pvItemToQueue ), ( pxHigherPriorityTaskWoken ), queueSEND_TO_BACK )
+                                                                                                                           ^
+main.c:193:2: note: in expansion of macro 'xQueueSendToBackFromISR'
+  xQueueSendToBackFromISR( Q_freq_data, &crnt_freq, pdFALSE );
+  ^
+freertos/queue.h:1340:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSendFromISR( QueueHandle_t xQueue, const void * const pvItemToQueue, BaseType_t * const pxHigherPriorityTaskWoken, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 632 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+12:47:28 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:133:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+main.c:172:8: warning: unused variable 'stability_flag_str' [-Wunused-variable]
+   char stability_flag_str[20];
+        ^
+In file included from main.c:17:0:
+main.c: In function 'freq_relay_irq':
+freertos/queue.h:1100:123: warning: passing argument 2 of 'xQueueGenericSendFromISR' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSendToBackFromISR( xQueue, pvItemToQueue, pxHigherPriorityTaskWoken ) xQueueGenericSendFromISR( ( xQueue ), ( pvItemToQueue ), ( pxHigherPriorityTaskWoken ), queueSEND_TO_BACK )
+                                                                                                                           ^
+main.c:193:2: note: in expansion of macro 'xQueueSendToBackFromISR'
+  xQueueSendToBackFromISR( Q_freq_data, &crnt_freq, pdFALSE );
+  ^
+freertos/queue.h:1340:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSendFromISR( QueueHandle_t xQueue, const void * const pvItemToQueue, BaseType_t * const pxHigherPriorityTaskWoken, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 632 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+12:49:14 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:106:2: error: too many arguments to function 'alt_up_char_buffer_string'
+  alt_up_char_buffer_string(char_buf, "0", 10, 32, 0x3ff, 0);
+  ^
+In file included from main.c:12:0:
+../Ass_1_bsp//drivers/inc/altera_up_avalon_video_character_buffer_with_dma.h:83:5: note: declared here
+ int alt_up_char_buffer_string(alt_up_char_buffer_dev *char_buffer, const char *ptr, 
+     ^
+main.c:133:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+main.c:172:8: warning: unused variable 'stability_flag_str' [-Wunused-variable]
+   char stability_flag_str[20];
+        ^
+In file included from main.c:17:0:
+main.c: In function 'freq_relay_irq':
+freertos/queue.h:1100:123: warning: passing argument 2 of 'xQueueGenericSendFromISR' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSendToBackFromISR( xQueue, pvItemToQueue, pxHigherPriorityTaskWoken ) xQueueGenericSendFromISR( ( xQueue ), ( pvItemToQueue ), ( pxHigherPriorityTaskWoken ), queueSEND_TO_BACK )
+                                                                                                                           ^
+main.c:193:2: note: in expansion of macro 'xQueueSendToBackFromISR'
+  xQueueSendToBackFromISR( Q_freq_data, &crnt_freq, pdFALSE );
+  ^
+freertos/queue.h:1340:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSendFromISR( QueueHandle_t xQueue, const void * const pvItemToQueue, BaseType_t * const pxHigherPriorityTaskWoken, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+make: *** [obj/default/main.o] Error 1
+12:49:51 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:133:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+main.c:172:8: warning: unused variable 'stability_flag_str' [-Wunused-variable]
+   char stability_flag_str[20];
+        ^
+In file included from main.c:17:0:
+main.c: In function 'freq_relay_irq':
+freertos/queue.h:1100:123: warning: passing argument 2 of 'xQueueGenericSendFromISR' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSendToBackFromISR( xQueue, pvItemToQueue, pxHigherPriorityTaskWoken ) xQueueGenericSendFromISR( ( xQueue ), ( pvItemToQueue ), ( pxHigherPriorityTaskWoken ), queueSEND_TO_BACK )
+                                                                                                                           ^
+main.c:193:2: note: in expansion of macro 'xQueueSendToBackFromISR'
+  xQueueSendToBackFromISR( Q_freq_data, &crnt_freq, pdFALSE );
+  ^
+freertos/queue.h:1340:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSendFromISR( QueueHandle_t xQueue, const void * const pvItemToQueue, BaseType_t * const pxHigherPriorityTaskWoken, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 632 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+12:51:14 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:133:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+main.c:172:8: warning: unused variable 'stability_flag_str' [-Wunused-variable]
+   char stability_flag_str[20];
+        ^
+In file included from main.c:17:0:
+main.c: In function 'freq_relay_irq':
+freertos/queue.h:1100:123: warning: passing argument 2 of 'xQueueGenericSendFromISR' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSendToBackFromISR( xQueue, pvItemToQueue, pxHigherPriorityTaskWoken ) xQueueGenericSendFromISR( ( xQueue ), ( pvItemToQueue ), ( pxHigherPriorityTaskWoken ), queueSEND_TO_BACK )
+                                                                                                                           ^
+main.c:193:2: note: in expansion of macro 'xQueueSendToBackFromISR'
+  xQueueSendToBackFromISR( Q_freq_data, &crnt_freq, pdFALSE );
+  ^
+freertos/queue.h:1340:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSendFromISR( QueueHandle_t xQueue, const void * const pvItemToQueue, BaseType_t * const pxHigherPriorityTaskWoken, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 632 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+12:53:55 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:133:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+main.c:172:8: warning: unused variable 'stability_flag_str' [-Wunused-variable]
+   char stability_flag_str[20];
+        ^
+In file included from main.c:17:0:
+main.c: In function 'freq_relay_irq':
+freertos/queue.h:1100:123: warning: passing argument 2 of 'xQueueGenericSendFromISR' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSendToBackFromISR( xQueue, pvItemToQueue, pxHigherPriorityTaskWoken ) xQueueGenericSendFromISR( ( xQueue ), ( pvItemToQueue ), ( pxHigherPriorityTaskWoken ), queueSEND_TO_BACK )
+                                                                                                                           ^
+main.c:193:2: note: in expansion of macro 'xQueueSendToBackFromISR'
+  xQueueSendToBackFromISR( Q_freq_data, &crnt_freq, pdFALSE );
+  ^
+freertos/queue.h:1340:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSendFromISR( QueueHandle_t xQueue, const void * const pvItemToQueue, BaseType_t * const pxHigherPriorityTaskWoken, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 632 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+12:55:48 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:133:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+main.c:172:8: warning: unused variable 'stability_flag_str' [-Wunused-variable]
+   char stability_flag_str[20];
+        ^
+In file included from main.c:17:0:
+main.c: In function 'freq_relay_irq':
+freertos/queue.h:1100:123: warning: passing argument 2 of 'xQueueGenericSendFromISR' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSendToBackFromISR( xQueue, pvItemToQueue, pxHigherPriorityTaskWoken ) xQueueGenericSendFromISR( ( xQueue ), ( pvItemToQueue ), ( pxHigherPriorityTaskWoken ), queueSEND_TO_BACK )
+                                                                                                                           ^
+main.c:193:2: note: in expansion of macro 'xQueueSendToBackFromISR'
+  xQueueSendToBackFromISR( Q_freq_data, &crnt_freq, pdFALSE );
+  ^
+freertos/queue.h:1340:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSendFromISR( QueueHandle_t xQueue, const void * const pvItemToQueue, BaseType_t * const pxHigherPriorityTaskWoken, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 632 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+12:56:45 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:133:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+main.c:172:8: warning: unused variable 'stability_flag_str' [-Wunused-variable]
+   char stability_flag_str[20];
+        ^
+In file included from main.c:17:0:
+main.c: In function 'freq_relay_irq':
+freertos/queue.h:1100:123: warning: passing argument 2 of 'xQueueGenericSendFromISR' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSendToBackFromISR( xQueue, pvItemToQueue, pxHigherPriorityTaskWoken ) xQueueGenericSendFromISR( ( xQueue ), ( pvItemToQueue ), ( pxHigherPriorityTaskWoken ), queueSEND_TO_BACK )
+                                                                                                                           ^
+main.c:193:2: note: in expansion of macro 'xQueueSendToBackFromISR'
+  xQueueSendToBackFromISR( Q_freq_data, &crnt_freq, pdFALSE );
+  ^
+freertos/queue.h:1340:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSendFromISR( QueueHandle_t xQueue, const void * const pvItemToQueue, BaseType_t * const pxHigherPriorityTaskWoken, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 632 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+12:59:07 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:133:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+main.c:180:8: warning: unused variable 'stability_flag_str' [-Wunused-variable]
+   char stability_flag_str[20];
+        ^
+In file included from main.c:17:0:
+main.c: In function 'freq_relay_irq':
+freertos/queue.h:1100:123: warning: passing argument 2 of 'xQueueGenericSendFromISR' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSendToBackFromISR( xQueue, pvItemToQueue, pxHigherPriorityTaskWoken ) xQueueGenericSendFromISR( ( xQueue ), ( pvItemToQueue ), ( pxHigherPriorityTaskWoken ), queueSEND_TO_BACK )
+                                                                                                                           ^
+main.c:201:2: note: in expansion of macro 'xQueueSendToBackFromISR'
+  xQueueSendToBackFromISR( Q_freq_data, &crnt_freq, pdFALSE );
+  ^
+freertos/queue.h:1340:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSendFromISR( QueueHandle_t xQueue, const void * const pvItemToQueue, BaseType_t * const pxHigherPriorityTaskWoken, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 632 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+13:00:15 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'PRVGADraw_Task':
+main.c:133:6: warning: operation on 'i' may be undefined [-Wsequence-point]
+    i = ++i%100; //point to the next data (oldest) to be overwritten
+      ^
+main.c:180:8: warning: unused variable 'stability_flag_str' [-Wunused-variable]
+   char stability_flag_str[20];
+        ^
+In file included from main.c:17:0:
+main.c: In function 'freq_relay_irq':
+freertos/queue.h:1100:123: warning: passing argument 2 of 'xQueueGenericSendFromISR' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSendToBackFromISR( xQueue, pvItemToQueue, pxHigherPriorityTaskWoken ) xQueueGenericSendFromISR( ( xQueue ), ( pvItemToQueue ), ( pxHigherPriorityTaskWoken ), queueSEND_TO_BACK )
+                                                                                                                           ^
+main.c:201:2: note: in expansion of macro 'xQueueSendToBackFromISR'
+  xQueueSendToBackFromISR( Q_freq_data, &crnt_freq, pdFALSE );
+  ^
+freertos/queue.h:1340:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSendFromISR( QueueHandle_t xQueue, const void * const pvItemToQueue, BaseType_t * const pxHigherPriorityTaskWoken, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 632 KBytes program size (code + initialized data).
+Info:             130561 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]

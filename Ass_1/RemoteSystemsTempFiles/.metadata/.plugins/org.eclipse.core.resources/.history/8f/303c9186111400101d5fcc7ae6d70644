@@ -90,9 +90,9 @@ void PRVGADraw_Task(void *pvParameters ){
 
 	//Set up plot axes
 	alt_up_pixel_buffer_dma_draw_hline(pixel_buf, 100, 590, 200, ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
-	alt_up_pixel_buffer_dma_draw_hline(pixel_buf, 100, 590, 265, ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
-	alt_up_pixel_buffer_dma_draw_vline(pixel_buf, 100, 50, 200,  ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
-	alt_up_pixel_buffer_dma_draw_vline(pixel_buf, 100, 220, 265, ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
+	alt_up_pixel_buffer_dma_draw_hline(pixel_buf, 100, 590, 300, ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
+	alt_up_pixel_buffer_dma_draw_vline(pixel_buf, 100, 50, 200, ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
+	alt_up_pixel_buffer_dma_draw_vline(pixel_buf, 100, 220, 300, ((0x3ff << 20) + (0x3ff << 10) + (0x3ff)), 0);
 
 	alt_up_char_buffer_string(char_buf, "Frequency(Hz)", 4, 4);
 	alt_up_char_buffer_string(char_buf, "52", 10, 7);
@@ -109,6 +109,9 @@ void PRVGADraw_Task(void *pvParameters ){
 	int i = 99, j = 0;
 	Line line_freq, line_roc;
 
+	// Assuming stability_flag is defined somewhere in your code
+	int stability_flag = 1; // Example value; change based on your logic
+
 	while(1){
 
 		//receive frequency data from queue
@@ -116,7 +119,6 @@ void PRVGADraw_Task(void *pvParameters ){
 			xQueueReceive( Q_freq_data, freq+i, 0 );
 
 			//calculate frequency RoC
-
 			if(i==0){
 				dfreq[0] = (freq[0]-freq[99]) * 2.0 * freq[0] * freq[99] / (freq[0]+freq[99]);
 			}
@@ -128,7 +130,6 @@ void PRVGADraw_Task(void *pvParameters ){
 			if (dfreq[i] > 100.0){
 				dfreq[i] = 100.0;
 			}
-
 
 			i =	++i%100; //point to the next data (oldest) to be overwritten
 
@@ -156,40 +157,35 @@ void PRVGADraw_Task(void *pvParameters ){
 				line_roc.y2 = (int)(ROCPLT_ORI_Y - ROCPLT_ROC_RES * dfreq[(i+j+1)%100]);
 
 				//Draw
-				if (stability_flag == 1) {
-					alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_freq.x1, line_freq.y1, line_freq.x2, line_freq.y2, 0x3ff << 0, 0);
-					alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_roc.x1, line_roc.y1, line_roc.x2, line_roc.y2, 0x3ff << 0, 0);
-				} else {
-					alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_freq.x1, line_freq.y1, line_freq.x2, line_freq.y2, 0xF800 << 0, 0);
-					alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_roc.x1, line_roc.y1, line_roc.x2, line_roc.y2, 0xF800 << 0, 0);
-
-				}
-				//(pixel_buf, line_freq.x1, line_freq.y1, line_freq.x2, line_freq.y2, 0x3ff << 0, 0);
-				//alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_roc.x1, line_roc.y1, line_roc.x2, line_roc.y2, 0x3ff << 0, 0);
+				alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_freq.x1, line_freq.y1, line_freq.x2, line_freq.y2, 0x3ff << 0, 0);
+				alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_roc.x1, line_roc.y1, line_roc.x2, line_roc.y2, 0x3ff << 0, 0);
 			}
 		}
+
 		// Display ROC_TH and RFREQ_TH
 		char roc_th_str[20], rfreq_th_str[20];
 		sprintf(roc_th_str, "ROC_TH: %.4f", ROC_TH);
 		sprintf(rfreq_th_str, "RFREQ_TH: %.1f", RFREQ_TH);
 
-		alt_up_char_buffer_string(char_buf, roc_th_str, 10, 36); // Adjust y position as needed
-		alt_up_char_buffer_string(char_buf, rfreq_th_str, 10, 38); // Adjust y position as needed
+		alt_up_char_buffer_string(char_buf, roc_th_str, 10, 34); // Adjust y position as needed
+		alt_up_char_buffer_string(char_buf, rfreq_th_str, 10, 36); // Adjust y position as needed
 
 		// Display stability flag (green or red)
 		char stability_flag_str[20];
 		if (stability_flag == 1) {
 			// Green text
-			alt_up_char_buffer_string(char_buf, "Stability: OK  ", 10, 40); // Adjust y position as needed
-			//alt_up_char_buffer_set_foreground_color(char_buf, 0x07E0); // Green
+			alt_up_char_buffer_string(char_buf, "Stability: OK", 10, 38); // Adjust y position as needed
+			alt_up_char_buffer_set_foreground_color(char_buf, 0x07E0); // Green
 		} else {
 			// Red text
-			alt_up_char_buffer_string(char_buf, "Stability: FAIL", 10, 40); // Adjust y position as needed
-			//alt_up_char_buffer_set_foreground_color(char_buf, 0xF800); // Red
+			alt_up_char_buffer_string(char_buf, "Stability: FAIL", 10, 38); // Adjust y position as needed
+			alt_up_char_buffer_set_foreground_color(char_buf, 0xF800); // Red
 		}
+
 		vTaskDelay(10);
 	}
 }
+
 
 void freq_relay_irq(){
 	#define SAMPLING_FREQ 16000.0
@@ -244,7 +240,7 @@ static void LCD_task(void *pvParameters) {
 
 int main(void) {
 	Q_freq_data = xQueueCreate( 100, sizeof(double) );
-	timer = xTimerCreate("Timer Name", 500, pdTRUE, NULL, vTimerCallback);
+	timer = xTimerCreate("Timer Name", 5, pdTRUE, NULL, vTimerCallback);
 	alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_irq);
 	IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0x55);
 

@@ -867,3 +867,111 @@ java.lang.Exception: Connected system ID hash not found on target at expected ba
 
 !ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:07:05.612
 !MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --sidp=0x430f0 --id=0x7 --timestamp=1393900972 /cygdrive/c/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1/Ass_1.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:37:27.982
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:37:28.533
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --sidp=0x430f0 --id=0x7 --timestamp=1393900972]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:37:31.003
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --sidp=0x430f0 --id=0x7 --timestamp=1393900972 /cygdrive/c/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1/Ass_1.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:38:50.602
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:38:51.118
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --sidp=0x430f0 --id=0x7 --timestamp=1393900972]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:38:53.605
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --sidp=0x430f0 --id=0x7 --timestamp=1393900972 /cygdrive/c/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1/Ass_1.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:43:01.962
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:43:02.471
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --sidp=0x430f0 --id=0x7 --timestamp=1393900972]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:43:04.947
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --sidp=0x430f0 --id=0x7 --timestamp=1393900972 /cygdrive/c/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1/Ass_1.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:46:10.589
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:46:11.100
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --sidp=0x430f0 --id=0x7 --timestamp=1393900972]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:46:13.580
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --sidp=0x430f0 --id=0x7 --timestamp=1393900972 /cygdrive/c/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1/Ass_1.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:47:30.274
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:47:30.786
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --sidp=0x430f0 --id=0x7 --timestamp=1393900972]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:47:33.265
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --sidp=0x430f0 --id=0x7 --timestamp=1393900972 /cygdrive/c/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1/Ass_1.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:49:52.842
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:49:53.368
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --sidp=0x430f0 --id=0x7 --timestamp=1393900972]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:49:55.847
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --sidp=0x430f0 --id=0x7 --timestamp=1393900972 /cygdrive/c/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1/Ass_1.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:51:15.831
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:51:16.337
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --sidp=0x430f0 --id=0x7 --timestamp=1393900972]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:51:18.821
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --sidp=0x430f0 --id=0x7 --timestamp=1393900972 /cygdrive/c/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1/Ass_1.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:53:56.864
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:53:57.366
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --sidp=0x430f0 --id=0x7 --timestamp=1393900972]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:53:59.854
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --sidp=0x430f0 --id=0x7 --timestamp=1393900972 /cygdrive/c/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1/Ass_1.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:55:50.499
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:55:51.004
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --sidp=0x430f0 --id=0x7 --timestamp=1393900972]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:55:53.477
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --sidp=0x430f0 --id=0x7 --timestamp=1393900972 /cygdrive/c/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1/Ass_1.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:56:47.113
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:56:47.606
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --sidp=0x430f0 --id=0x7 --timestamp=1393900972]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:56:50.081
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --sidp=0x430f0 --id=0x7 --timestamp=1393900972 /cygdrive/c/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1/Ass_1.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:59:15.230
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:59:15.768
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --sidp=0x430f0 --id=0x7 --timestamp=1393900972]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 12:59:18.242
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --sidp=0x430f0 --id=0x7 --timestamp=1393900972 /cygdrive/c/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1/Ass_1.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 13:00:17.184
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 13:00:17.649
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --sidp=0x430f0 --id=0x7 --timestamp=1393900972]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2025-04-08 13:00:20.127
+!MESSAGE Executing: [C:/intelfpga/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --sidp=0x430f0 --id=0x7 --timestamp=1393900972 /cygdrive/c/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1/Ass_1.elf]
