@@ -163,6 +163,20 @@ void PRVGADraw_Task(void *pvParameters ){
 	}
 }
 
+int main(void) {
+	Q_freq_data = xQueueCreate( 100, sizeof(double) );
+	timer = xTimerCreate("Timer Name", 5, pdTRUE, NULL, vTimerCallback);
+	alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_irq);
+	IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0x55);
+
+	xTaskCreate( freq_analyser_task, "freq_analyser_task", TASK_STACKSIZE, NULL, FREQ_ANALYSER_PRIORITY, NULL);
+	xTaskCreate( LCD_task, "LCD_task", TASK_STACKSIZE, NULL, LCD_PRIORITY, NULL);
+	xTaskCreate( PRVGADraw_Task, "DrawTsk", TASK_STACKSIZE, NULL, LCD_PRIORITY, &PRVGADraw );
+	xTaskCreate( Timer_Reset_Task, "0", TASK_STACKSIZE, NULL, TIMER_RESET_PRIORITY, &Timer_Reset );
+	vTaskStartScheduler();
+	while (1);
+}
+
 void freq_relay_irq(){
 	#define SAMPLING_FREQ 16000.0
 	prev_freq = crnt_freq;
@@ -214,17 +228,4 @@ static void LCD_task(void *pvParameters) {
 }
 
 
-int main(void) {
-	Q_freq_data = xQueueCreate( 100, sizeof(double) );
-	timer = xTimerCreate("Timer Name", 5, pdTRUE, NULL, vTimerCallback);
-	alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_irq);
-	IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0x55);
-
-	xTaskCreate( freq_analyser_task, "freq_analyser_task", TASK_STACKSIZE, NULL, FREQ_ANALYSER_PRIORITY, NULL);
-	xTaskCreate( LCD_task, "LCD_task", TASK_STACKSIZE, NULL, LCD_PRIORITY, NULL);
-	xTaskCreate( PRVGADraw_Task, "DrawTsk", TASK_STACKSIZE, NULL, LCD_PRIORITY, &PRVGADraw );
-	xTaskCreate( Timer_Reset_Task, "0", TASK_STACKSIZE, NULL, TIMER_RESET_PRIORITY, &Timer_Reset );
-	vTaskStartScheduler();
-	while (1);
-}
 

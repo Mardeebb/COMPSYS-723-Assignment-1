@@ -1,34 +1,19 @@
-
 #include <stdio.h>
-#include <unistd.h>
-#include <stddef.h>
-#include <string.h>
 #include <stdlib.h>
-
 #include "sys/alt_irq.h"
+#include "system.h"
 #include "io.h"
-#include <system.h>
-#include <altera_avalon_pio_regs.h>
 #include "altera_up_avalon_video_character_buffer_with_dma.h"
 #include "altera_up_avalon_video_pixel_buffer_dma.h"
 
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/queue.h"
-#include "FreeRTOS/timers.h"
 
-#define ESC 27
-#define CLEAR_LCD_STRING "[2J"
 
-#define   TASK_STACKSIZE       2048
 
-#define LCD_PRIORITY       		11
-#define SWITCHES_PRIORITY       12
-#define LED_PRIORITY       		13
-#define TIMER_RESET_PRIORITY    14
-#define LOAD_MONITOR_PRIORITY   15
-#define FREQ_ANALYSER_PRIORITY  16
+#include "FreeRTOS/FreeRTOS.h"
+#include "FreeRTOS/task.h"
+#include "FreeRTOS/queue.h"
 
+//For frequency plot
 #define FREQPLT_ORI_X 101		//x axis pixel position at the plot origin
 #define FREQPLT_GRID_SIZE_X 5	//pixel separation in the x axis between two data points
 #define FREQPLT_ORI_Y 199.0		//y axis pixel position at the plot origin
@@ -41,13 +26,9 @@
 
 #define MIN_FREQ 45.0 //minimum frequency to draw
 
-static void freq_analyser_task(void *pvParameters);
-static void LCD_task(void *pvParameters);
-void Timer_Reset_Task(void *pvParameters);
-
-TimerHandle_t timer;
-TaskHandle_t Timer_Reset;
+#define PRVGADraw_Task_P      (tskIDLE_PRIORITY+1)
 TaskHandle_t PRVGADraw;
+
 
 static QueueHandle_t Q_freq_data;
 
@@ -58,17 +39,11 @@ typedef struct{
 	unsigned int y2;
 }Line;
 
-volatile double crnt_freq;
-volatile double prev_freq = 0;
-volatile double roc = 0;
-
-uint8_t freq_update = 1;
-uint8_t stability_flag = 1;
-uint8_t timer_reset = 0;
 
 /****** VGA display ******/
 
 void PRVGADraw_Task(void *pvParameters ){
+
 
 	//initialize VGA controllers
 	alt_up_pixel_buffer_dma_dev *pixel_buf;
@@ -84,6 +59,7 @@ void PRVGADraw_Task(void *pvParameters ){
 		printf("can't find char buffer device\n");
 	}
 	alt_up_char_buffer_clear(char_buf);
+
 
 
 	//Set up plot axes
@@ -104,6 +80,7 @@ void PRVGADraw_Task(void *pvParameters ){
 	alt_up_char_buffer_string(char_buf, "0", 10, 32);
 	alt_up_char_buffer_string(char_buf, "-30", 9, 34);
 	alt_up_char_buffer_string(char_buf, "-60", 9, 36);
+
 
 	double freq[100], dfreq[100];
 	int i = 99, j = 0;
@@ -160,71 +137,36 @@ void PRVGADraw_Task(void *pvParameters ){
 			}
 		}
 		vTaskDelay(10);
+
 	}
 }
 
-void freq_relay_irq(){
+void freq_relay(){
 	#define SAMPLING_FREQ 16000.0
-	prev_freq = crnt_freq;
-	unsigned int temp = IORD(FREQUENCY_ANALYSER_BASE, 0);
-	crnt_freq = SAMPLING_FREQ/(double)temp;
-	roc = (crnt_freq - prev_freq) / temp;
-	roc = roc < 0 ? roc * -1 : roc;
-	xQueueSendToBackFromISR( Q_freq_data, &crnt_freq, pdFALSE );
-	freq_update = 1;
+	double temp = SAMPLING_FREQ/(double)IORD(FREQUENCY_ANALYSER_BASE, 0);
+
+	xQueueSendToBackFromISR( Q_freq_data, &temp, pdFALSE );
+
 	return;
 }
 
-void Timer_Reset_Task(void *pvParameters ){
-	while(1){
-		if (timer_reset == 1){
-			xTimerReset( timer, 10 );
-			timer_reset = 0;
-		}
-	}
-}
-void vTimerCallback(xTimerHandle t_timer){
-	int LEDs = stability_flag == 1 ? 0xFF : 0x00;
-	IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, LEDs);
-}
-
-static void freq_analyser_task(void *pvParameters) {
-	while (1) {
-	  while(freq_update == 0);
-	  if (roc >= 0.0005 || (crnt_freq < 49 || crnt_freq > 51)){
-		  stability_flag = 0;
-	  } else {
-		  stability_flag = 1;
-	  }
-	  freq_update = 0;
-	  timer_reset = 1;
-	}
-}
-
-static void LCD_task(void *pvParameters) {
-	FILE *lcd;
-	lcd = fopen(CHARACTER_LCD_NAME, "w");
-	while (1) {
-		vTaskDelay(100);
-	    fprintf(lcd, "%c%s", ESC, CLEAR_LCD_STRING);
-	    fprintf(lcd, "ROC frequency\n%f Hz\n", roc);
-		printf("freq:     %f Hz\nprev_freq: %f Hz\nroc:      %f Hz\n", crnt_freq, prev_freq, roc);
-		printf("\nstability flag: %d\n", stability_flag);
-	}
-}
 
 
-int main(void) {
+int main()
+{
 	Q_freq_data = xQueueCreate( 100, sizeof(double) );
-	timer = xTimerCreate("Timer Name", 5, pdTRUE, NULL, vTimerCallback);
-	alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_irq);
-	IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0x55);
 
-	xTaskCreate( freq_analyser_task, "freq_analyser_task", TASK_STACKSIZE, NULL, FREQ_ANALYSER_PRIORITY, NULL);
-	xTaskCreate( LCD_task, "LCD_task", TASK_STACKSIZE, NULL, LCD_PRIORITY, NULL);
-	xTaskCreate( PRVGADraw_Task, "DrawTsk", TASK_STACKSIZE, NULL, LCD_PRIORITY, &PRVGADraw );
-	xTaskCreate( Timer_Reset_Task, "0", TASK_STACKSIZE, NULL, TIMER_RESET_PRIORITY, &Timer_Reset );
+
+	alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay);
+
+	xTaskCreate( PRVGADraw_Task, "DrawTsk", configMINIMAL_STACK_SIZE, NULL, PRVGADraw_Task_P, &PRVGADraw );
+
+
+
 	vTaskStartScheduler();
-	while (1);
+
+	while(1)
+
+  return 0;
 }
 

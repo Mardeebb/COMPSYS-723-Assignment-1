@@ -58,7 +58,7 @@ typedef struct{
 	unsigned int y2;
 }Line;
 
-volatile double crnt_freq;
+volatile double freq;
 volatile double prev_freq = 0;
 volatile double roc = 0;
 
@@ -163,14 +163,35 @@ void PRVGADraw_Task(void *pvParameters ){
 	}
 }
 
-void freq_relay_irq(){
+void freq_relay(){
 	#define SAMPLING_FREQ 16000.0
-	prev_freq = crnt_freq;
+	double temp = SAMPLING_FREQ/(double)IORD(FREQUENCY_ANALYSER_BASE, 0);
+
+	xQueueSendToBackFromISR( Q_freq_data, &temp, pdFALSE );
+
+	return;
+}
+
+int main(void) {
+	Q_freq_data = xQueueCreate( 100, sizeof(double) );
+	timer = xTimerCreate("Timer Name", 5, pdTRUE, NULL, vTimerCallback);
+	alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_irq);
+	IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0x55);
+
+	xTaskCreate( freq_analyser_task, "freq_analyser_task", TASK_STACKSIZE, NULL, FREQ_ANALYSER_PRIORITY, NULL);
+	xTaskCreate( LCD_task, "LCD_task", TASK_STACKSIZE, NULL, LCD_PRIORITY, NULL);
+	xTaskCreate( PRVGADraw_Task, "DrawTsk", TASK_STACKSIZE, NULL, LCD_PRIORITY, &PRVGADraw );
+	xTaskCreate( Timer_Reset_Task, "0", TASK_STACKSIZE, NULL, TIMER_RESET_PRIORITY, &Timer_Reset );
+	vTaskStartScheduler();
+	while (1);
+}
+
+void freq_relay_irq(){
+	prev_freq = freq;
 	unsigned int temp = IORD(FREQUENCY_ANALYSER_BASE, 0);
-	crnt_freq = SAMPLING_FREQ/(double)temp;
-	roc = (crnt_freq - prev_freq) / temp;
+	freq = 16000/(double)temp;
+	roc = (freq - prev_freq) / temp;
 	roc = roc < 0 ? roc * -1 : roc;
-	xQueueSendToBackFromISR( Q_freq_data, &crnt_freq, pdFALSE );
 	freq_update = 1;
 	return;
 }
@@ -191,7 +212,7 @@ void vTimerCallback(xTimerHandle t_timer){
 static void freq_analyser_task(void *pvParameters) {
 	while (1) {
 	  while(freq_update == 0);
-	  if (roc >= 0.0005 || (crnt_freq < 49 || crnt_freq > 51)){
+	  if (roc >= 0.0005 || (freq < 49 || freq > 51)){
 		  stability_flag = 0;
 	  } else {
 		  stability_flag = 1;
@@ -208,23 +229,10 @@ static void LCD_task(void *pvParameters) {
 		vTaskDelay(100);
 	    fprintf(lcd, "%c%s", ESC, CLEAR_LCD_STRING);
 	    fprintf(lcd, "ROC frequency\n%f Hz\n", roc);
-		printf("freq:     %f Hz\nprev_freq: %f Hz\nroc:      %f Hz\n", crnt_freq, prev_freq, roc);
+		printf("freq:     %f Hz\nprev_freq: %f Hz\nroc:      %f Hz\n", freq, prev_freq, roc);
 		printf("\nstability flag: %d\n", stability_flag);
 	}
 }
 
 
-int main(void) {
-	Q_freq_data = xQueueCreate( 100, sizeof(double) );
-	timer = xTimerCreate("Timer Name", 5, pdTRUE, NULL, vTimerCallback);
-	alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_irq);
-	IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0x55);
-
-	xTaskCreate( freq_analyser_task, "freq_analyser_task", TASK_STACKSIZE, NULL, FREQ_ANALYSER_PRIORITY, NULL);
-	xTaskCreate( LCD_task, "LCD_task", TASK_STACKSIZE, NULL, LCD_PRIORITY, NULL);
-	xTaskCreate( PRVGADraw_Task, "DrawTsk", TASK_STACKSIZE, NULL, LCD_PRIORITY, &PRVGADraw );
-	xTaskCreate( Timer_Reset_Task, "0", TASK_STACKSIZE, NULL, TIMER_RESET_PRIORITY, &Timer_Reset );
-	vTaskStartScheduler();
-	while (1);
-}
 
