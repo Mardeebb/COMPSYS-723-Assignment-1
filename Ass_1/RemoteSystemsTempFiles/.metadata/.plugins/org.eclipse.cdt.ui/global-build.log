@@ -1,289 +1,16 @@
-14:24:29 **** Incremental Build of configuration Nios II for project Ass_1_bsp ****
-make all 
-Compiling alt_alarm_start.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_alarm_start.o HAL/src/alt_alarm_start.c
-Compiling alt_busy_sleep.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_busy_sleep.o HAL/src/alt_busy_sleep.c
-Compiling alt_close.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_close.o HAL/src/alt_close.c
-Compiling alt_dcache_flush.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_dcache_flush.o HAL/src/alt_dcache_flush.c
-Compiling alt_dcache_flush_all.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_dcache_flush_all.o HAL/src/alt_dcache_flush_all.c
-Compiling alt_dcache_flush_no_writeback.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_dcache_flush_no_writeback.o HAL/src/alt_dcache_flush_no_writeback.c
-Compiling alt_dev.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_dev.o HAL/src/alt_dev.c
-Compiling alt_dma_rxchan_open.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_dma_rxchan_open.o HAL/src/alt_dma_rxchan_open.c
-Compiling alt_dma_txchan_open.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_dma_txchan_open.o HAL/src/alt_dma_txchan_open.c
-Compiling alt_ecc_fatal_exception.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_ecc_fatal_exception.o HAL/src/alt_ecc_fatal_exception.c
-Compiling alt_exception_entry.S...
-nios2-elf-gcc -MP -MMD -c   -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global    -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED  -Wa,-gdwarf2  -o obj/HAL/src/alt_exception_entry.o HAL/src/alt_exception_entry.S
-Compiling alt_exit.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_exit.o HAL/src/alt_exit.c
-Compiling alt_fcntl.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_fcntl.o HAL/src/alt_fcntl.c
-Compiling alt_fd_lock.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_fd_lock.o HAL/src/alt_fd_lock.c
-Compiling alt_fd_unlock.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_fd_unlock.o HAL/src/alt_fd_unlock.c
-Compiling alt_find_dev.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_find_dev.o HAL/src/alt_find_dev.c
-Compiling alt_find_file.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_find_file.o HAL/src/alt_find_file.c
-Compiling alt_flash_dev.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_flash_dev.o HAL/src/alt_flash_dev.c
-Compiling alt_fs_reg.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_fs_reg.o HAL/src/alt_fs_reg.c
-Compiling alt_fstat.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_fstat.o HAL/src/alt_fstat.c
-Compiling alt_get_fd.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_get_fd.o HAL/src/alt_get_fd.c
-Compiling alt_gmon.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_gmon.o HAL/src/alt_gmon.c
-Compiling alt_icache_flush.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_icache_flush.o HAL/src/alt_icache_flush.c
-Compiling alt_icache_flush_all.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_icache_flush_all.o HAL/src/alt_icache_flush_all.c
-Compiling alt_iic.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_iic.o HAL/src/alt_iic.c
-Compiling alt_iic_isr_register.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_iic_isr_register.o HAL/src/alt_iic_isr_register.c
-Compiling alt_instruction_exception_entry.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_instruction_exception_entry.o HAL/src/alt_instruction_exception_entry.c
-Compiling alt_instruction_exception_register.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_instruction_exception_register.o HAL/src/alt_instruction_exception_register.c
-Compiling alt_io_redirect.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_io_redirect.o HAL/src/alt_io_redirect.c
-Compiling alt_ioctl.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_ioctl.o HAL/src/alt_ioctl.c
-Compiling alt_irq_entry.S...
-nios2-elf-gcc -MP -MMD -c   -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global    -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED  -Wa,-gdwarf2  -o obj/HAL/src/alt_irq_entry.o HAL/src/alt_irq_entry.S
-Compiling alt_irq_handler.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_irq_handler.o HAL/src/alt_irq_handler.c
-Compiling alt_irq_register.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_irq_register.o HAL/src/alt_irq_register.c
-Compiling alt_irq_vars.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_irq_vars.o HAL/src/alt_irq_vars.c
-Compiling alt_isatty.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_isatty.o HAL/src/alt_isatty.c
-Compiling alt_lseek.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_lseek.o HAL/src/alt_lseek.c
-Compiling alt_main.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_main.o HAL/src/alt_main.c
-Compiling alt_open.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_open.o HAL/src/alt_open.c
-Compiling alt_read.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_read.o HAL/src/alt_read.c
-Compiling alt_release_fd.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_release_fd.o HAL/src/alt_release_fd.c
-Compiling alt_remap_cached.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_remap_cached.o HAL/src/alt_remap_cached.c
-Compiling alt_remap_uncached.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_remap_uncached.o HAL/src/alt_remap_uncached.c
-Compiling alt_sbrk.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_sbrk.o HAL/src/alt_sbrk.c
-Compiling alt_software_exception.S...
-nios2-elf-gcc -MP -MMD -c   -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global    -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED  -Wa,-gdwarf2  -o obj/HAL/src/alt_software_exception.o HAL/src/alt_software_exception.S
-Compiling alt_tick.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_tick.o HAL/src/alt_tick.c
-Compiling alt_uncached_free.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_uncached_free.o HAL/src/alt_uncached_free.c
-Compiling alt_uncached_malloc.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_uncached_malloc.o HAL/src/alt_uncached_malloc.c
-Compiling alt_write.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/alt_write.o HAL/src/alt_write.c
-Compiling altera_nios2_qsys_irq.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/HAL/src/altera_nios2_qsys_irq.o HAL/src/altera_nios2_qsys_irq.c
-Compiling crt0.S...
-nios2-elf-gcc -MP -MMD -c   -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global    -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED  -Wa,-gdwarf2  -o obj/HAL/src/crt0.o HAL/src/crt0.S
-Compiling alt_sys_init.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/alt_sys_init.o alt_sys_init.c
-Compiling altera_avalon_jtag_uart_fd.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_avalon_jtag_uart_fd.o drivers/src/altera_avalon_jtag_uart_fd.c
-Compiling altera_avalon_jtag_uart_init.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_avalon_jtag_uart_init.o drivers/src/altera_avalon_jtag_uart_init.c
-Compiling altera_avalon_jtag_uart_ioctl.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_avalon_jtag_uart_ioctl.o drivers/src/altera_avalon_jtag_uart_ioctl.c
-Compiling altera_avalon_jtag_uart_read.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_avalon_jtag_uart_read.o drivers/src/altera_avalon_jtag_uart_read.c
-Compiling altera_avalon_jtag_uart_write.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_avalon_jtag_uart_write.o drivers/src/altera_avalon_jtag_uart_write.c
-Compiling altera_avalon_lcd_16207.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_avalon_lcd_16207.o drivers/src/altera_avalon_lcd_16207.c
-Compiling altera_avalon_lcd_16207_fd.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_avalon_lcd_16207_fd.o drivers/src/altera_avalon_lcd_16207_fd.c
-Compiling altera_avalon_sysid_qsys.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_avalon_sysid_qsys.o drivers/src/altera_avalon_sysid_qsys.c
-Compiling altera_avalon_timer_sc.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_avalon_timer_sc.o drivers/src/altera_avalon_timer_sc.c
-Compiling altera_avalon_timer_ts.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_avalon_timer_ts.o drivers/src/altera_avalon_timer_ts.c
-Compiling altera_avalon_timer_vars.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_avalon_timer_vars.o drivers/src/altera_avalon_timer_vars.c
-Compiling altera_avalon_uart_fd.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_avalon_uart_fd.o drivers/src/altera_avalon_uart_fd.c
-Compiling altera_avalon_uart_init.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_avalon_uart_init.o drivers/src/altera_avalon_uart_init.c
-Compiling altera_avalon_uart_ioctl.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_avalon_uart_ioctl.o drivers/src/altera_avalon_uart_ioctl.c
-Compiling altera_avalon_uart_read.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_avalon_uart_read.o drivers/src/altera_avalon_uart_read.c
-Compiling altera_avalon_uart_write.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_avalon_uart_write.o drivers/src/altera_avalon_uart_write.c
-Compiling altera_up_avalon_ps2.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_up_avalon_ps2.o drivers/src/altera_up_avalon_ps2.c
-Compiling altera_up_avalon_video_character_buffer_with_dma.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_up_avalon_video_character_buffer_with_dma.o drivers/src/altera_up_avalon_video_character_buffer_with_dma.c
-Compiling altera_up_avalon_video_pixel_buffer_dma.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_up_avalon_video_pixel_buffer_dma.o drivers/src/altera_up_avalon_video_pixel_buffer_dma.c
-Compiling altera_up_ps2_keyboard.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_up_ps2_keyboard.o drivers/src/altera_up_ps2_keyboard.c
-Compiling altera_up_ps2_mouse.c...
-nios2-elf-gcc -xc -MP -MMD -c  -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall  -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global   -o obj/drivers/src/altera_up_ps2_mouse.o drivers/src/altera_up_ps2_mouse.c
-Creating libhal_bsp.a...
-rm -f -f libhal_bsp.a
-nios2-elf-ar -src libhal_bsp.a obj/HAL/src/alt_alarm_start.o obj/HAL/src/alt_busy_sleep.o obj/HAL/src/alt_close.o obj/HAL/src/alt_dcache_flush.o obj/HAL/src/alt_dcache_flush_all.o obj/HAL/src/alt_dcache_flush_no_writeback.o obj/HAL/src/alt_dev.o obj/HAL/src/alt_dev_llist_insert.o obj/HAL/src/alt_dma_rxchan_open.o obj/HAL/src/alt_dma_txchan_open.o obj/HAL/src/alt_do_ctors.o obj/HAL/src/alt_do_dtors.o obj/HAL/src/alt_ecc_fatal_entry.o obj/HAL/src/alt_ecc_fatal_exception.o obj/HAL/src/alt_env_lock.o obj/HAL/src/alt_environ.o obj/HAL/src/alt_errno.o obj/HAL/src/alt_exception_entry.o obj/HAL/src/alt_exception_muldiv.o obj/HAL/src/alt_exception_trap.o obj/HAL/src/alt_execve.o obj/HAL/src/alt_exit.o obj/HAL/src/alt_fcntl.o obj/HAL/src/alt_fd_lock.o obj/HAL/src/alt_fd_unlock.o obj/HAL/src/alt_find_dev.o obj/HAL/src/alt_find_file.o obj/HAL/src/alt_flash_dev.o obj/HAL/src/alt_fork.o obj/HAL/src/alt_fs_reg.o obj/HAL/src/alt_fstat.o obj/HAL/src/alt_get_fd.o obj/HAL/src/alt_getchar.o obj/HAL/src/alt_getpid.o obj/HAL/src/alt_gettod.o obj/HAL/src/alt_gmon.o obj/HAL/src/alt_icache_flush.o obj/HAL/src/alt_icache_flush_all.o obj/HAL/src/alt_iic.o obj/HAL/src/alt_iic_isr_register.o obj/HAL/src/alt_instruction_exception_entry.o obj/HAL/src/alt_instruction_exception_register.o obj/HAL/src/alt_io_redirect.o obj/HAL/src/alt_ioctl.o obj/HAL/src/alt_irq_entry.o obj/HAL/src/alt_irq_handler.o obj/HAL/src/alt_irq_register.o obj/HAL/src/alt_irq_vars.o obj/HAL/src/alt_isatty.o obj/HAL/src/alt_kill.o obj/HAL/src/alt_link.o obj/HAL/src/alt_load.o obj/HAL/src/alt_log_macro.o obj/HAL/src/alt_log_printf.o obj/HAL/src/alt_lseek.o obj/HAL/src/alt_main.o obj/HAL/src/alt_malloc_lock.o obj/HAL/src/alt_mcount.o obj/HAL/src/alt_open.o obj/HAL/src/alt_printf.o obj/HAL/src/alt_putchar.o obj/HAL/src/alt_putcharbuf.o obj/HAL/src/alt_putstr.o obj/HAL/src/alt_read.o obj/HAL/src/alt_release_fd.o obj/HAL/src/alt_remap_cached.o obj/HAL/src/alt_remap_uncached.o obj/HAL/src/alt_rename.o obj/HAL/src/alt_sbrk.o obj/HAL/src/alt_settod.o obj/HAL/src/alt_software_exception.o obj/HAL/src/alt_stat.o obj/HAL/src/alt_tick.o obj/HAL/src/alt_times.o obj/HAL/src/alt_uncached_free.o obj/HAL/src/alt_uncached_malloc.o obj/HAL/src/alt_unlink.o obj/HAL/src/alt_usleep.o obj/HAL/src/alt_wait.o obj/HAL/src/alt_write.o obj/HAL/src/altera_nios2_qsys_irq.o obj/HAL/src/crt0.o obj/alt_sys_init.o obj/drivers/src/altera_avalon_cfi_flash.o obj/drivers/src/altera_avalon_cfi_flash_amd.o obj/drivers/src/altera_avalon_cfi_flash_intel.o obj/drivers/src/altera_avalon_cfi_flash_table.o obj/drivers/src/altera_avalon_jtag_uart_fd.o obj/drivers/src/altera_avalon_jtag_uart_init.o obj/drivers/src/altera_avalon_jtag_uart_ioctl.o obj/drivers/src/altera_avalon_jtag_uart_read.o obj/drivers/src/altera_avalon_jtag_uart_write.o obj/drivers/src/altera_avalon_lcd_16207.o obj/drivers/src/altera_avalon_lcd_16207_fd.o obj/drivers/src/altera_avalon_sysid_qsys.o obj/drivers/src/altera_avalon_timer_sc.o obj/drivers/src/altera_avalon_timer_ts.o obj/drivers/src/altera_avalon_timer_vars.o obj/drivers/src/altera_avalon_uart_fd.o obj/drivers/src/altera_avalon_uart_init.o obj/drivers/src/altera_avalon_uart_ioctl.o obj/drivers/src/altera_avalon_uart_read.o obj/drivers/src/altera_avalon_uart_write.o obj/drivers/src/altera_up_avalon_ps2.o obj/drivers/src/altera_up_avalon_video_character_buffer_with_dma.o obj/drivers/src/altera_up_avalon_video_pixel_buffer_dma.o obj/drivers/src/altera_up_ps2_keyboard.o obj/drivers/src/altera_up_ps2_mouse.o
-[BSP build complete]
-14:24:37 **** Incremental Build of configuration Nios II for project Ass_1 ****
+15:55:12 **** Incremental Build of configuration Nios II for project Ass_1 ****
 make all 
 Info: Building ../Ass_1_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
 [BSP build complete]
-Info: Compiling FreeRTOS/croutine.c to obj/default/FreeRTOS/croutine.o
-nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/FreeRTOS/croutine.o FreeRTOS/croutine.c
-FreeRTOS/croutine.c: In function 'xCoRoutineCreate':
-FreeRTOS/croutine.c:148:29: warning: implicit declaration of function 'pvPortMalloc' [-Wimplicit-function-declaration]
-  pxCoRoutine = ( CRCB_t * ) pvPortMalloc( sizeof( CRCB_t ) );
-                             ^
-Info: Compiling FreeRTOS/event_groups.c to obj/default/FreeRTOS/event_groups.o
-nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/FreeRTOS/event_groups.o FreeRTOS/event_groups.c
-FreeRTOS/event_groups.c: In function 'xEventGroupCreate':
-FreeRTOS/event_groups.c:142:16: warning: implicit declaration of function 'pvPortMalloc' [-Wimplicit-function-declaration]
-  pxEventBits = pvPortMalloc( sizeof( EventGroup_t ) );
-                ^
-FreeRTOS/event_groups.c:142:14: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
-  pxEventBits = pvPortMalloc( sizeof( EventGroup_t ) );
-              ^
-Info: Compiling FreeRTOS/heap.c to obj/default/FreeRTOS/heap.o
-nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/FreeRTOS/heap.o FreeRTOS/heap.c
-Info: Compiling FreeRTOS/list.c to obj/default/FreeRTOS/list.o
-nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/FreeRTOS/list.o FreeRTOS/list.c
-Info: Compiling FreeRTOS/port.c to obj/default/FreeRTOS/port.o
-nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/FreeRTOS/port.o FreeRTOS/port.c
-FreeRTOS/port.c:90:0: warning: "configTICK_RATE_HZ" redefined
- #define configTICK_RATE_HZ 1000
- ^
-In file included from FreeRTOS/FreeRTOS.h:98:0,
-                 from FreeRTOS/port.c:84:
-FreeRTOS/FreeRTOSConfig.h:97:0: note: this is the location of the previous definition
- #define configTICK_RATE_HZ    ( ( portTickType ) 1000 )
- ^
-FreeRTOS/port.c:91:0: warning: "configCPU_CLOCK_HZ" redefined
- #define configCPU_CLOCK_HZ TIMER1MS_FREQ
- ^
-In file included from FreeRTOS/FreeRTOS.h:98:0,
-                 from FreeRTOS/port.c:84:
-FreeRTOS/FreeRTOSConfig.h:98:0: note: this is the location of the previous definition
- #define configCPU_CLOCK_HZ    ( ( unsigned long ) ALT_SYS_CLK ) 
- ^
-FreeRTOS/port.c: In function 'vApplicationStackOverflowHook':
-FreeRTOS/port.c:96:2: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
-  printf("[free_rtos] Application stack overflow at task: %s\n", pcTaskName);
-  ^
-FreeRTOS/port.c:96:2: warning: incompatible implicit declaration of built-in function 'printf'
-FreeRTOS/port.c:96:2: note: include '<stdio.h>' or provide a declaration of 'printf'
-FreeRTOS/port.c: In function 'alt_irq_register':
-FreeRTOS/port.c:231:18: warning: variable 'status' set but not used [-Wunused-but-set-variable]
-  alt_irq_context status;
-                  ^
-Info: Compiling FreeRTOS/queue.c to obj/default/FreeRTOS/queue.o
-nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/FreeRTOS/queue.o FreeRTOS/queue.c
-FreeRTOS/queue.c: In function 'xQueueGenericCreate':
-FreeRTOS/queue.c:339:35: warning: implicit declaration of function 'pvPortMalloc' [-Wimplicit-function-declaration]
-  pcAllocatedBuffer = ( int8_t * ) pvPortMalloc( sizeof( Queue_t ) + xQueueSizeInBytes );
-                                   ^
-Info: Compiling FreeRTOS/tasks.c to obj/default/FreeRTOS/tasks.o
-nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/FreeRTOS/tasks.o FreeRTOS/tasks.c
-In file included from FreeRTOS/tasks.c:80:0:
-FreeRTOS/tasks.c: In function 'prvAllocateTCBAndStack':
-FreeRTOS/FreeRTOS.h:651:88: warning: implicit declaration of function 'pvPortMalloc' [-Wimplicit-function-declaration]
-  #define pvPortMallocAligned( x, puxStackBuffer ) ( ( ( puxStackBuffer ) == NULL ) ? ( pvPortMalloc( ( x ) ) ) : ( puxStackBuffer ) )
-                                                                                        ^
-FreeRTOS/tasks.c:3052:31: note: in expansion of macro 'pvPortMallocAligned'
-   pxStack = ( StackType_t * ) pvPortMallocAligned( ( ( ( size_t ) usStackDepth ) * sizeof( StackType_t ) ), puxStackBuffer ); /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
-                               ^
-FreeRTOS/FreeRTOS.h:651:112: warning: pointer/integer type mismatch in conditional expression
-  #define pvPortMallocAligned( x, puxStackBuffer ) ( ( ( puxStackBuffer ) == NULL ) ? ( pvPortMalloc( ( x ) ) ) : ( puxStackBuffer ) )
-                                                                                                                ^
-FreeRTOS/tasks.c:3052:31: note: in expansion of macro 'pvPortMallocAligned'
-   pxStack = ( StackType_t * ) pvPortMallocAligned( ( ( ( size_t ) usStackDepth ) * sizeof( StackType_t ) ), puxStackBuffer ); /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
-                               ^
-Info: Compiling FreeRTOS/timers.c to obj/default/FreeRTOS/timers.o
-nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/FreeRTOS/timers.o FreeRTOS/timers.c
-FreeRTOS/timers.c: In function 'xTimerCreate':
-FreeRTOS/timers.c:286:30: warning: implicit declaration of function 'pvPortMalloc' [-Wimplicit-function-declaration]
-   pxNewTimer = ( Timer_t * ) pvPortMalloc( sizeof( Timer_t ) );
-                              ^
-Info: Compiling main.c to obj/default/main.o
-nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:19:0:
-main.c: In function 'stabilityMonitorTask':
-FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
- #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
-                                                                                          ^
-main.c:113:13: note: in expansion of macro 'xQueueSend'
-             xQueueSend(Q_freq_data, &frequency, pdFALSE);
-             ^
-FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
- BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
-            ^
-main.c: In function 'PRVGADraw_Task':
-main.c:247:15: warning: operation on 'i' may be undefined [-Wsequence-point]
-             i = ++i%100;
-               ^
-Info: Linking Ass_1.elf
-nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
-Info: (Ass_1.elf) 635 KBytes program size (code + initialized data).
-Info:             130560 KBytes free for stack + heap.
-Info: Creating Ass_1.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
 [Ass_1 build complete]
-14:29:56 **** Incremental Build of configuration Nios II for project Ass_1 ****
+15:55:19 **** Incremental Build of configuration Nios II for project Ass_1 ****
 make all 
 Info: Building ../Ass_1_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
 [BSP build complete]
-Info: Compiling main.c to obj/default/main.o
-nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:19:0:
-main.c: In function 'stabilityMonitorTask':
-FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
- #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
-                                                                                          ^
-main.c:115:13: note: in expansion of macro 'xQueueSend'
-             xQueueSend(Q_freq_data, &frequency, pdFALSE);
-             ^
-FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
- BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
-            ^
-main.c: In function 'PRVGADraw_Task':
-main.c:249:15: warning: operation on 'i' may be undefined [-Wsequence-point]
-             i = ++i%100;
-               ^
-Info: Linking Ass_1.elf
-nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
-Info: (Ass_1.elf) 636 KBytes program size (code + initialized data).
-Info:             130560 KBytes free for stack + heap.
-Info: Creating Ass_1.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
 [Ass_1 build complete]
-14:30:38 **** Incremental Build of configuration Nios II for project Ass_1 ****
+15:58:23 **** Incremental Build of configuration Nios II for project Ass_1 ****
 make all 
 Info: Building ../Ass_1_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
@@ -295,255 +22,7 @@ main.c: In function 'stabilityMonitorTask':
 FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
  #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
                                                                                           ^
-main.c:115:13: note: in expansion of macro 'xQueueSend'
-             xQueueSend(Q_freq_data, &frequency, pdFALSE);
-             ^
-FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
- BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
-            ^
-main.c: In function 'PRVGADraw_Task':
-main.c:249:15: warning: operation on 'i' may be undefined [-Wsequence-point]
-             i = ++i%100;
-               ^
-Info: Linking Ass_1.elf
-nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
-Info: (Ass_1.elf) 636 KBytes program size (code + initialized data).
-Info:             130560 KBytes free for stack + heap.
-Info: Creating Ass_1.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
-[Ass_1 build complete]
-14:34:02 **** Incremental Build of configuration Nios II for project Ass_1 ****
-make all 
-Info: Building ../Ass_1_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
-[BSP build complete]
-Info: Compiling main.c to obj/default/main.o
-nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:19:0:
-main.c: In function 'stabilityMonitorTask':
-FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
- #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
-                                                                                          ^
-main.c:117:13: note: in expansion of macro 'xQueueSend'
-             xQueueSend(Q_freq_data, &frequency, pdFALSE);
-             ^
-FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
- BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
-            ^
-main.c: In function 'PRVGADraw_Task':
-main.c:251:15: warning: operation on 'i' may be undefined [-Wsequence-point]
-             i = ++i%100;
-               ^
-Info: Linking Ass_1.elf
-nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
-Info: (Ass_1.elf) 636 KBytes program size (code + initialized data).
-Info:             130560 KBytes free for stack + heap.
-Info: Creating Ass_1.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
-[Ass_1 build complete]
-14:36:59 **** Incremental Build of configuration Nios II for project Ass_1 ****
-make all 
-Info: Building ../Ass_1_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
-[BSP build complete]
-Info: Compiling main.c to obj/default/main.o
-nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:19:0:
-main.c: In function 'stabilityMonitorTask':
-FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
- #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
-                                                                                          ^
-main.c:120:13: note: in expansion of macro 'xQueueSend'
-             xQueueSend(Q_freq_data, &frequency, pdFALSE);
-             ^
-FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
- BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
-            ^
-main.c: In function 'PRVGADraw_Task':
-main.c:254:15: warning: operation on 'i' may be undefined [-Wsequence-point]
-             i = ++i%100;
-               ^
-Info: Linking Ass_1.elf
-nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
-Info: (Ass_1.elf) 636 KBytes program size (code + initialized data).
-Info:             130560 KBytes free for stack + heap.
-Info: Creating Ass_1.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
-[Ass_1 build complete]
-14:43:17 **** Incremental Build of configuration Nios II for project Ass_1 ****
-make all 
-Info: Building ../Ass_1_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
-[BSP build complete]
-Info: Compiling main.c to obj/default/main.o
-nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:19:0:
-main.c: In function 'stabilityMonitorTask':
-FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
- #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
-                                                                                          ^
-main.c:121:13: note: in expansion of macro 'xQueueSend'
-             xQueueSend(Q_freq_data, &frequency, pdFALSE);
-             ^
-FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
- BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
-            ^
-main.c: In function 'PRVGADraw_Task':
-main.c:255:15: warning: operation on 'i' may be undefined [-Wsequence-point]
-             i = ++i%100;
-               ^
-Info: Linking Ass_1.elf
-nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
-Info: (Ass_1.elf) 636 KBytes program size (code + initialized data).
-Info:             130560 KBytes free for stack + heap.
-Info: Creating Ass_1.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
-[Ass_1 build complete]
-14:45:23 **** Incremental Build of configuration Nios II for project Ass_1 ****
-make all 
-Info: Building ../Ass_1_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
-[BSP build complete]
-Info: Compiling main.c to obj/default/main.o
-nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:19:0:
-main.c: In function 'stabilityMonitorTask':
-FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
- #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
-                                                                                          ^
-main.c:121:13: note: in expansion of macro 'xQueueSend'
-             xQueueSend(Q_freq_data, &frequency, pdFALSE);
-             ^
-FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
- BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
-            ^
-main.c:125:17: warning: implicit declaration of function 'record_time' [-Wimplicit-function-declaration]
-                 record_time();
-                 ^
-main.c: In function 'loadMonitorTask':
-main.c:155:17: warning: implicit declaration of function 'add_time_to_array' [-Wimplicit-function-declaration]
-                 add_time_to_array();
-                 ^
-main.c: In function 'PRVGADraw_Task':
-main.c:259:15: warning: operation on 'i' may be undefined [-Wsequence-point]
-             i = ++i%100;
-               ^
-main.c: At top level:
-main.c:407:6: warning: conflicting types for 'add_time_to_array'
- void add_time_to_array() {
-      ^
-main.c:155:17: note: previous implicit declaration of 'add_time_to_array' was here
-                 add_time_to_array();
-                 ^
-main.c:420:6: warning: conflicting types for 'record_time'
- void record_time(){
-      ^
-main.c:125:17: note: previous implicit declaration of 'record_time' was here
-                 record_time();
-                 ^
-Info: Linking Ass_1.elf
-nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
-Info: (Ass_1.elf) 636 KBytes program size (code + initialized data).
-Info:             130560 KBytes free for stack + heap.
-Info: Creating Ass_1.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
-[Ass_1 build complete]
-14:46:06 **** Incremental Build of configuration Nios II for project Ass_1 ****
-make all 
-Info: Building ../Ass_1_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
-[BSP build complete]
-Info: Compiling main.c to obj/default/main.o
-nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:19:0:
-main.c: In function 'stabilityMonitorTask':
-FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
- #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
-                                                                                          ^
-main.c:122:13: note: in expansion of macro 'xQueueSend'
-             xQueueSend(Q_freq_data, &frequency, pdFALSE);
-             ^
-FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
- BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
-            ^
-main.c: In function 'loadMonitorTask':
-main.c:156:17: warning: implicit declaration of function 'add_time_to_array' [-Wimplicit-function-declaration]
-                 add_time_to_array();
-                 ^
-main.c: In function 'PRVGADraw_Task':
-main.c:260:15: warning: operation on 'i' may be undefined [-Wsequence-point]
-             i = ++i%100;
-               ^
-main.c: At top level:
-main.c:408:6: warning: conflicting types for 'add_time_to_array'
- void add_time_to_array() {
-      ^
-main.c:156:17: note: previous implicit declaration of 'add_time_to_array' was here
-                 add_time_to_array();
-                 ^
-Info: Linking Ass_1.elf
-nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
-Info: (Ass_1.elf) 636 KBytes program size (code + initialized data).
-Info:             130560 KBytes free for stack + heap.
-Info: Creating Ass_1.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
-[Ass_1 build complete]
-14:46:28 **** Incremental Build of configuration Nios II for project Ass_1 ****
-make all 
-Info: Building ../Ass_1_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
-[BSP build complete]
-Info: Compiling main.c to obj/default/main.o
-nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-main.c:62:24: error: expected declaration specifiers or '...' before numeric constant
- void add_time_to_array(0);
-                        ^
-In file included from main.c:19:0:
-main.c: In function 'stabilityMonitorTask':
-FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
- #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
-                                                                                          ^
-main.c:123:13: note: in expansion of macro 'xQueueSend'
-             xQueueSend(Q_freq_data, &frequency, pdFALSE);
-             ^
-FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
- BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
-            ^
-main.c: In function 'loadMonitorTask':
-main.c:157:17: warning: implicit declaration of function 'add_time_to_array' [-Wimplicit-function-declaration]
-                 add_time_to_array();
-                 ^
-main.c: In function 'PRVGADraw_Task':
-main.c:261:15: warning: operation on 'i' may be undefined [-Wsequence-point]
-             i = ++i%100;
-               ^
-main.c: At top level:
-main.c:409:6: warning: conflicting types for 'add_time_to_array'
- void add_time_to_array() {
-      ^
-main.c:157:17: note: previous implicit declaration of 'add_time_to_array' was here
-                 add_time_to_array();
-                 ^
-make: *** [obj/default/main.o] Error 1
-14:46:44 **** Incremental Build of configuration Nios II for project Ass_1 ****
-make all 
-Info: Building ../Ass_1_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
-[BSP build complete]
-Info: Compiling main.c to obj/default/main.o
-nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:19:0:
-main.c: In function 'stabilityMonitorTask':
-FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
- #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
-                                                                                          ^
-main.c:123:13: note: in expansion of macro 'xQueueSend'
+main.c:126:13: note: in expansion of macro 'xQueueSend'
              xQueueSend(Q_freq_data, &frequency, pdFALSE);
              ^
 FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
@@ -561,7 +40,7 @@ Info:             130560 KBytes free for stack + heap.
 Info: Creating Ass_1.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
 [Ass_1 build complete]
-14:48:59 **** Incremental Build of configuration Nios II for project Ass_1 ****
+15:59:39 **** Incremental Build of configuration Nios II for project Ass_1 ****
 make all 
 Info: Building ../Ass_1_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
@@ -573,7 +52,7 @@ main.c: In function 'stabilityMonitorTask':
 FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
  #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
                                                                                           ^
-main.c:123:13: note: in expansion of macro 'xQueueSend'
+main.c:126:13: note: in expansion of macro 'xQueueSend'
              xQueueSend(Q_freq_data, &frequency, pdFALSE);
              ^
 FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
@@ -591,7 +70,7 @@ Info:             130560 KBytes free for stack + heap.
 Info: Creating Ass_1.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
 [Ass_1 build complete]
-14:50:11 **** Incremental Build of configuration Nios II for project Ass_1 ****
+16:00:21 **** Incremental Build of configuration Nios II for project Ass_1 ****
 make all 
 Info: Building ../Ass_1_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
@@ -603,7 +82,97 @@ main.c: In function 'stabilityMonitorTask':
 FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
  #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
                                                                                           ^
-main.c:123:13: note: in expansion of macro 'xQueueSend'
+main.c:126:13: note: in expansion of macro 'xQueueSend'
+             xQueueSend(Q_freq_data, &frequency, pdFALSE);
+             ^
+FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+main.c: In function 'PRVGADraw_Task':
+main.c:261:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+             i = ++i%100;
+               ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 636 KBytes program size (code + initialized data).
+Info:             130560 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+16:01:45 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:19:0:
+main.c: In function 'stabilityMonitorTask':
+FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
+                                                                                          ^
+main.c:126:13: note: in expansion of macro 'xQueueSend'
+             xQueueSend(Q_freq_data, &frequency, pdFALSE);
+             ^
+FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+main.c: In function 'PRVGADraw_Task':
+main.c:261:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+             i = ++i%100;
+               ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 636 KBytes program size (code + initialized data).
+Info:             130560 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+16:03:20 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:19:0:
+main.c: In function 'stabilityMonitorTask':
+FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
+                                                                                          ^
+main.c:126:13: note: in expansion of macro 'xQueueSend'
+             xQueueSend(Q_freq_data, &frequency, pdFALSE);
+             ^
+FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+main.c: In function 'PRVGADraw_Task':
+main.c:261:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+             i = ++i%100;
+               ^
+Info: Linking Ass_1.elf
+nios2-elf-g++  -T'../Ass_1_bsp//linker.x' -msys-crt0='../Ass_1_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../Ass_1_bsp/   -Wl,-Map=Ass_1.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o Ass_1.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert Ass_1.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1" --sopcinfo C:/Users/tcas362/Documents/GitHub/COMPSYS-723-Assignment-1/Ass_1/software/Ass_1_bsp/../../nios2.sopcinfo
+Info: (Ass_1.elf) 636 KBytes program size (code + initialized data).
+Info:             130560 KBytes free for stack + heap.
+Info: Creating Ass_1.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
+[Ass_1 build complete]
+16:05:06 **** Incremental Build of configuration Nios II for project Ass_1 ****
+make all 
+Info: Building ../Ass_1_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../Ass_1_bsp//HAL/inc -I../Ass_1_bsp/ -I../Ass_1_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:19:0:
+main.c: In function 'stabilityMonitorTask':
+FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
+                                                                                          ^
+main.c:126:13: note: in expansion of macro 'xQueueSend'
              xQueueSend(Q_freq_data, &frequency, pdFALSE);
              ^
 FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'

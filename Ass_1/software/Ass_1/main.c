@@ -86,12 +86,15 @@ volatile uint8_t timer_reset_flag2 = 1;
 uint8_t freq_update = 1;
 uint8_t stability_flag = 1;
 uint8_t maintenance_flag = 0;
-volatile int time = 0 ;
+volatile int ms = 0 ;
 volatile int seconds = 0;
 volatile int minutes = 0;
-volatile int temp_time = 0 ;
+volatile int temp_ms = 0 ;
 volatile int temp_seconds = 0;
 volatile int temp_minutes = 0;
+volatile int min = 0 ;
+volatile int max = 0;
+volatile int avg = 0;
 int recorded_time[] = {0,0,0,0,0};
 
 void freq_relay_isr(){
@@ -147,10 +150,9 @@ static void loadMonitorTask(void *pvParameters) {
             if (timer500_flag && !received_stability) {
                 timer500_flag = 0;
                 for (int i = 4; i >= 0; i--) {
-                    printf("checking load (unstable): %i it is state %i\n",i,load_state_N[i]);
                     if (load_state_N[i] == 1) {
                     	load_state_N[i] = 0;
-                        printf("%i load detached \n", i);
+                        //printf("%i load detached \n", i);
                         add_time_to_array();
                         break;
                     }
@@ -159,10 +161,9 @@ static void loadMonitorTask(void *pvParameters) {
             if (timer500_flag && received_stability) {
                 timer500_flag = 0;
                 for (int i = 0; i <= 4; i++) {
-                    printf("checking load (stable): %i it is state %i\n",i,load_state_N[i]);
                     if (load_state_N[i] == 0) {
                     	load_state_N[i] = 1;
-                        printf("%i load attached \n", i);
+                        //printf("%i load attached \n", i);
                         add_time_to_array();
                         break;
                     }
@@ -202,7 +203,6 @@ static void pollingSwitchsTask(void *pvParameters) {
         	  load_state_M[i] = (uiSwitchValue >> i) & 0x1;
             }
         }
-        //IOWR_ALTERA_AVALON_PIO_DATA(RED_LEDS_BASE, uiSwitchValue);
         vTaskDelay(pdMS_TO_TICKS(100));
     }
 }
@@ -292,8 +292,8 @@ static void PRVGADraw_Task(void *pvParameters ) {
             }
         }
 
-        sprintf(bfr_a, "FREQUENCY: %.4f Hz     ", frequency);
-        sprintf(bfr_b, "ROC:       %.4f Hz/s   ", roc_frequency);
+        sprintf(bfr_a, "FREQUENCY: %2.4f Hz     ", frequency);
+        sprintf(bfr_b, "ROC:       %2.4f Hz/s   ", roc_frequency);
         alt_up_char_buffer_string(char_buf, bfr_a, 5, 40);
         alt_up_char_buffer_string(char_buf, bfr_b, 5, 42);
 
@@ -322,15 +322,15 @@ static void PRVGADraw_Task(void *pvParameters ) {
 
         alt_up_char_buffer_string(char_buf, "Running Time:", 50, 40);
         alt_up_char_buffer_string(char_buf, "Reaction Times:", 50, 44);
-        sprintf(bfr_a, "%2dm:%2ds:%3dms", minutes,seconds,time);
+        sprintf(bfr_a, "%2dm:%2ds:%3dms", minutes,seconds,ms);
         sprintf(bfr_b, "%dms %dms %dms %dms %dms", recorded_time[0],recorded_time[1],recorded_time[2],recorded_time[3],recorded_time[4]);
         alt_up_char_buffer_string(char_buf, bfr_a, 50, 42);
         alt_up_char_buffer_string(char_buf, bfr_b, 50, 46);
-        sprintf(bfr_c, "Max: %dms", 200);
+        sprintf(bfr_c, "Max: %dms", max);
         alt_up_char_buffer_string(char_buf, bfr_c, 50, 48);
-        sprintf(bfr_c, "Min: %dms", 200);
+        sprintf(bfr_c, "Min: %dms", min);
         alt_up_char_buffer_string(char_buf, bfr_c, 50, 50);
-        sprintf(bfr_c, "AVG: %dms", 200);
+        sprintf(bfr_c, "AVG: %dms", avg);
         alt_up_char_buffer_string(char_buf, bfr_c, 50, 52);
 
         alt_up_char_buffer_string(char_buf, "Load state: ", 35, 54);
@@ -359,6 +359,7 @@ static void PRVGADraw_Task(void *pvParameters ) {
 	  }
 }
 
+/* Dont use printf here */
 static void LCD_task(void *pvParameters) {
 	FILE *lcd;
 	lcd = fopen(CHARACTER_LCD_NAME, "w");
@@ -369,35 +370,34 @@ static void LCD_task(void *pvParameters) {
 	}
 }
 
+/* Timer for load monitoring */
 void Timer_Reset_Task(void *pvParameters ){
 	while(1){
 		if (timer_reset_flag == 1){
 			xTimerReset( timer, 10 );
 			timer_reset_flag = 0;
 		}
-
 	}
 }
-
 void vTimerCallback(xTimerHandle t_timer){
 	timer_reset_flag = 1;
 	timer500_flag = 1;
 }
+
+/* Timer for time recordings */
 void Timer_Reset_Task2(void *pvParameters ){
 	while(1){
 		if (timer_reset_flag2 == 1){
 			xTimerReset( timer2, 10 );
 			timer_reset_flag2 = 0;
 		}
-
 	}
 }
-
 void vTimerCallback2(xTimerHandle t_timer2){
 	timer_reset_flag2 = 1;
-	time += 1;
-	if (time > 995){
-		time = 0;
+	ms ++;
+	if (ms > 999){
+		ms = 0;
 		seconds ++;
 	}
 	if (seconds > 59){
@@ -406,50 +406,59 @@ void vTimerCallback2(xTimerHandle t_timer2){
 	}
 }
 
+/* Called after load state is changed */
 void add_time_to_array() {
-    // Convert minutes and seconds to milliseconds and add them to ms
-    int total_ms = (minutes * 60 * 1000) + (seconds * 1000) + time;
-    int temp_ms = (temp_minutes * 60 * 1000) + (temp_seconds * 1000) + temp_time;
+    int total_ms = (minutes * 60 * 1000) + (seconds * 1000) + ms;
+    int temp_time = (temp_minutes * 60 * 1000) + (temp_seconds * 1000) + temp_ms;
+    int sum = 0;
 
-    // Shift the array elements to the left
     for (int i = 1; i < 5; i++) {
         recorded_time[i - 1] = recorded_time[i];
     }
-
-    // Add the new time to the last position
-    recorded_time[4] = - temp_ms + total_ms;
+    recorded_time[4] = total_ms - temp_time;
+    for (int i = 0; i < 5; i++){
+    	if (recorded_time[i] <= min){
+    		min = recorded_time[i];
+    	}
+    	if (recorded_time[i] >= max){
+    		max = recorded_time[i];
+    	}
+    	sum += recorded_time[i];
+    }
+    avg = sum / 5;
 }
+
+/* Called after stability flag changes */
 void record_time(){
 	temp_minutes = minutes;
 	temp_seconds = seconds;
-	temp_time = time;
+	temp_ms = ms;
 }
 
 int main(void) {
+	  stabilityTaskQueue = xQueueCreate(100, sizeof(double));
+	  loadMonitorTaskQueue = xQueueCreate(100, sizeof(int));
 
+	  /* Tasks */
+	  xTaskCreate(stabilityMonitorTask, "stabilityMonitorTask", TASK_STACKSIZE, NULL, FREQ_ANALYSER_PRIORITY, &stabilityTaskHandle);
+	  xTaskCreate(loadMonitorTask, "loadMonitorTask", TASK_STACKSIZE, NULL, LOAD_MONITOR_PRIORITY, &loadMonitorTaskHandle);
+	  xTaskCreate(pollingSwitchsTask, "pollingSwitchsTask", TASK_STACKSIZE, NULL, SWITCHES_PRIORITY, &pollingSwitchsTaskHandle);
+	  xTaskCreate(LCD_task, "LCD_task", TASK_STACKSIZE, NULL, DISPLAY_PRIORITY, &LCD_handle);
+	  xTaskCreate(PRVGADraw_Task, "DrawTsk", TASK_STACKSIZE, NULL, DISPLAY_PRIORITY, &PRVGADraw);
+	  xTaskCreate( Timer_Reset_Task, "0", configMINIMAL_STACK_SIZE, NULL, Timer_Reset_Task_P, &Timer_Reset );
+	  xTaskCreate( Timer_Reset_Task2, "0", configMINIMAL_STACK_SIZE, NULL, Timer_Reset_Task_P, &Timer_Reset2 );
 
-  stabilityTaskQueue = xQueueCreate(100, sizeof(double));
-  loadMonitorTaskQueue = xQueueCreate(100, sizeof(int));
+	  /* ISRs */
+	  timer = xTimerCreate("Timer Name", 500, pdTRUE, NULL, vTimerCallback);
+	  timer2 = xTimerCreate("Timer Name2", 1, pdTRUE, NULL, vTimerCallback2);
+	  Q_freq_data = xQueueCreate(100, sizeof(double));
+	  alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_isr);
+	  IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE, 0x7);
+	  IOWR_ALTERA_AVALON_PIO_IRQ_MASK(PUSH_BUTTON_BASE, 0x7);
+	  alt_irq_register(PUSH_BUTTON_IRQ, 0, button_isr);
+	  IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0x00000000);
+	  timer500_flag = 1;
 
-  xTaskCreate(stabilityMonitorTask, "stabilityMonitorTask", TASK_STACKSIZE, NULL, FREQ_ANALYSER_PRIORITY, &stabilityTaskHandle);
-  xTaskCreate(loadMonitorTask, "loadMonitorTask", TASK_STACKSIZE, NULL, LOAD_MONITOR_PRIORITY, &loadMonitorTaskHandle);
-  xTaskCreate(pollingSwitchsTask, "pollingSwitchsTask", TASK_STACKSIZE, NULL, SWITCHES_PRIORITY, &pollingSwitchsTaskHandle);
-  xTaskCreate(LCD_task, "LCD_task", TASK_STACKSIZE, NULL, DISPLAY_PRIORITY, &LCD_handle);
-  xTaskCreate(PRVGADraw_Task, "DrawTsk", TASK_STACKSIZE, NULL, DISPLAY_PRIORITY, &PRVGADraw);
-  xTaskCreate( Timer_Reset_Task, "0", configMINIMAL_STACK_SIZE, NULL, Timer_Reset_Task_P, &Timer_Reset );
-  xTaskCreate( Timer_Reset_Task2, "0", configMINIMAL_STACK_SIZE, NULL, Timer_Reset_Task_P, &Timer_Reset2 );
-
-  timer = xTimerCreate("Timer Name", 500, pdTRUE, NULL, vTimerCallback);
-  timer2 = xTimerCreate("Timer Name2", 1, pdTRUE, NULL, vTimerCallback2);
-  timer500_flag = 1;
-
-  Q_freq_data = xQueueCreate(100, sizeof(double));
-  alt_irq_register(FREQUENCY_ANALYSER_IRQ, 0, freq_relay_isr);
-  IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PUSH_BUTTON_BASE, 0x7);
-  IOWR_ALTERA_AVALON_PIO_IRQ_MASK(PUSH_BUTTON_BASE, 0x7);
-  alt_irq_register(PUSH_BUTTON_IRQ, 0, button_isr);
-  IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0x00000000);
-
-  vTaskStartScheduler();
-  while (1);
+	  vTaskStartScheduler();
+	  while (1);
 }

@@ -1,4 +1,4 @@
-14:50:11 **** Incremental Build of configuration Nios II for project Ass_1 ****
+16:05:06 **** Incremental Build of configuration Nios II for project Ass_1 ****
 make all 
 Info: Building ../Ass_1_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../Ass_1_bsp/
@@ -10,7 +10,7 @@ main.c: In function 'stabilityMonitorTask':
 FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
  #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
                                                                                           ^
-main.c:123:13: note: in expansion of macro 'xQueueSend'
+main.c:126:13: note: in expansion of macro 'xQueueSend'
              xQueueSend(Q_freq_data, &frequency, pdFALSE);
              ^
 FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
@@ -29,5 +29,5 @@ Info: Creating Ass_1.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source Ass_1.elf >Ass_1.objdump
 [Ass_1 build complete]
 
-14:50:13 Build Finished (took 1s.601ms)
+16:05:07 Build Finished (took 1s.545ms)
 
