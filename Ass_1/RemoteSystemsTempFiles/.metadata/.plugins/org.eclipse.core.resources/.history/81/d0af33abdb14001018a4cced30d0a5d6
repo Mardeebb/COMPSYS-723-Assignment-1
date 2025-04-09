@@ -306,18 +306,8 @@ static void PRVGADraw_Task(void *pvParameters ) {
         }
         alt_up_char_buffer_string(char_buf, bfr_c, 35, 48);
 
-        alt_up_char_buffer_string(char_buf, "Running Time:", 50, 40);
-        alt_up_char_buffer_string(char_buf, "Reaction Times:", 50, 44);
-        sprintf(bfr_a, "%2dm:%2ds:%3dms", 12,34,567);
-        sprintf(bfr_b, "%dms %dms %dms %dms %dms", 200,200,200,200,200);
-        alt_up_char_buffer_string(char_buf, bfr_a, 50, 42);
-        alt_up_char_buffer_string(char_buf, bfr_b, 50, 46);
-        sprintf(bfr_c, "Max: %dms", 200);
-        alt_up_char_buffer_string(char_buf, bfr_c, 50, 48);
-        sprintf(bfr_c, "Min: %dms", 200);
-        alt_up_char_buffer_string(char_buf, bfr_c, 50, 50);
-        sprintf(bfr_c, "AVG: %dms", 200);
-        alt_up_char_buffer_string(char_buf, bfr_c, 50, 52);
+        alt_up_char_buffer_string(char_buf, "Running Time:", 55, 40);
+        sprintf(bfr_a, "%2d:%2d:%2d", 0,0,0);
 
         alt_up_char_buffer_string(char_buf, "Load state: ", 35, 54);
         for (int i = 0; i < 5; i++) {

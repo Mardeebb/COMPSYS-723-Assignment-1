@@ -289,6 +289,8 @@ static void PRVGADraw_Task(void *pvParameters ) {
         alt_up_char_buffer_string(char_buf, bfr_b, 5, 48);
 
         alt_up_char_buffer_string(char_buf, "Stability:    ", 35, 40);
+        alt_up_char_buffer_string(char_buf, "Mode:", 35, 46);
+
         if (stability_flag == 1) {
           sprintf(bfr_c, "Stable    ");
           alt_up_pixel_buffer_dma_draw_box(pixel_buf, 275, 332, 368, 346, 0x3ff << 0, 0);
@@ -296,8 +298,6 @@ static void PRVGADraw_Task(void *pvParameters ) {
           sprintf(bfr_c, "Not Stable");
           alt_up_pixel_buffer_dma_draw_box(pixel_buf, 275, 332, 368, 346, 0xff00 << 0, 0);
         }
-
-        alt_up_char_buffer_string(char_buf, "Mode:", 35, 46);
         alt_up_char_buffer_string(char_buf, bfr_c, 35, 42);
         if (maintenance_flag == 1) {
           sprintf(bfr_c, "Maintenance");
@@ -306,36 +306,23 @@ static void PRVGADraw_Task(void *pvParameters ) {
         }
         alt_up_char_buffer_string(char_buf, bfr_c, 35, 48);
 
-        alt_up_char_buffer_string(char_buf, "Running Time:", 50, 40);
-        alt_up_char_buffer_string(char_buf, "Reaction Times:", 50, 44);
-        sprintf(bfr_a, "%2dm:%2ds:%3dms", 12,34,567);
-        sprintf(bfr_b, "%dms %dms %dms %dms %dms", 200,200,200,200,200);
-        alt_up_char_buffer_string(char_buf, bfr_a, 50, 42);
-        alt_up_char_buffer_string(char_buf, bfr_b, 50, 46);
-        sprintf(bfr_c, "Max: %dms", 200);
-        alt_up_char_buffer_string(char_buf, bfr_c, 50, 48);
-        sprintf(bfr_c, "Min: %dms", 200);
-        alt_up_char_buffer_string(char_buf, bfr_c, 50, 50);
-        sprintf(bfr_c, "AVG: %dms", 200);
-        alt_up_char_buffer_string(char_buf, bfr_c, 50, 52);
-
         alt_up_char_buffer_string(char_buf, "Load state: ", 35, 54);
         for (int i = 0; i < 5; i++) {
         	if (maintenance_flag == 0){
 				  if (load_state_N[i] == 1) {
 						sprintf(bfr_c, "Load %d: ON ", i);
-						alt_up_pixel_buffer_dma_draw_box(pixel_buf, 100+i*120, 443, 130+i*120, 458, 0x3ff << 0, 0);
+						alt_up_pixel_buffer_dma_draw_box(pixel_buf, 100+i*120, 448, 130+i*120, 463, 0x3ff << 0, 0);
 				  } else {
 					  sprintf(bfr_c, "Load %d: OFF", i);
-						alt_up_pixel_buffer_dma_draw_box(pixel_buf, 100+i*120, 443, 130+i*120, 458, 0xff00 << 0, 0);
+						alt_up_pixel_buffer_dma_draw_box(pixel_buf, 100+i*120, 448, 130+i*120, 463, 0xff00 << 0, 0);
 				  }
         	} else {
         		if (load_state_M[i] == 1) {
 					sprintf(bfr_c, "Load %d: ON ", i);
-					alt_up_pixel_buffer_dma_draw_box(pixel_buf, 100+i*120, 443, 130+i*120, 458, 0x3ff << 0, 0);
+					alt_up_pixel_buffer_dma_draw_box(pixel_buf, 100+i*120, 428, 130+i*120, 443, 0x3ff << 0, 0);
 				} else {
 					sprintf(bfr_c, "Load %d: OFF", i);
-					alt_up_pixel_buffer_dma_draw_box(pixel_buf, 100+i*120, 443, 130+i*120, 458, 0xff00 << 0, 0);
+					alt_up_pixel_buffer_dma_draw_box(pixel_buf, 100+i*120, 428, 130+i*120, 443, 0xff00 << 0, 0);
 				}
         	}
           alt_up_char_buffer_string(char_buf, bfr_c, 5 + i*15, 56);
