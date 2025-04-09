@@ -167,7 +167,7 @@ static void loadMonitorTask(void *pvParameters) {
         	for (int i = 0; i < 5; i++) {
 				led_output |= (load_state_M[i] << (4 - i));
 			}
-			IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0);
+            //led_output = (~led_output) & 0x1F;
 			IOWR_ALTERA_AVALON_PIO_DATA(RED_LEDS_BASE, led_output);
         }
         vTaskDelay(pdMS_TO_TICKS(50));
