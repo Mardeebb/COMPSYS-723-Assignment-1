@@ -59,7 +59,6 @@ static void stabilityMonitorTask(void *pvParameters);
 static void pollingSwitchsTask(void *pvParameters);
 static void PRVGADraw_Task(void *pvParameters );
 void record_time();
-void add_time_to_array();
 
 static QueueHandle_t Q_freq_data;
 TaskHandle_t  stabilityTaskHandle, loadMonitorTaskHandle, pollingSwitchsTaskHandle, PRVGADraw, LCD_handle;
@@ -151,10 +150,10 @@ static void loadMonitorTask(void *pvParameters) {
                     if (load_state_N[i] == 1) {
                     	load_state_N[i] = 0;
                         printf("%i load detached \n", i);
-                        add_time_to_array();
                         break;
                     }
                 }
+                add_time_to_array();
             }
             if (timer500_flag && received_stability) {
                 timer500_flag = 0;
@@ -163,10 +162,10 @@ static void loadMonitorTask(void *pvParameters) {
                     if (load_state_N[i] == 0) {
                     	load_state_N[i] = 1;
                         printf("%i load attached \n", i);
-                        add_time_to_array();
                         break;
                     }
                 }
+                add_time_to_array();
             }
             led_output = 0;
             for (int i = 0; i < 5; i++) {
@@ -395,7 +394,7 @@ void Timer_Reset_Task2(void *pvParameters ){
 
 void vTimerCallback2(xTimerHandle t_timer2){
 	timer_reset_flag2 = 1;
-	time += 1;
+	time += 5;
 	if (time > 995){
 		time = 0;
 		seconds ++;
@@ -417,7 +416,7 @@ void add_time_to_array() {
     }
 
     // Add the new time to the last position
-    recorded_time[4] = - temp_ms + total_ms;
+    recorded_time[5 - 1] = temp_ms - total_ms;
 }
 void record_time(){
 	temp_minutes = minutes;
@@ -440,7 +439,7 @@ int main(void) {
   xTaskCreate( Timer_Reset_Task2, "0", configMINIMAL_STACK_SIZE, NULL, Timer_Reset_Task_P, &Timer_Reset2 );
 
   timer = xTimerCreate("Timer Name", 500, pdTRUE, NULL, vTimerCallback);
-  timer2 = xTimerCreate("Timer Name2", 1, pdTRUE, NULL, vTimerCallback2);
+  timer2 = xTimerCreate("Timer Name2", 5, pdTRUE, NULL, vTimerCallback2);
   timer500_flag = 1;
 
   Q_freq_data = xQueueCreate(100, sizeof(double));

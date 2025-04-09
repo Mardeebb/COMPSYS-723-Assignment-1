@@ -395,7 +395,7 @@ void Timer_Reset_Task2(void *pvParameters ){
 
 void vTimerCallback2(xTimerHandle t_timer2){
 	timer_reset_flag2 = 1;
-	time += 1;
+	time += 5;
 	if (time > 995){
 		time = 0;
 		seconds ++;
@@ -440,7 +440,7 @@ int main(void) {
   xTaskCreate( Timer_Reset_Task2, "0", configMINIMAL_STACK_SIZE, NULL, Timer_Reset_Task_P, &Timer_Reset2 );
 
   timer = xTimerCreate("Timer Name", 500, pdTRUE, NULL, vTimerCallback);
-  timer2 = xTimerCreate("Timer Name2", 1, pdTRUE, NULL, vTimerCallback2);
+  timer2 = xTimerCreate("Timer Name2", 5, pdTRUE, NULL, vTimerCallback2);
   timer500_flag = 1;
 
   Q_freq_data = xQueueCreate(100, sizeof(double));

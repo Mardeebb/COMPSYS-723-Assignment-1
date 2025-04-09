@@ -58,8 +58,6 @@ static void LCD_task(void *pvParameters);
 static void stabilityMonitorTask(void *pvParameters);
 static void pollingSwitchsTask(void *pvParameters);
 static void PRVGADraw_Task(void *pvParameters );
-void record_time();
-void add_time_to_array();
 
 static QueueHandle_t Q_freq_data;
 TaskHandle_t  stabilityTaskHandle, loadMonitorTaskHandle, pollingSwitchsTaskHandle, PRVGADraw, LCD_handle;
@@ -87,12 +85,6 @@ uint8_t freq_update = 1;
 uint8_t stability_flag = 1;
 uint8_t maintenance_flag = 0;
 volatile int time = 0 ;
-volatile int seconds = 0;
-volatile int minutes = 0;
-volatile int temp_time = 0 ;
-volatile int temp_seconds = 0;
-volatile int temp_minutes = 0;
-int recorded_time[] = {0,0,0,0,0};
 
 void freq_relay_isr(){
     unsigned int samples = IORD(FREQUENCY_ANALYSER_BASE, 0);
@@ -124,12 +116,10 @@ static void stabilityMonitorTask(void *pvParameters) {
 
             if (frequency >= FREQ_TH + 1 || frequency <= FREQ_TH-1 || roc_frequency < -1 * ROC_TH || roc_frequency > ROC_TH) {
                 stability_flag = 0;
-                record_time();
                 xQueueSend(loadMonitorTaskQueue, &stability_flag, pdFALSE);
                 xTaskNotifyGive(loadMonitorTaskHandle);
             } else {
                 stability_flag = 1;
-                record_time();
                 xQueueSend(loadMonitorTaskQueue, &stability_flag, pdFALSE);
                 xTaskNotifyGive(loadMonitorTaskHandle);
             }
@@ -151,7 +141,6 @@ static void loadMonitorTask(void *pvParameters) {
                     if (load_state_N[i] == 1) {
                     	load_state_N[i] = 0;
                         printf("%i load detached \n", i);
-                        add_time_to_array();
                         break;
                     }
                 }
@@ -163,7 +152,6 @@ static void loadMonitorTask(void *pvParameters) {
                     if (load_state_N[i] == 0) {
                     	load_state_N[i] = 1;
                         printf("%i load attached \n", i);
-                        add_time_to_array();
                         break;
                     }
                 }
@@ -322,8 +310,8 @@ static void PRVGADraw_Task(void *pvParameters ) {
 
         alt_up_char_buffer_string(char_buf, "Running Time:", 50, 40);
         alt_up_char_buffer_string(char_buf, "Reaction Times:", 50, 44);
-        sprintf(bfr_a, "%2dm:%2ds:%3dms", minutes,seconds,time);
-        sprintf(bfr_b, "%dms %dms %dms %dms %dms", recorded_time[0],recorded_time[1],recorded_time[2],recorded_time[3],recorded_time[4]);
+        sprintf(bfr_a, "%2dm:%2ds:%3dms", time / 1200,time / 200,time);
+        sprintf(bfr_b, "%dms %dms %dms %dms %dms", 200,200,200,200,200);
         alt_up_char_buffer_string(char_buf, bfr_a, 50, 42);
         alt_up_char_buffer_string(char_buf, bfr_b, 50, 46);
         sprintf(bfr_c, "Max: %dms", 200);
@@ -395,35 +383,9 @@ void Timer_Reset_Task2(void *pvParameters ){
 
 void vTimerCallback2(xTimerHandle t_timer2){
 	timer_reset_flag2 = 1;
-	time += 1;
-	if (time > 995){
-		time = 0;
-		seconds ++;
-	}
-	if (seconds > 59){
-		minutes ++;
-		seconds = 0;
-	}
+	time ++;
 }
 
-void add_time_to_array() {
-    // Convert minutes and seconds to milliseconds and add them to ms
-    int total_ms = (minutes * 60 * 1000) + (seconds * 1000) + time;
-    int temp_ms = (temp_minutes * 60 * 1000) + (temp_seconds * 1000) + temp_time;
-
-    // Shift the array elements to the left
-    for (int i = 1; i < 5; i++) {
-        recorded_time[i - 1] = recorded_time[i];
-    }
-
-    // Add the new time to the last position
-    recorded_time[4] = - temp_ms + total_ms;
-}
-void record_time(){
-	temp_minutes = minutes;
-	temp_seconds = seconds;
-	temp_time = time;
-}
 
 int main(void) {
 
@@ -440,7 +402,7 @@ int main(void) {
   xTaskCreate( Timer_Reset_Task2, "0", configMINIMAL_STACK_SIZE, NULL, Timer_Reset_Task_P, &Timer_Reset2 );
 
   timer = xTimerCreate("Timer Name", 500, pdTRUE, NULL, vTimerCallback);
-  timer2 = xTimerCreate("Timer Name2", 1, pdTRUE, NULL, vTimerCallback2);
+  timer2 = xTimerCreate("Timer Name2", 5, pdTRUE, NULL, vTimerCallback2);
   timer500_flag = 1;
 
   Q_freq_data = xQueueCreate(100, sizeof(double));
