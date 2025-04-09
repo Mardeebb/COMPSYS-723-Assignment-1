@@ -35,7 +35,7 @@
 #define DISPLAY_PRIORITY       	11
 #define SWITCHES_PRIORITY       12
 #define LED_PRIORITY       		  13
-#define TIMER_RESET_PRIORITY    14
+#define TIMER_RESET_PRIORITY    (tskIDLE_PRIORITY+1)
 #define LOAD_MONITOR_PRIORITY   15
 #define FREQ_ANALYSER_PRIORITY  16
 
@@ -98,11 +98,11 @@ volatile int max = 0;
 volatile int avg = 0;
 int recorded_time[] = { 0,0,0,0,0 };
 
-int loads_active_flag = 0;
 int load_state[] = { 0,0,0,0,0 };
 int switch_state[] = { 0,0,0,0 };
 
 uint8_t timer500_flag = 1;
+uint8_t timer_reset_flag = 1;
 uint8_t timer_reset_flag2 = 1;
 uint8_t stability_flag = 1;
 uint8_t maintenance_flag = 0;
@@ -110,7 +110,7 @@ uint8_t stability_changed_flag = 0;
 
 // ------------------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------------------------
-// --------------------------------------------------------------------- Interupt Service Routines ------------------------------------------
+// --------------------------------------------------------------------- Interrupt Service Routines -----------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -179,7 +179,6 @@ void ps2_isr(void* ps2_device, alt_u32 id) {
 
 static void stabilityMonitorTask(void* pvParameters) {
     unsigned int received_samples;
-    static uint8_t last_stability = 1;
     while (1) {
         if (xQueueReceive(stabilityTaskQueue, &received_samples, portMAX_DELAY)) {
             old_frequency = frequency;
@@ -204,79 +203,96 @@ static void stabilityMonitorTask(void* pvParameters) {
 }
 
 static void loadMonitorTask(void* pvParameters) {
-    uint8_t received_stability;
-    static uint8_t last_stability = 1;
+    uint8_t received_stability = 0;
+    uint8_t last_stability = 1;
     unsigned int led_output = 0;
-    unsigned int redled_output = 0;
+    unsigned int reverse = 0;
+    int bitCount = 5;
 
     while (1) {
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-        if (xQueueReceive(loadMonitorTaskQueue, &received_stability, portMAX_DELAY) && xSemaphoreTake(xTimerSemaphore, portMAX_DELAY) && maintenance_flag == 0) {
-
+        if (xQueueReceive(loadMonitorTaskQueue, &stability_flag, portMAX_DELAY) && xSemaphoreTake(xTimerSemaphore, portMAX_DELAY) && maintenance_flag == 0) {
+        	received_stability = stability_flag;
             if (received_stability != last_stability) {
                 stability_changed_flag = 1;
-                xTimerReset(timer, 10);
+                timer_reset_flag = 1;
                 timer500_flag = 0;
                 last_stability = received_stability;
                 continue;
             }
             if (timer500_flag && !received_stability) {
+                timer500_flag = 0;
                 for (int i = 4; i >= 0; i--) {
-                    if (load_state[i] == 1) {
+                    if (load_state[i] == 1 && switch_state[i] == 1) {
                         load_state[i] = 0;
-                        loads_active_flag = 1;
                         add_time_to_array();
                         break;
                     }
                 }
             }
             if (timer500_flag && received_stability) {
+                timer500_flag = 0;
                 for (int i = 0; i <= 4; i++) {
-                    if (load_state[i] == 0) {
+                    if (load_state[i] == 0 && switch_state[i] == 1) {
                         load_state[i] = 1;
-                        loads_active_flag = 1;
                         add_time_to_array();
                         break;
                     }
                 }
             }
         }
+	    reverse = 0;
+        bitCount = 5;
+        led_output = 0;
         if (maintenance_flag == 1) {
-            led_output = 0;
-            unsigned int uiSwitchValue = IORD_ALTERA_AVALON_PIO_DATA(SLIDE_SWITCH_BASE);
             for (int i = 0; i < 5; i++) {
-                switch_state[i] = (uiSwitchValue >> i) & 0x1;
+            	reverse |= (load_state[i] << i);
             }
-            for (int i = 0; i < 5; i++) {
-                printf("%i of switches is %i\n", i, switch_state[i]);
-                led_output |= (switch_state[i] << i);
-                printf("LED output is now %i\n", led_output);
-                load_state[i] = switch_state[i];
-            }
+			while (bitCount--) {
+				led_output <<= 1;
+				led_output |= (reverse & 1);
+				reverse >>= 1;
+			}
             IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, 0);
             IOWR_ALTERA_AVALON_PIO_DATA(RED_LEDS_BASE, led_output);
+        } else {
+			for (int i = 0; i < 5; i++) {
+				reverse |= (load_state[i] << i);
+			}
+			while (bitCount--) {
+				led_output <<= 1;
+				led_output |= (reverse & 1);
+				reverse >>= 1;
+			}
+			IOWR_ALTERA_AVALON_PIO_DATA(RED_LEDS_BASE, led_output);
+			uint32_t green_led_output = (~led_output) & 0x1F;
+			IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, green_led_output);
+			vTaskDelay(pdMS_TO_TICKS(100));
         }
-        if (loads_active_flag) {
-            led_output = 0;
-            for (int i = 0; i < 5; i++) {
-                led_output |= (load_state[i] << i);
-            }
-            IOWR_ALTERA_AVALON_PIO_DATA(RED_LEDS_BASE, led_output);
-            uint32_t green_led_output = (~led_output) & 0x1F;
-            IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, green_led_output);
-            loads_active_flag = 0;
-        }
-        vTaskDelay(pdMS_TO_TICKS(100));
     }
 }
 
 static void pollingSwitchsTask(void* pvParameters) {
     unsigned int uiSwitchValue = 0;
+    unsigned int reverse = 0;
     while (1) {
         uiSwitchValue = IORD_ALTERA_AVALON_PIO_DATA(SLIDE_SWITCH_BASE);
+        reverse = 0;
+        int bitCount = 5;
+        while (bitCount--) {
+			reverse <<= 1;
+			reverse |= (uiSwitchValue & 1);
+			uiSwitchValue >>= 1;
+		}
+        for (int i = 0; i < 5; i++) {
+            switch_state[i] = (reverse >> i) & 0x1;
+        	if (switch_state[i] == 0){
+        		load_state[i] = 0;
+        	}
+        }
         if (maintenance_flag == 1) {
             for (int i = 0; i < 5; i++) {
-                load_state[i] = (uiSwitchValue >> i) & 0x1;
+                load_state[i] = switch_state[i];
             }
         }
         vTaskDelay(pdMS_TO_TICKS(100));
@@ -354,19 +370,40 @@ static void PRVGADraw_Task(void* pvParameters) {
                 line_roc.x2 = ROCPLT_ORI_X + ROCPLT_GRID_SIZE_X * (j + 1);
                 line_roc.y2 = (int) (ROCPLT_ORI_Y - ROCPLT_ROC_RES * dfreq[(i + j + 1) % 100]);
 
-                if (freq[(i + j) % 100] >= FREQ_TH + 1 || freq[(i + j) % 100] <= FREQ_TH - 1) {
+                if (freq[(i + j) % 100] >= freqTH + 1 || freq[(i + j) % 100] <= freqTH - 1) {
                     alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_freq.x1, line_freq.y1, line_freq.x2, line_freq.y2, 0xFF00 << 0, 0);
                 } else {
                     alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_freq.x1, line_freq.y1, line_freq.x2, line_freq.y2, 0x3FF << 0, 0);
                 }
-                if (dfreq[(i + j) % 100] < -1 * ROC_TH || dfreq[(i + j) % 100] > ROC_TH) {
+                if (dfreq[(i + j) % 100] < -1 * rocTH || dfreq[(i + j) % 100] > rocTH) {
                     alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_roc.x1, line_roc.y1, line_roc.x2, line_roc.y2, 0xFF00 << 0, 0);
                 } else {
                     alt_up_pixel_buffer_dma_draw_line(pixel_buf, line_roc.x1, line_roc.y1, line_roc.x2, line_roc.y2, 0x3ff << 0, 0);
                 }
             }
         }
+        // Real-time data
+        sprintf(bfr_a, "FREQUENCY: %2.4f Hz     ", frequency);
+        sprintf(bfr_b, "ROC:       %2.4f Hz/s   ", roc_frequency);
+        alt_up_char_buffer_string(char_buf, bfr_a, 5, 40);
+        alt_up_char_buffer_string(char_buf, bfr_b, 5, 42);
 
+        // Threshold display and editing
+        if (maintenance_flag == 1) {
+        	sprintf(bfr_a, "Edit: ");
+        	if (change_frequencyTH == 0) {
+    			sprintf(bfr_b, " Frequency TH");
+        	} else {
+    			sprintf(bfr_b, " ROC TH      ");
+        	}
+			alt_up_char_buffer_string(char_buf, bfr_a, 5, 52);
+			alt_up_char_buffer_string(char_buf, bfr_b, 10, 52);
+        } else {
+        	sprintf(bfr_a, "      ");
+			sprintf(bfr_b, "             ");
+			alt_up_char_buffer_string(char_buf, bfr_a, 5, 52);
+			alt_up_char_buffer_string(char_buf, bfr_b, 10, 52);
+        }
         if (increment_flag) {
             if (maintenance_flag == 1) {
                 if (change_frequencyTH == 0) {
@@ -387,16 +424,12 @@ static void PRVGADraw_Task(void* pvParameters) {
             }
             decrement_flag = 0;
         }
-        sprintf(bfr_a, "FREQUENCY: %2.4f Hz     ", frequency);
-        sprintf(bfr_b, "ROC:       %2.4f Hz/s   ", roc_frequency);
-        alt_up_char_buffer_string(char_buf, bfr_a, 5, 40);
-        alt_up_char_buffer_string(char_buf, bfr_b, 5, 42);
-
         sprintf(bfr_a, "FREQ_TH: %.1f Hz  ", freqTH);
         sprintf(bfr_b, "ROC_TH:  %.4f Hz/s", rocTH);
         alt_up_char_buffer_string(char_buf, bfr_a, 5, 46);
         alt_up_char_buffer_string(char_buf, bfr_b, 5, 48);
 
+        // Stability and mode
         alt_up_char_buffer_string(char_buf, "Stability:    ", 35, 40);
         if (stability_flag == 1) {
             sprintf(bfr_c, "Stable    ");
@@ -405,7 +438,6 @@ static void PRVGADraw_Task(void* pvParameters) {
             sprintf(bfr_c, "Not Stable");
             alt_up_pixel_buffer_dma_draw_box(pixel_buf, 275, 332, 368, 346, 0xff00 << 0, 0);
         }
-
         alt_up_char_buffer_string(char_buf, "Mode:", 35, 46);
         alt_up_char_buffer_string(char_buf, bfr_c, 35, 42);
         if (maintenance_flag == 1) {
@@ -415,6 +447,7 @@ static void PRVGADraw_Task(void* pvParameters) {
         }
         alt_up_char_buffer_string(char_buf, bfr_c, 35, 48);
 
+        // Time data
         alt_up_char_buffer_string(char_buf, "Running Time:", 50, 40);
         alt_up_char_buffer_string(char_buf, "Reaction Times:", 50, 44);
         sprintf(bfr_a, "%2dm:%2ds:%3dms", minutes, seconds, ms);
@@ -428,10 +461,11 @@ static void PRVGADraw_Task(void* pvParameters) {
         sprintf(bfr_c, "AVG: %dms", avg);
         alt_up_char_buffer_string(char_buf, bfr_c, 50, 52);
 
+        // Loads
         alt_up_char_buffer_string(char_buf, "Load state: ", 35, 54);
         for (int i = 0; i < 5; i++) {
             if (maintenance_flag == 0) {
-                if (load_state_N[i] == 1) {
+                if (load_state[i] == 1) {
                     sprintf(bfr_c, "Load %d: ON ", i);
                     alt_up_pixel_buffer_dma_draw_box(pixel_buf, 100 + i * 120, 443, 130 + i * 120, 458, 0x3ff << 0, 0);
                 } else {
@@ -439,7 +473,7 @@ static void PRVGADraw_Task(void* pvParameters) {
                     alt_up_pixel_buffer_dma_draw_box(pixel_buf, 100 + i * 120, 443, 130 + i * 120, 458, 0xff00 << 0, 0);
                 }
             } else {
-                if (load_state_M[i] == 1) {
+                if (load_state[i] == 1) {
                     sprintf(bfr_c, "Load %d: ON ", i);
                     alt_up_pixel_buffer_dma_draw_box(pixel_buf, 100 + i * 120, 443, 130 + i * 120, 458, 0x3ff << 0, 0);
                 } else {
@@ -477,14 +511,15 @@ static void LCD_task(void* pvParameters) {
 /* Timer for load monitoring */
 void Timer_Reset_Task(void* pvParameters) {
     while (1) {
-        if (timer500_flag == 1) {
+        if (timer_reset_flag == 1) {
             xTimerReset(timer, 10);
-            timer500_flag = 0;
+            timer_reset_flag = 0;
         }
     }
 }
 void vTimerCallback(xTimerHandle t_timer) {
     timer500_flag = 1;
+    timer_reset_flag = 1;
     xSemaphoreGiveFromISR(xTimerSemaphore, NULL);
 }
 
@@ -521,6 +556,7 @@ void add_time_to_array() {
         recorded_time[i - 1] = recorded_time[i];
     }
     recorded_time[4] = total_ms - temp_time;
+    min = recorded_time[0];
     for (int i = 0; i < 5; i++) {
         if (recorded_time[i] <= min) {
             min = recorded_time[i];
@@ -562,10 +598,7 @@ int main(void) {
 
     /* ISRs */
     timer500_flag = 1;
-    if (ps2_device == NULL) {
-        printf("can't find PS/2 device\n");
-        return 1;
-    }
+    timer_reset_flag = 1;
     timer = xTimerCreate("Timer Name", 500, pdTRUE, NULL, vTimerCallback);
     timer2 = xTimerCreate("Timer Name 2", 1, pdTRUE, NULL, vTimerCallback2);
     Q_freq_data = xQueueCreate(100, sizeof(double));
@@ -577,6 +610,10 @@ int main(void) {
     alt_up_ps2_dev* ps2_device = alt_up_ps2_open_dev(PS2_NAME);
     alt_up_ps2_enable_read_interrupt(ps2_device);
     alt_irq_register(PS2_IRQ, ps2_device, ps2_isr);
+    if (ps2_device == NULL) {
+        printf("can't find PS/2 device\n");
+        return 1;
+    }
 
     vTaskStartScheduler();
     while (1);
