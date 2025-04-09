@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>2/04/2025 2:49:01 PM</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1743558541316</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>9/04/2025 3:46:01 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1744170361570</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>H:\COMPSYS723\COMPSYS-723-Assignment-1\ffrequency_analyser\software\freqyAnalyser_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\nios2.sopcinfo</SopcDesignFile>

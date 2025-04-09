@@ -1,529 +1,860 @@
-11:24:06 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+16:01:21 **** Build of configuration Nios II for project freqyAnalyser_bsp ****
 make all 
-Info: Building ../freqyAnalyser_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
 [BSP build complete]
-Info: Linking freqyAnalyser.elf
-nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-obj/default/main.o: In function `loadMonitorTask':
-C:\Users\jhen559\Downloads\COMPSYS-723-Assignment-1\ffrequency_analyser\software\freqyAnalyser/main.c:211: undefined reference to `IOWR_ALTERA_AVALON_PIO_DAT'
-collect2.exe: error: ld returned 1 exit status
-make: *** [freqyAnalyser.elf] Error 1
-11:24:18 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
-make all 
-Info: Building ../freqyAnalyser_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
-[BSP build complete]
-Info: Linking freqyAnalyser.elf
-nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-obj/default/main.o: In function `loadMonitorTask':
-C:\Users\jhen559\Downloads\COMPSYS-723-Assignment-1\ffrequency_analyser\software\freqyAnalyser/main.c:211: undefined reference to `IOWR_ALTERA_AVALON_PIO_DAT'
-collect2.exe: error: ld returned 1 exit status
-make: *** [freqyAnalyser.elf] Error 1
-11:24:46 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+16:01:47 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
 make all 
 Info: Building ../freqyAnalyser_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
 [BSP build complete]
 Info: Compiling main.c to obj/default/main.o
 nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:19:0:
+In file included from main.c:20:0:
 main.c: In function 'stabilityMonitorTask':
 FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
  #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
                                                                                           ^
-main.c:116:13: note: in expansion of macro 'xQueueSend'
+main.c:158:13: note: in expansion of macro 'xQueueSend'
              xQueueSend(Q_freq_data, &frequency, pdFALSE);
              ^
 FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
  BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
             ^
-main.c:110:20: warning: unused variable 'last_stability' [-Wunused-variable]
+main.c:152:20: warning: unused variable 'last_stability' [-Wunused-variable]
      static uint8_t last_stability = 1;
                     ^
 main.c: In function 'loadMonitorTask':
-main.c:211:13: warning: implicit declaration of function 'IOWR_ALTERA_AVALON_PIO_DAT' [-Wimplicit-function-declaration]
-             IOWR_ALTERA_AVALON_PIO_DAT(GREEN_LEDS_BASE, led_output);
-             ^
+main.c:178:18: warning: unused variable 'redled_output' [-Wunused-variable]
+     unsigned int redled_output = 0;
+                  ^
 main.c: In function 'PRVGADraw_Task':
-main.c:284:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+main.c:332:15: warning: operation on 'i' may be undefined [-Wsequence-point]
              i = ++i%100;
                ^
+main.c: In function 'ps2_isr':
+main.c:115:8: warning: 'byte' is used uninitialized in this function [-Wuninitialized]
+     if (byte == 0xE0) {
+        ^
+Info: Assembling FreeRTOS/port_asm.S to obj/default/FreeRTOS/port_asm.o
+nios2-elf-gcc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -Wa,-I../freqyAnalyser_bsp//HAL/inc -Wa,-I../freqyAnalyser_bsp/ -Wa,-I../freqyAnalyser_bsp//drivers/inc -Wa,-gdwarf2 -o obj/default/FreeRTOS/port_asm.o FreeRTOS/port_asm.S
 Info: Linking freqyAnalyser.elf
 nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-obj/default/main.o: In function `loadMonitorTask':
-C:\Users\jhen559\Downloads\COMPSYS-723-Assignment-1\ffrequency_analyser\software\freqyAnalyser/main.c:211: undefined reference to `IOWR_ALTERA_AVALON_PIO_DAT'
-collect2.exe: error: ld returned 1 exit status
-make: *** [freqyAnalyser.elf] Error 1
-11:25:28 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 635 KBytes program size (code + initialized data).
+Info:                     130561 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+16:02:32 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
 make all 
 Info: Building ../freqyAnalyser_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
 [BSP build complete]
 Info: Compiling main.c to obj/default/main.o
 nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:19:0:
+In file included from main.c:20:0:
 main.c: In function 'stabilityMonitorTask':
 FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
  #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
                                                                                           ^
-main.c:116:13: note: in expansion of macro 'xQueueSend'
+main.c:158:13: note: in expansion of macro 'xQueueSend'
              xQueueSend(Q_freq_data, &frequency, pdFALSE);
              ^
 FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
  BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
             ^
-main.c:110:20: warning: unused variable 'last_stability' [-Wunused-variable]
+main.c:152:20: warning: unused variable 'last_stability' [-Wunused-variable]
      static uint8_t last_stability = 1;
                     ^
+main.c: In function 'loadMonitorTask':
+main.c:178:18: warning: unused variable 'redled_output' [-Wunused-variable]
+     unsigned int redled_output = 0;
+                  ^
 main.c: In function 'PRVGADraw_Task':
-main.c:286:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+main.c:332:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+             i = ++i%100;
+               ^
+main.c: In function 'ps2_isr':
+main.c:115:8: warning: 'byte' is used uninitialized in this function [-Wuninitialized]
+     if (byte == 0xE0) {
+        ^
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 635 KBytes program size (code + initialized data).
+Info:                     130561 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+16:03:35 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:20:0:
+main.c: In function 'stabilityMonitorTask':
+FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
+                                                                                          ^
+main.c:126:13: note: in expansion of macro 'xQueueSend'
+             xQueueSend(Q_freq_data, &frequency, pdFALSE);
+             ^
+FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+main.c:120:20: warning: unused variable 'last_stability' [-Wunused-variable]
+     static uint8_t last_stability = 1;
+                    ^
+main.c: In function 'loadMonitorTask':
+main.c:146:18: warning: unused variable 'redled_output' [-Wunused-variable]
+     unsigned int redled_output = 0;
+                  ^
+main.c: In function 'PRVGADraw_Task':
+main.c:300:15: warning: operation on 'i' may be undefined [-Wsequence-point]
              i = ++i%100;
                ^
 Info: Linking freqyAnalyser.elf
 nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/jhen559/Downloads/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo C:/Users/jhen559/Downloads/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
 Info: (freqyAnalyser.elf) 634 KBytes program size (code + initialized data).
 Info:                     130561 KBytes free for stack + heap.
 Info: Creating freqyAnalyser.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
 [freqyAnalyser build complete]
-11:30:17 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+16:04:20 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
 make all 
 Info: Building ../freqyAnalyser_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
 [BSP build complete]
 Info: Compiling main.c to obj/default/main.o
 nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:19:0:
+In file included from main.c:20:0:
 main.c: In function 'stabilityMonitorTask':
 FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
  #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
                                                                                           ^
-main.c:116:13: note: in expansion of macro 'xQueueSend'
+main.c:158:13: note: in expansion of macro 'xQueueSend'
              xQueueSend(Q_freq_data, &frequency, pdFALSE);
              ^
 FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
  BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
             ^
-main.c:110:20: warning: unused variable 'last_stability' [-Wunused-variable]
+main.c:152:20: warning: unused variable 'last_stability' [-Wunused-variable]
      static uint8_t last_stability = 1;
                     ^
 main.c: In function 'loadMonitorTask':
-main.c:136:18: warning: unused variable 'redled_output' [-Wunused-variable]
+main.c:178:18: warning: unused variable 'redled_output' [-Wunused-variable]
      unsigned int redled_output = 0;
                   ^
 main.c: In function 'PRVGADraw_Task':
-main.c:286:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+main.c:332:15: warning: operation on 'i' may be undefined [-Wsequence-point]
              i = ++i%100;
                ^
+main.c: In function 'ps2_isr':
+main.c:115:14: warning: 'byte' is used uninitialized in this function [-Wuninitialized]
+     if (byte == 0xE0) {
+              ^
 Info: Linking freqyAnalyser.elf
 nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/jhen559/Downloads/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo C:/Users/jhen559/Downloads/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
-Info: (freqyAnalyser.elf) 634 KBytes program size (code + initialized data).
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 635 KBytes program size (code + initialized data).
 Info:                     130561 KBytes free for stack + heap.
 Info: Creating freqyAnalyser.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
 [freqyAnalyser build complete]
-11:31:19 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+16:05:19 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
 make all 
 Info: Building ../freqyAnalyser_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
 [BSP build complete]
 Info: Compiling main.c to obj/default/main.o
 nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:19:0:
+In file included from main.c:20:0:
 main.c: In function 'stabilityMonitorTask':
 FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
  #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
                                                                                           ^
-main.c:116:13: note: in expansion of macro 'xQueueSend'
+main.c:158:13: note: in expansion of macro 'xQueueSend'
              xQueueSend(Q_freq_data, &frequency, pdFALSE);
              ^
 FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
  BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
             ^
-main.c:110:20: warning: unused variable 'last_stability' [-Wunused-variable]
+main.c:152:20: warning: unused variable 'last_stability' [-Wunused-variable]
      static uint8_t last_stability = 1;
                     ^
 main.c: In function 'loadMonitorTask':
-main.c:136:18: warning: unused variable 'redled_output' [-Wunused-variable]
+main.c:178:18: warning: unused variable 'redled_output' [-Wunused-variable]
      unsigned int redled_output = 0;
                   ^
 main.c: In function 'PRVGADraw_Task':
-main.c:287:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+main.c:332:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+             i = ++i%100;
+               ^
+main.c: In function 'ps2_isr':
+main.c:115:14: warning: 'byte' is used uninitialized in this function [-Wuninitialized]
+     if (byte == 0xE0) {
+              ^
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 635 KBytes program size (code + initialized data).
+Info:                     130560 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+16:06:15 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:20:0:
+main.c: In function 'stabilityMonitorTask':
+FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
+                                                                                          ^
+main.c:160:13: note: in expansion of macro 'xQueueSend'
+             xQueueSend(Q_freq_data, &frequency, pdFALSE);
+             ^
+FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+main.c:154:20: warning: unused variable 'last_stability' [-Wunused-variable]
+     static uint8_t last_stability = 1;
+                    ^
+main.c: In function 'loadMonitorTask':
+main.c:180:18: warning: unused variable 'redled_output' [-Wunused-variable]
+     unsigned int redled_output = 0;
+                  ^
+main.c: In function 'PRVGADraw_Task':
+main.c:334:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+             i = ++i%100;
+               ^
+main.c: In function 'ps2_isr':
+main.c:115:14: warning: 'byte' is used uninitialized in this function [-Wuninitialized]
+     if (byte == 0xE0) {
+              ^
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 635 KBytes program size (code + initialized data).
+Info:                     130560 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+16:06:59 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:20:0:
+main.c: In function 'stabilityMonitorTask':
+FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
+                                                                                          ^
+main.c:160:13: note: in expansion of macro 'xQueueSend'
+             xQueueSend(Q_freq_data, &frequency, pdFALSE);
+             ^
+FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+main.c:154:20: warning: unused variable 'last_stability' [-Wunused-variable]
+     static uint8_t last_stability = 1;
+                    ^
+main.c: In function 'loadMonitorTask':
+main.c:180:18: warning: unused variable 'redled_output' [-Wunused-variable]
+     unsigned int redled_output = 0;
+                  ^
+main.c: In function 'PRVGADraw_Task':
+main.c:334:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+             i = ++i%100;
+               ^
+main.c: In function 'ps2_isr':
+main.c:115:14: warning: 'byte' is used uninitialized in this function [-Wuninitialized]
+     if (byte == 0xE0) {
+              ^
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 635 KBytes program size (code + initialized data).
+Info:                     130560 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+16:08:37 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:20:0:
+main.c: In function 'stabilityMonitorTask':
+FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
+                                                                                          ^
+main.c:160:13: note: in expansion of macro 'xQueueSend'
+             xQueueSend(Q_freq_data, &frequency, pdFALSE);
+             ^
+FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+main.c:154:20: warning: unused variable 'last_stability' [-Wunused-variable]
+     static uint8_t last_stability = 1;
+                    ^
+main.c: In function 'loadMonitorTask':
+main.c:180:18: warning: unused variable 'redled_output' [-Wunused-variable]
+     unsigned int redled_output = 0;
+                  ^
+main.c: In function 'PRVGADraw_Task':
+main.c:334:15: warning: operation on 'i' may be undefined [-Wsequence-point]
              i = ++i%100;
                ^
 Info: Linking freqyAnalyser.elf
 nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/jhen559/Downloads/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo C:/Users/jhen559/Downloads/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
-Info: (freqyAnalyser.elf) 634 KBytes program size (code + initialized data).
-Info:                     130561 KBytes free for stack + heap.
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 635 KBytes program size (code + initialized data).
+Info:                     130560 KBytes free for stack + heap.
 Info: Creating freqyAnalyser.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
 [freqyAnalyser build complete]
-11:34:41 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+16:09:17 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
 make all 
 Info: Building ../freqyAnalyser_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
 [BSP build complete]
 Info: Compiling main.c to obj/default/main.o
 nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:19:0:
+In file included from main.c:20:0:
 main.c: In function 'stabilityMonitorTask':
 FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
  #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
                                                                                           ^
-main.c:116:13: note: in expansion of macro 'xQueueSend'
+main.c:160:13: note: in expansion of macro 'xQueueSend'
              xQueueSend(Q_freq_data, &frequency, pdFALSE);
              ^
 FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
  BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
             ^
-main.c:110:20: warning: unused variable 'last_stability' [-Wunused-variable]
+main.c:154:20: warning: unused variable 'last_stability' [-Wunused-variable]
      static uint8_t last_stability = 1;
                     ^
 main.c: In function 'loadMonitorTask':
-main.c:213:22: warning: unused variable 'green_led_output' [-Wunused-variable]
-             uint32_t green_led_output = (~led_output) & 0x1F;  // Mask to 5 bits
-                      ^
-In file included from main.c:9:0:
-main.c:217:54: error: 'green_led_output' undeclared (first use in this function)
-         IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, green_led_output);
-                                                      ^
-../freqyAnalyser_bsp//HAL/inc/io.h:75:66: note: in definition of macro 'IOWR'
-   __builtin_stwio (__IO_CALC_ADDRESS_NATIVE ((BASE), (REGNUM)), (DATA))
-                                                                  ^
-main.c:217:9: note: in expansion of macro 'IOWR_ALTERA_AVALON_PIO_DATA'
-         IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, green_led_output);
-         ^
-main.c:217:54: note: each undeclared identifier is reported only once for each function it appears in
-         IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, green_led_output);
-                                                      ^
-../freqyAnalyser_bsp//HAL/inc/io.h:75:66: note: in definition of macro 'IOWR'
-   __builtin_stwio (__IO_CALC_ADDRESS_NATIVE ((BASE), (REGNUM)), (DATA))
-                                                                  ^
-main.c:217:9: note: in expansion of macro 'IOWR_ALTERA_AVALON_PIO_DATA'
-         IOWR_ALTERA_AVALON_PIO_DATA(GREEN_LEDS_BASE, green_led_output);
-         ^
-main.c:136:18: warning: unused variable 'redled_output' [-Wunused-variable]
+main.c:180:18: warning: unused variable 'redled_output' [-Wunused-variable]
      unsigned int redled_output = 0;
                   ^
 main.c: In function 'PRVGADraw_Task':
-main.c:287:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+main.c:334:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+             i = ++i%100;
+               ^
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 635 KBytes program size (code + initialized data).
+Info:                     130561 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+16:10:10 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:20:0:
+main.c: In function 'stabilityMonitorTask':
+FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
+                                                                                          ^
+main.c:160:13: note: in expansion of macro 'xQueueSend'
+             xQueueSend(Q_freq_data, &frequency, pdFALSE);
+             ^
+FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+main.c:154:20: warning: unused variable 'last_stability' [-Wunused-variable]
+     static uint8_t last_stability = 1;
+                    ^
+main.c: In function 'loadMonitorTask':
+main.c:180:18: warning: unused variable 'redled_output' [-Wunused-variable]
+     unsigned int redled_output = 0;
+                  ^
+main.c: In function 'PRVGADraw_Task':
+main.c:334:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+             i = ++i%100;
+               ^
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 635 KBytes program size (code + initialized data).
+Info:                     130561 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+16:13:48 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:20:0:
+main.c: In function 'stabilityMonitorTask':
+FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
+                                                                                          ^
+main.c:168:13: note: in expansion of macro 'xQueueSend'
+             xQueueSend(Q_freq_data, &frequency, pdFALSE);
+             ^
+FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+main.c:162:20: warning: unused variable 'last_stability' [-Wunused-variable]
+     static uint8_t last_stability = 1;
+                    ^
+main.c: In function 'loadMonitorTask':
+main.c:188:18: warning: unused variable 'redled_output' [-Wunused-variable]
+     unsigned int redled_output = 0;
+                  ^
+main.c: In function 'PRVGADraw_Task':
+main.c:342:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+             i = ++i%100;
+               ^
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 635 KBytes program size (code + initialized data).
+Info:                     130560 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+16:21:15 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c:50:15: error: expected '=', ',', ';', 'asm' or '__attribute__' before numeric constant
+ double ROC_TH 15.0;
+               ^
+main.c:51:16: error: expected '=', ',', ';', 'asm' or '__attribute__' before numeric constant
+ double FREQ_TH 50.0;
+                ^
+In file included from main.c:20:0:
+main.c: In function 'stabilityMonitorTask':
+FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
+                                                                                          ^
+main.c:180:13: note: in expansion of macro 'xQueueSend'
+             xQueueSend(Q_freq_data, &frequency, pdFALSE);
+             ^
+FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+main.c:182:30: error: 'FREQ_TH' undeclared (first use in this function)
+             if (frequency >= FREQ_TH + 1 || frequency <= FREQ_TH-1 || roc_frequency < -1 * ROC_TH || roc_frequency > ROC_TH) {
+                              ^
+main.c:182:30: note: each undeclared identifier is reported only once for each function it appears in
+main.c:182:92: error: 'ROC_TH' undeclared (first use in this function)
+             if (frequency >= FREQ_TH + 1 || frequency <= FREQ_TH-1 || roc_frequency < -1 * ROC_TH || roc_frequency > ROC_TH) {
+                                                                                            ^
+main.c:174:20: warning: unused variable 'last_stability' [-Wunused-variable]
+     static uint8_t last_stability = 1;
+                    ^
+main.c: In function 'loadMonitorTask':
+main.c:200:18: warning: unused variable 'redled_output' [-Wunused-variable]
+     unsigned int redled_output = 0;
+                  ^
+main.c: In function 'PRVGADraw_Task':
+main.c:354:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+             i = ++i%100;
+               ^
+main.c:394:14: error: 'FREQ_TH' undeclared (first use in this function)
+              FREQ_TH++;
+              ^
+main.c:400:14: error: 'ROC_TH' undeclared (first use in this function)
+              ROC_TH++;
+              ^
+make: *** [obj/default/main.o] Error 1
+16:22:14 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:20:0:
+main.c: In function 'stabilityMonitorTask':
+FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
+                                                                                          ^
+main.c:180:13: note: in expansion of macro 'xQueueSend'
+             xQueueSend(Q_freq_data, &frequency, pdFALSE);
+             ^
+FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+main.c:174:20: warning: unused variable 'last_stability' [-Wunused-variable]
+     static uint8_t last_stability = 1;
+                    ^
+main.c: In function 'loadMonitorTask':
+main.c:200:18: warning: unused variable 'redled_output' [-Wunused-variable]
+     unsigned int redled_output = 0;
+                  ^
+main.c: In function 'PRVGADraw_Task':
+main.c:354:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+             i = ++i%100;
+               ^
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 635 KBytes program size (code + initialized data).
+Info:                     130560 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+16:23:52 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c:51:20: error: expected ',' or ';' before numeric constant
+ double FREQ_TH = 5 0.0;
+                    ^
+In file included from main.c:20:0:
+main.c: In function 'stabilityMonitorTask':
+FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
+                                                                                          ^
+main.c:180:13: note: in expansion of macro 'xQueueSend'
+             xQueueSend(Q_freq_data, &frequency, pdFALSE);
+             ^
+FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+main.c:174:20: warning: unused variable 'last_stability' [-Wunused-variable]
+     static uint8_t last_stability = 1;
+                    ^
+main.c: In function 'loadMonitorTask':
+main.c:200:18: warning: unused variable 'redled_output' [-Wunused-variable]
+     unsigned int redled_output = 0;
+                  ^
+main.c: In function 'PRVGADraw_Task':
+main.c:354:15: warning: operation on 'i' may be undefined [-Wsequence-point]
              i = ++i%100;
                ^
 make: *** [obj/default/main.o] Error 1
-11:35:24 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+16:24:19 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
 make all 
 Info: Building ../freqyAnalyser_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
 [BSP build complete]
 Info: Compiling main.c to obj/default/main.o
 nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:19:0:
+In file included from main.c:20:0:
 main.c: In function 'stabilityMonitorTask':
 FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
  #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
                                                                                           ^
-main.c:117:13: note: in expansion of macro 'xQueueSend'
+main.c:180:13: note: in expansion of macro 'xQueueSend'
              xQueueSend(Q_freq_data, &frequency, pdFALSE);
              ^
 FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
  BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
             ^
-main.c:111:20: warning: unused variable 'last_stability' [-Wunused-variable]
+main.c:174:20: warning: unused variable 'last_stability' [-Wunused-variable]
      static uint8_t last_stability = 1;
                     ^
 main.c: In function 'loadMonitorTask':
-main.c:137:18: warning: unused variable 'redled_output' [-Wunused-variable]
+main.c:200:18: warning: unused variable 'redled_output' [-Wunused-variable]
      unsigned int redled_output = 0;
                   ^
 main.c: In function 'PRVGADraw_Task':
-main.c:288:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+main.c:354:15: warning: operation on 'i' may be undefined [-Wsequence-point]
              i = ++i%100;
                ^
 Info: Linking freqyAnalyser.elf
 nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/jhen559/Downloads/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo C:/Users/jhen559/Downloads/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
-Info: (freqyAnalyser.elf) 634 KBytes program size (code + initialized data).
-Info:                     130561 KBytes free for stack + heap.
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 635 KBytes program size (code + initialized data).
+Info:                     130560 KBytes free for stack + heap.
 Info: Creating freqyAnalyser.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
 [freqyAnalyser build complete]
-11:35:49 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
-make all 
-Info: Building ../freqyAnalyser_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
-[BSP build complete]
-[freqyAnalyser build complete]
-11:36:12 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+16:28:40 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
 make all 
 Info: Building ../freqyAnalyser_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
 [BSP build complete]
 Info: Compiling main.c to obj/default/main.o
 nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:19:0:
+In file included from main.c:20:0:
 main.c: In function 'stabilityMonitorTask':
 FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
  #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
                                                                                           ^
-main.c:117:13: note: in expansion of macro 'xQueueSend'
+main.c:180:13: note: in expansion of macro 'xQueueSend'
              xQueueSend(Q_freq_data, &frequency, pdFALSE);
              ^
 FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
  BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
             ^
-main.c:111:20: warning: unused variable 'last_stability' [-Wunused-variable]
+main.c:51:21: error: expected ')' before ';' token
+ #define FREQ_TH 50.0;
+                     ^
+main.c:182:30: note: in expansion of macro 'FREQ_TH'
+             if (frequency >= FREQ_TH + 1 || frequency <= FREQ_TH-1 || roc_frequency < -1 * ROC_TH || roc_frequency > ROC_TH) {
+                              ^
+main.c:174:20: warning: unused variable 'last_stability' [-Wunused-variable]
      static uint8_t last_stability = 1;
                     ^
 main.c: In function 'loadMonitorTask':
-main.c:137:18: warning: unused variable 'redled_output' [-Wunused-variable]
+main.c:200:18: warning: unused variable 'redled_output' [-Wunused-variable]
      unsigned int redled_output = 0;
                   ^
 main.c: In function 'PRVGADraw_Task':
-main.c:288:15: warning: operation on 'i' may be undefined [-Wsequence-point]
-             i = ++i%100;
-               ^
-Info: Linking freqyAnalyser.elf
-nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/jhen559/Downloads/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo C:/Users/jhen559/Downloads/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
-Info: (freqyAnalyser.elf) 634 KBytes program size (code + initialized data).
-Info:                     130561 KBytes free for stack + heap.
-Info: Creating freqyAnalyser.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
-[freqyAnalyser build complete]
-11:37:04 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
-make all 
-Info: Building ../freqyAnalyser_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
-[BSP build complete]
-Info: Compiling main.c to obj/default/main.o
-nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:19:0:
-main.c: In function 'stabilityMonitorTask':
-FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
- #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
-                                                                                          ^
-main.c:117:13: note: in expansion of macro 'xQueueSend'
-             xQueueSend(Q_freq_data, &frequency, pdFALSE);
-             ^
-FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
- BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
-            ^
-main.c:111:20: warning: unused variable 'last_stability' [-Wunused-variable]
-     static uint8_t last_stability = 1;
-                    ^
-main.c: In function 'loadMonitorTask':
-main.c:137:18: warning: unused variable 'redled_output' [-Wunused-variable]
-     unsigned int redled_output = 0;
-                  ^
-main.c: In function 'PRVGADraw_Task':
-main.c:287:15: warning: operation on 'i' may be undefined [-Wsequence-point]
-             i = ++i%100;
-               ^
-Info: Linking freqyAnalyser.elf
-nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/jhen559/Downloads/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo C:/Users/jhen559/Downloads/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
-Info: (freqyAnalyser.elf) 634 KBytes program size (code + initialized data).
-Info:                     130561 KBytes free for stack + heap.
-Info: Creating freqyAnalyser.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
-[freqyAnalyser build complete]
-11:37:48 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
-make all 
-Info: Building ../freqyAnalyser_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
-[BSP build complete]
-[freqyAnalyser build complete]
-11:38:26 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
-make all 
-Info: Building ../freqyAnalyser_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
-[BSP build complete]
-Info: Compiling main.c to obj/default/main.o
-nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:19:0:
-main.c: In function 'stabilityMonitorTask':
-FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
- #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
-                                                                                          ^
-main.c:116:13: note: in expansion of macro 'xQueueSend'
-             xQueueSend(Q_freq_data, &frequency, pdFALSE);
-             ^
-FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
- BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
-            ^
-main.c:110:20: warning: unused variable 'last_stability' [-Wunused-variable]
-     static uint8_t last_stability = 1;
-                    ^
-main.c: In function 'loadMonitorTask':
-main.c:213:40: error: expected expression before '=' token
-             uint32_t green_led_output; = (~led_output) & 0x1F;  // Mask to 5 bits
-                                        ^
-main.c:136:18: warning: unused variable 'redled_output' [-Wunused-variable]
-     unsigned int redled_output = 0;
-                  ^
-main.c: In function 'PRVGADraw_Task':
-main.c:286:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+main.c:357:15: warning: operation on 'i' may be undefined [-Wsequence-point]
              i = ++i%100;
                ^
 make: *** [obj/default/main.o] Error 1
-11:38:34 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+16:29:05 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
 make all 
 Info: Building ../freqyAnalyser_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
 [BSP build complete]
 Info: Compiling main.c to obj/default/main.o
 nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:19:0:
+In file included from main.c:20:0:
 main.c: In function 'stabilityMonitorTask':
 FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
  #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
                                                                                           ^
-main.c:116:13: note: in expansion of macro 'xQueueSend'
+main.c:180:13: note: in expansion of macro 'xQueueSend'
              xQueueSend(Q_freq_data, &frequency, pdFALSE);
              ^
 FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
  BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
             ^
-main.c:110:20: warning: unused variable 'last_stability' [-Wunused-variable]
+main.c:174:20: warning: unused variable 'last_stability' [-Wunused-variable]
      static uint8_t last_stability = 1;
                     ^
 main.c: In function 'loadMonitorTask':
-main.c:136:18: warning: unused variable 'redled_output' [-Wunused-variable]
+main.c:200:18: warning: unused variable 'redled_output' [-Wunused-variable]
      unsigned int redled_output = 0;
                   ^
 main.c: In function 'PRVGADraw_Task':
-main.c:286:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+main.c:357:15: warning: operation on 'i' may be undefined [-Wsequence-point]
              i = ++i%100;
                ^
 Info: Linking freqyAnalyser.elf
 nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/jhen559/Downloads/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo C:/Users/jhen559/Downloads/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
-Info: (freqyAnalyser.elf) 634 KBytes program size (code + initialized data).
-Info:                     130561 KBytes free for stack + heap.
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 635 KBytes program size (code + initialized data).
+Info:                     130560 KBytes free for stack + heap.
 Info: Creating freqyAnalyser.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
 [freqyAnalyser build complete]
-11:39:20 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
-make all 
-Info: Building ../freqyAnalyser_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
-[BSP build complete]
-[freqyAnalyser build complete]
-11:39:54 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
-make all 
-Info: Building ../freqyAnalyser_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
-[BSP build complete]
-[freqyAnalyser build complete]
-11:42:04 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+16:34:23 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
 make all 
 Info: Building ../freqyAnalyser_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
 [BSP build complete]
 Info: Compiling main.c to obj/default/main.o
 nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:19:0:
+In file included from main.c:20:0:
 main.c: In function 'stabilityMonitorTask':
 FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
  #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
                                                                                           ^
-main.c:116:13: note: in expansion of macro 'xQueueSend'
+main.c:167:13: note: in expansion of macro 'xQueueSend'
              xQueueSend(Q_freq_data, &frequency, pdFALSE);
              ^
 FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
  BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
             ^
-main.c:110:20: warning: unused variable 'last_stability' [-Wunused-variable]
+main.c:161:20: warning: unused variable 'last_stability' [-Wunused-variable]
      static uint8_t last_stability = 1;
                     ^
 main.c: In function 'loadMonitorTask':
-main.c:136:18: warning: unused variable 'redled_output' [-Wunused-variable]
+main.c:187:18: warning: unused variable 'redled_output' [-Wunused-variable]
      unsigned int redled_output = 0;
                   ^
 main.c: In function 'PRVGADraw_Task':
-main.c:290:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+main.c:344:15: warning: operation on 'i' may be undefined [-Wsequence-point]
              i = ++i%100;
                ^
-Info: Linking freqyAnalyser.elf
-nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/jhen559/Downloads/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo C:/Users/jhen559/Downloads/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
-Info: (freqyAnalyser.elf) 634 KBytes program size (code + initialized data).
-Info:                     130561 KBytes free for stack + heap.
-Info: Creating freqyAnalyser.objdump
-nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
-[freqyAnalyser build complete]
-11:43:12 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
-make all 
-Info: Building ../freqyAnalyser_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
-[BSP build complete]
-[freqyAnalyser build complete]
-11:43:57 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
-make all 
-Info: Building ../freqyAnalyser_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
-[BSP build complete]
-[freqyAnalyser build complete]
-11:44:13 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
-make all 
-Info: Building ../freqyAnalyser_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
-[BSP build complete]
-[freqyAnalyser build complete]
-11:44:26 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
-make all 
-Info: Building ../freqyAnalyser_bsp/
-C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
-[BSP build complete]
-[freqyAnalyser build complete]
-11:45:37 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+main.c:392:53: error: 'FREQ_MIN' undeclared (first use in this function)
+             if (change_frequencyTH == 0 && freqTH > FREQ_MIN) {
+                                                     ^
+main.c:392:53: note: each undeclared identifier is reported only once for each function it appears in
+main.c:394:59: error: 'ROC_MIN' undeclared (first use in this function)
+             } else if (change_frequencyTH == 1 && rocTH > ROC_MIN) {
+                                                           ^
+make: *** [obj/default/main.o] Error 1
+16:34:42 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
 make all 
 Info: Building ../freqyAnalyser_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
 [BSP build complete]
 Info: Compiling main.c to obj/default/main.o
 nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
-In file included from main.c:19:0:
+In file included from main.c:20:0:
 main.c: In function 'stabilityMonitorTask':
 FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
  #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
                                                                                           ^
-main.c:116:13: note: in expansion of macro 'xQueueSend'
+main.c:167:13: note: in expansion of macro 'xQueueSend'
              xQueueSend(Q_freq_data, &frequency, pdFALSE);
              ^
 FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
  BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
             ^
-main.c:110:20: warning: unused variable 'last_stability' [-Wunused-variable]
+main.c:161:20: warning: unused variable 'last_stability' [-Wunused-variable]
      static uint8_t last_stability = 1;
                     ^
 main.c: In function 'loadMonitorTask':
-main.c:136:18: warning: unused variable 'redled_output' [-Wunused-variable]
+main.c:187:18: warning: unused variable 'redled_output' [-Wunused-variable]
      unsigned int redled_output = 0;
                   ^
 main.c: In function 'PRVGADraw_Task':
-main.c:290:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+main.c:344:15: warning: operation on 'i' may be undefined [-Wsequence-point]
              i = ++i%100;
                ^
 Info: Linking freqyAnalyser.elf
 nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
-nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "C:/Users/jhen559/Downloads/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo C:/Users/jhen559/Downloads/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
-Info: (freqyAnalyser.elf) 634 KBytes program size (code + initialized data).
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 635 KBytes program size (code + initialized data).
 Info:                     130561 KBytes free for stack + heap.
 Info: Creating freqyAnalyser.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
 [freqyAnalyser build complete]
-11:47:01 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+16:38:55 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:20:0:
+main.c: In function 'stabilityMonitorTask':
+FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
+                                                                                          ^
+main.c:167:13: note: in expansion of macro 'xQueueSend'
+             xQueueSend(Q_freq_data, &frequency, pdFALSE);
+             ^
+FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+main.c:161:20: warning: unused variable 'last_stability' [-Wunused-variable]
+     static uint8_t last_stability = 1;
+                    ^
+main.c: In function 'loadMonitorTask':
+main.c:187:18: warning: unused variable 'redled_output' [-Wunused-variable]
+     unsigned int redled_output = 0;
+                  ^
+main.c: In function 'PRVGADraw_Task':
+main.c:344:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+             i = ++i%100;
+               ^
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 635 KBytes program size (code + initialized data).
+Info:                     130561 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+16:39:36 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:20:0:
+main.c: In function 'stabilityMonitorTask':
+FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
+                                                                                          ^
+main.c:167:13: note: in expansion of macro 'xQueueSend'
+             xQueueSend(Q_freq_data, &frequency, pdFALSE);
+             ^
+FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+main.c:161:20: warning: unused variable 'last_stability' [-Wunused-variable]
+     static uint8_t last_stability = 1;
+                    ^
+main.c: In function 'loadMonitorTask':
+main.c:187:18: warning: unused variable 'redled_output' [-Wunused-variable]
+     unsigned int redled_output = 0;
+                  ^
+main.c: In function 'PRVGADraw_Task':
+main.c:344:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+             i = ++i%100;
+               ^
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 635 KBytes program size (code + initialized data).
+Info:                     130561 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+16:42:44 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+make all 
+Info: Building ../freqyAnalyser_bsp/
+C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../freqyAnalyser_bsp//HAL/inc -I../freqyAnalyser_bsp/ -I../freqyAnalyser_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:20:0:
+main.c: In function 'stabilityMonitorTask':
+FreeRTOS/queue.h:421:90: warning: passing argument 2 of 'xQueueGenericSend' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+ #define xQueueSend( xQueue, pvItemToQueue, xTicksToWait ) xQueueGenericSend( ( xQueue ), ( pvItemToQueue ), ( xTicksToWait ), queueSEND_TO_BACK )
+                                                                                          ^
+main.c:170:13: note: in expansion of macro 'xQueueSend'
+             xQueueSend(Q_freq_data, &frequency, pdFALSE);
+             ^
+FreeRTOS/queue.h:592:12: note: expected 'const void * const' but argument is of type 'volatile double *'
+ BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQueue, TickType_t xTicksToWait, const BaseType_t xCopyPosition ) PRIVILEGED_FUNCTION;
+            ^
+main.c:164:20: warning: unused variable 'last_stability' [-Wunused-variable]
+     static uint8_t last_stability = 1;
+                    ^
+main.c: In function 'loadMonitorTask':
+main.c:190:18: warning: unused variable 'redled_output' [-Wunused-variable]
+     unsigned int redled_output = 0;
+                  ^
+main.c: In function 'PRVGADraw_Task':
+main.c:346:15: warning: operation on 'i' may be undefined [-Wsequence-point]
+             i = ++i%100;
+               ^
+Info: Linking freqyAnalyser.elf
+nios2-elf-g++  -T'../freqyAnalyser_bsp//linker.x' -msys-crt0='../freqyAnalyser_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../freqyAnalyser_bsp/   -Wl,-Map=freqyAnalyser.map   -O0 -g -Wall   -mhw-div -mhw-mul -mno-hw-mulx -mgpopt=global  -o freqyAnalyser.elf obj/default/FreeRTOS/croutine.o obj/default/FreeRTOS/event_groups.o obj/default/FreeRTOS/heap.o obj/default/FreeRTOS/list.o obj/default/FreeRTOS/port.o obj/default/FreeRTOS/queue.o obj/default/FreeRTOS/tasks.o obj/default/FreeRTOS/timers.o obj/default/main.o obj/default/FreeRTOS/port_asm.o -lm -msys-lib=m
+nios2-elf-insert freqyAnalyser.elf --thread_model hal --cpu_name nios2 --qsys true --simulation_enabled false --id 7 --sidp 0x430f0 --timestamp 1393900972 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name nios2 --quartus_project_dir "H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser" --sopcinfo H:/COMPSYS723/COMPSYS-723-Assignment-1/ffrequency_analyser/software/freqyAnalyser_bsp/../../nios2.sopcinfo
+Info: (freqyAnalyser.elf) 635 KBytes program size (code + initialized data).
+Info:                     130561 KBytes free for stack + heap.
+Info: Creating freqyAnalyser.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source freqyAnalyser.elf >freqyAnalyser.objdump
+[freqyAnalyser build complete]
+16:45:21 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
 make all 
 Info: Building ../freqyAnalyser_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
 [BSP build complete]
 [freqyAnalyser build complete]
-11:55:39 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+16:45:57 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
 make all 
 Info: Building ../freqyAnalyser_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/

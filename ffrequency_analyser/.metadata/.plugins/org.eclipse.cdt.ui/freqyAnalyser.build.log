@@ -1,9 +1,9 @@
-11:55:39 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
+16:45:57 **** Incremental Build of configuration Nios II for project freqyAnalyser ****
 make all 
 Info: Building ../freqyAnalyser_bsp/
 C:/intelFPGA/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../freqyAnalyser_bsp/
 [BSP build complete]
 [freqyAnalyser build complete]
 
-11:55:41 Build Finished (took 1s.400ms)
+16:45:59 Build Finished (took 2s.668ms)
 

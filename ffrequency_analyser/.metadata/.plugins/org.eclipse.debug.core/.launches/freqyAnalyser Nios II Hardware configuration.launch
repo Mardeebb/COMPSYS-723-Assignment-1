@@ -5,7 +5,7 @@
 <stringAttribute key="byteStreamDeviceInstanceID" value="0"/>
 <booleanAttribute key="downloadProgram" value="true"/>
 <stringAttribute key="elfFile" value="C:\Users\jhen559\Downloads\COMPSYS-723-Assignment-1\ffrequency_analyser\software\freqyAnalyser\freqyAnalyser.elf"/>
-<stringAttribute key="elfUserFile" value="C:\Users\jhen559\Downloads\COMPSYS-723-Assignment-1\ffrequency_analyser\software\freqyAnalyser\freqyAnalyser.elf"/>
+<stringAttribute key="elfUserFile" value="H:\COMPSYS723\COMPSYS-723-Assignment-1\ffrequency_analyser\software\freqyAnalyser\freqyAnalyser.elf"/>
 <booleanAttribute key="enableElfUserFile" value="true"/>
 <stringAttribute key="org.eclipse.cdt.debug.mi.core.GDB_INIT" value=""/>
 <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_ID" value="com.altera.debug.cdi.gdb.plugin.Nios2GdbCdiDebugger"/>

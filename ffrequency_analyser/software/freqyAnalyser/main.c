@@ -11,6 +11,7 @@
 #include <altera_avalon_pio_regs.h>
 #include "altera_up_avalon_video_character_buffer_with_dma.h"
 #include "altera_up_avalon_video_pixel_buffer_dma.h"
+#include "altera_up_avalon_ps2.h"
 #include <sys/alt_alarm.h>
 #include <altera_avalon_uart_regs.h>
 
@@ -85,6 +86,17 @@ uint8_t stability_flag = 1;
 uint8_t maintenance_flag = 0;
 uint8_t stability_changed_flag = 0;
 
+volatile int increment_flag = 0;     // 1 when right arrow pressed
+volatile int decrement_flag = 0;     // 1 when left arrow pressed
+// 0 = changing frequency threshold
+// 1 = changing roc frequency threshold
+int change_frequencyTH = 0;
+int extended = 0;
+int released = 0;
+
+double freqTH = 50.0;
+double rocTH = 15.0;
+
 
 void freq_relay_isr(){
     unsigned int samples = IORD(FREQUENCY_ANALYSER_BASE, 0);
@@ -105,6 +117,48 @@ void button_isr() {
     return;
 }
 
+void ps2_isr(void* ps2_device, alt_u32 id){
+    static int extended = 0;
+    static int released = 0;
+    unsigned char byte;
+
+    if (alt_up_ps2_read_data_byte_timeout(ps2_device, &byte) != 0)
+        return;
+
+    if (byte == 0xE0) {
+        extended = 1;
+        return;
+    } else if (byte == 0xF0) {
+        released = 1;
+        return;
+    }
+
+    if (extended == 1) {
+        if (!released) {
+            switch (byte) {
+                case 0x72: // Down
+                    change_frequencyTH = 0;
+                    break;
+                case 0x75: // Up
+                    change_frequencyTH = 1;
+                    break;
+                case 0x74: // Right
+                    increment_flag = 1;
+                    break;
+                case 0x6B: // Left
+                    decrement_flag = 1;
+                    break;
+            }
+        }
+    }
+    extended = 0;
+    released = 0;
+	alt_up_ps2_read_data_byte_timeout(ps2_device, &byte);
+//	printf("%i\n", extended);
+//	printf("%i\n", released);
+	//printf("Scan code: %x\n", byte);
+}
+
 static void stabilityMonitorTask(void *pvParameters) {
     unsigned int received_samples;
     static uint8_t last_stability = 1;
@@ -115,7 +169,7 @@ static void stabilityMonitorTask(void *pvParameters) {
             roc_frequency = ((frequency - old_frequency) / received_samples) * 16000.0;
             xQueueSend(Q_freq_data, &frequency, pdFALSE);
 
-            if (frequency >= FREQ_TH + 1 || frequency <= FREQ_TH-1 || roc_frequency < -1 * ROC_TH || roc_frequency > ROC_TH) {
+            if (frequency >= freqTH + 1.0 || frequency <= freqTH-1.0 || roc_frequency < -1 * rocTH || roc_frequency > rocTH) {
                 stability_flag = 0;
                 xQueueSend(loadMonitorTaskQueue, &stability_flag, pdFALSE);
                 xTaskNotifyGive(loadMonitorTaskHandle);
@@ -152,26 +206,26 @@ static void loadMonitorTask(void *pvParameters) {
         	//printf("%i\n", received_stability);
         	// if unstable and 500ms passes shed loads
             if (timer500_flag && !received_stability) {
-            	printf("unstable for 500ms\n");
+            	//printf("unstable for 500ms\n");
                 for (int i = 4; i >= 0; i--) {
                   //  printf("checking load: %i it is state %i\n",i,load_state[i]);
                     if (load_state[i] == 1) {
                         load_state[i] = 0;
                         loads_active_flag = 1;
-                        printf("%i load detached \n", i);
+                        //printf("%i load detached \n", i);
                         break;
                     }
                 }
             }
         	// if stable and 500ms passes reconnecting loads
             if (timer500_flag && received_stability) {
-            	printf("Stable for 500ms\n");
+            	//printf("Stable for 500ms\n");
                 for (int i = 0; i <= 4; i++) {
                    // printf("checking load (stable): %i it is state %i\n",i,load_state[i]);
                     if (load_state[i] == 0) {
                         load_state[i] = 1;
                         loads_active_flag = 1;
-                        printf("%i load attached \n", i);
+                        //printf("%i load attached \n", i);
                         break;
                     }
                 }
@@ -237,6 +291,8 @@ static void pollingSwitchsTask(void *pvParameters) {
 }
 
 static void PRVGADraw_Task(void *pvParameters ) {
+
+
   char bfr_a[20], bfr_b[20], bfr_c[20];
   alt_up_pixel_buffer_dma_dev *pixel_buf;
   pixel_buf = alt_up_pixel_buffer_dma_open_dev(VIDEO_PIXEL_BUFFER_DMA_NAME);
@@ -324,9 +380,27 @@ static void PRVGADraw_Task(void *pvParameters ) {
         sprintf(bfr_b, "ROC: %.4f", roc_frequency);
         alt_up_char_buffer_string(char_buf, bfr_a, 10, 40);
         alt_up_char_buffer_string(char_buf, bfr_b, 10, 42);
+        // increment the threshold frequency based on ps2 interrupt
+        if (increment_flag) {
+            if (change_frequencyTH == 0) {
+                freqTH += 1.0;
+            } else if (change_frequencyTH == 1) {
+                rocTH += 1.0;
+            }
+            increment_flag = 0; // reset after handling
+        }
+        // decrement the threshold frequency based on ps2 interrupt
+        if (decrement_flag) {
+            if (change_frequencyTH == 0) {
+                freqTH -= 1.0;
+            } else if (change_frequencyTH == 1) {
+                rocTH -= 1.0;
+            }
+            decrement_flag = 0; // reset after handling
+        }
 
-        sprintf(bfr_a, "ROC_TH: %.4f", ROC_TH);
-        sprintf(bfr_b, "FREQ_TH: %.1f", FREQ_TH);
+        sprintf(bfr_a, "ROC_TH: %.4f", rocTH);
+        sprintf(bfr_b, "FREQ_TH: %.1f", freqTH);
         alt_up_char_buffer_string(char_buf, bfr_a, 10, 46);
         alt_up_char_buffer_string(char_buf, bfr_b, 10, 48);
 
@@ -416,6 +490,15 @@ int main(void) {
   IOWR_ALTERA_AVALON_PIO_IRQ_MASK(PUSH_BUTTON_BASE, 0x7);
   alt_irq_register(PUSH_BUTTON_IRQ, 0, button_isr);
   IOWR_ALTERA_AVALON_PIO_DATA(SEVEN_SEG_BASE, 0x00000000);
+  alt_up_ps2_dev * ps2_device = alt_up_ps2_open_dev(PS2_NAME);
+
+  if(ps2_device == NULL){
+	  printf("can't find PS/2 device\n");
+	  return 1;
+  }
+
+	alt_up_ps2_enable_read_interrupt(ps2_device);
+	alt_irq_register(PS2_IRQ, ps2_device, ps2_isr);
 
   vTaskStartScheduler();
   while (1);

@@ -1,6 +1,6 @@
-09:42:22 **** Build of configuration Nios II for project freqyAnalyser_bsp ****
+16:01:21 **** Build of configuration Nios II for project freqyAnalyser_bsp ****
 make all 
 [BSP build complete]
 
-09:42:23 Build Finished (took 616ms)
+16:01:25 Build Finished (took 3s.875ms)
 

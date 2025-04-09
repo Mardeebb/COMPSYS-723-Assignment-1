@@ -11,6 +11,7 @@ obj/default/main.o: main.c ../freqyAnalyser_bsp//HAL/inc/sys/alt_irq.h \
  ../freqyAnalyser_bsp//HAL/inc/sys/alt_llist.h \
  ../freqyAnalyser_bsp//HAL/inc/priv/alt_dev_llist.h \
  ../freqyAnalyser_bsp//drivers/inc/altera_up_avalon_video_pixel_buffer_dma.h \
+ ../freqyAnalyser_bsp//drivers/inc/altera_up_avalon_ps2.h \
  ../freqyAnalyser_bsp//HAL/inc/sys/alt_alarm.h \
  ../freqyAnalyser_bsp//HAL/inc/sys/alt_llist.h \
  ../freqyAnalyser_bsp//HAL/inc/priv/alt_alarm.h \
@@ -49,6 +50,8 @@ obj/default/main.o: main.c ../freqyAnalyser_bsp//HAL/inc/sys/alt_irq.h \
 ../freqyAnalyser_bsp//HAL/inc/priv/alt_dev_llist.h:
 
 ../freqyAnalyser_bsp//drivers/inc/altera_up_avalon_video_pixel_buffer_dma.h:
+
+../freqyAnalyser_bsp//drivers/inc/altera_up_avalon_ps2.h:
 
 ../freqyAnalyser_bsp//HAL/inc/sys/alt_alarm.h:
 
