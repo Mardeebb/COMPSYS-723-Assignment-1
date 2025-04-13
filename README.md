@@ -27,10 +27,10 @@ Mardee Bayron - Tim Cashmore - Joel Henderson
 
 ## Boot Up
 
-to initially setup the board and eclipse our final implementation is in the ffrequency_analyser folder 
+to initially setup the board and eclipse our final implementation is in the ffrequency_analyser folder. 
 The project should be called freqyAnalyser (ffrequency_analyser > software > freqyAnalyser)
 We have also placed the freq_relay_controller.sof file needed to first program the DE2-115 board in
-the "program_fles" folder
+the "program_files" folder
 
 Once the system has booted, it starts in **Normal Mode**.
 
